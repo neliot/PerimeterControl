@@ -1,0 +1,111 @@
+\begin{thebibliography}{10}
+
+\bibitem{AZHMJJM:12}
+M.~S. Alvissalim, B.~Zaman, Z.~A. Hafizh, M.~A. Ma'sum, G.~Jati, W.~Jatmiko,
+  and P.~Mursanto.
+\newblock Swarm quadrotor robots for telecommunication network coverage area
+  expansion in disaster area.
+\newblock In {\em SICE Annual Conference (SICE), 2012 Proceedings of}, pages
+  2256--2261, Aug 2012.
+
+\bibitem{APZDAMC:09}
+Panayiotis Andreou, Demetrios Zeinalipour-Yazti, Maria Andreou, Panos~K
+  Chrysanthis, and George Samaras.
+\newblock Perimeter-based data replication in mobile sensor networks.
+\newblock In {\em Mobile Data Management: Systems, Services and Middleware,
+  2009. MDM'09. Tenth International Conference on}, pages 244--251. IEEE, 2009.
+
+\bibitem{BAFVM:06}
+Laura Barnes, Wendy Alvis, MaryAnne Fields, Kimon Valavanis, and Wilfrido
+  Moreno.
+\newblock Heterogeneous swarm formation control using bivariate normal
+  functions to generate potential fields.
+\newblock In {\em Distributed Intelligent Systems: Collective Intelligence and
+  Its Applications, 2006. DIS 2006. IEEE Workshop on}, pages 85--94. IEEE,
+  2006.
+
+\bibitem{BAF:06}
+Laura Barnes, Wendy Alvis, MaryAnne Fields, Kimon Valavanis, and Wilfrido
+  Moreno.
+\newblock Swarm formation control with potential fields formed by bivariate
+  normal functions.
+\newblock In {\em Control and Automation, 2006. MED'06. 14th Mediterranean
+  Conference on}, pages 1--7. IEEE, 2006.
+
+\bibitem{BM:09}
+{Derek J.} Bennet and C.R. McInnes.
+\newblock Verifiable control of a swarm of unmanned aerial vehicles.
+\newblock {\em Journal of Aerospace Engineering}, 223(7):939--953, 2009.
+
+\bibitem{GP:04a}
+V.~Gazi and K.~M. Passino.
+\newblock Stability analysis of social foraging swarms.
+\newblock {\em IEEE Transactions on Systems, Man, and Cybernetics, Part B
+  (Cybernetics)}, 34(1):539--557, Feb 2004.
+
+\bibitem{GP:02}
+Veysel Gazi and Kevin~M Passino.
+\newblock Stability analysis of swarms in an environment with an
+  attractant/repellent profile.
+\newblock In {\em American Control Conference, 2002. Proceedings of the 2002},
+  volume~3, pages 1819--1824. IEEE, 2002.
+
+\bibitem{GP:04}
+Veysel Gazi and Kevin~M. Passino.
+\newblock A class of attractions/repulsion functions for stable swarm
+  aggregations.
+\newblock {\em International Journal of Control}, 77(18):1567--1579, 2004.
+
+\bibitem{GP:05}
+Veysel Gazi and Kevin~M Passino.
+\newblock Stability of a one-dimensional discrete-time asynchronous swarm.
+\newblock {\em Systems, Man, and Cybernetics, Part B: Cybernetics, IEEE
+  Transactions on}, 35(4):834--841, 2005.
+
+\bibitem{GP:11}
+Veysel Gazi and Kevin~M Passino.
+\newblock {\em Swarm stability and optimization}.
+\newblock Springer Science \& Business Media, 2011.
+
+\bibitem{MYP:09}
+Yogeswaran Mohan and SG~Ponnambalam.
+\newblock An extensive review of research in swarm robotics.
+\newblock In {\em Nature \& Biologically Inspired Computing, 2009. NaBIC 2009.
+  World Congress on}, pages 140--145. IEEE, 2009.
+
+\bibitem{RWBK:15}
+R.~Ramaithitima, M.~Whitzer, S.~Bhattacharya, and V.~Kumar.
+\newblock Sensor coverage robot swarms using local sensing without metric
+  information.
+\newblock In {\em 2015 IEEE International Conference on Robotics and Automation
+  (ICRA)}, pages 3408--3415, May 2015.
+
+\bibitem{RWBK:16}
+R.~Ramaithitima, M.~Whitzer, S.~Bhattacharya, and V.~Kumar.
+\newblock Automated creation of topological maps in unknown environments using
+  a swarm of resource-constrained robots.
+\newblock {\em IEEE Robotics and Automation Letters}, 1(2):746--753, July 2016.
+
+\bibitem{SB:06}
+M.~Scheutz and P.~Bauer.
+\newblock A scalable, robust, ultra-low complexity agent swarm for area
+  coverage and interception tasks.
+\newblock In {\em 2006 IEEE Conference on Computer Aided Control System Design,
+  2006 IEEE International Conference on Control Applications, 2006 IEEE
+  International Symposium on Intelligent Control}, pages 1258--1263, Oct 2006.
+
+\bibitem{SK:16}
+A.~M. Schroeder and M.~Kumar.
+\newblock Design of decentralized chemotactic control law for area coverage
+  using swarm of mobile robots.
+\newblock In {\em 2016 American Control Conference (ACC)}, pages 4317--4322,
+  July 2016.
+
+\bibitem{YDH:15}
+B.~Yang, Y.~Ding, and K.~Hao.
+\newblock Area coverage searching for swarm robots using dynamic voronoi-based
+  method.
+\newblock In {\em Control Conference (CCC), 2015 34th Chinese}, pages
+  6090--6094, July 2015.
+
+\end{thebibliography}
