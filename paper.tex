@@ -451,7 +451,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Swarm coordination through perimeter detcetion}
+\title{Swarm coordination through perimeter detection}
 %
 %
 % author names and IEEE memberships
@@ -538,7 +538,7 @@ M.~Brockway are from Northumbria University, UK}
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
 %\boldmath
-This chapter identifies the effect a \textit{destination vector} has upon the motion of a swarm. Three coordination techniques are applied to a swarm and metrics are used to identify the effects. The three coordination techniques are: full perimeter detection, where only edge based agents will have a \textit{destination vector} applied. Partial perimeter detection, where a subset of the perimeter agents are detected and finally all agents in the swarm having a \textit{destination vector} applied. For all the experiments the base parameters of the swarm are fixed ensuring that the only variable will be the \textit{destination vector} that is applied by the coordinating agents. This process allows the impact of the algorithms to be isolated and compared. Section~\ref{sec:AlternateBias1}~discusses the potential variations to the base parameters and the effects this has on controlling the impact of the weightings.
+This paper identifies the effect a \textit{destination vector} has upon the motion of a swarm. Three coordination techniques are applied to a swarm and metrics are used to identify the effects. The three coordination techniques are: full perimeter detection, where only edge based agents will have a \textit{destination vector} applied. Partial perimeter detection, where a subset of the perimeter agents are detected and finally all agents in the swarm having a \textit{destination vector} applied. For all the experiments the base parameters of the swarm are fixed ensuring that the only variable will be the \textit{destination vector} that is applied by the coordinating agents. This process allows the impact of the algorithms to be isolated and compared. Section~\ref{sec:AlternateBias1}~discusses the potential variations to the base parameters and the effects this has on controlling the impact of the weightings.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -590,14 +590,14 @@ To allow an analysis of each algorithm's effect on a swarm a baseline measuremen
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SampleSwarm200-1}
+\includegraphics[width=8cm]{figures/SampleSwarm200-1}
 \end{center}
 \caption[Sample swarm 200 agents initial state]{Sample swarm 200 agents initial state (\textit{screen shot from simulator})\label{fig:SampleSwarm200-1}}
 \end{figure}
 
 \begin{table}
 \begin{center}
-\begin{tabular}{| p{2.5cm} | c | p{7cm} |}
+\begin{tabular}{| p{1.5cm} | c | p{4cm} |}
 \hline
 \bf Weight \bf Component & \bf Hexagonal & \bf Description \\ \hline
 Sample Rate & 100 & ms - Unit sampling interval\\  \hline
@@ -615,7 +615,7 @@ The results for the baseline experimental swarm are shown in~Figures~\ref{coord:
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineMagnitude1}
+\includegraphics[width=9cm]{figures/BaselineMagnitude1}
 \end{center}
 \caption{Baseline internal movement - magnitude\label{coord:BaselineMagnitude1}}
 \end{figure}
@@ -624,7 +624,7 @@ Figure~\ref{coord:BaselineMagnitude1} shows the magnitude between $t_0$ and appr
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineDistance1}
+\includegraphics[width=9cm]{figures/BaselineDistance1}
 \end{center}
 \caption{Baseline internal movement - distance\label{coord:BaselineDistance1}}
 \end{figure}
@@ -635,7 +635,7 @@ The centroid path for the baseline swarm is shown in~FIgure~\ref{coord:SwarmPath
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SwarmPathBaseline}
+\includegraphics[width=9cm]{figures/SwarmPathBaseline}
 \end{center}
 \caption{Baseline swarm path\label{coord:SwarmPathBaseline1}}
 \end{figure}
@@ -679,7 +679,7 @@ Figure~\ref{reduced:Monolithic1} shows a screen shot from the swarm simulator wi
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=7cm]{figures/Monolithic2}
+\includegraphics[width=6cm]{figures/Monolithic2}
 \end{center}
 \caption[Monolithic agents]{Monolithic agents (Circles indicate all agents are using GPS, \textit{screen shot from simulator}) \label{reduced:Monolithic1}}
 \end{figure}
@@ -689,7 +689,7 @@ To identify the effect of the all-agents algorithm the simulation is executed us
 %BASELINE-ALLAGENTS-MAG.py
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllAgentsMag1}
+\includegraphics[width=9cm]{figures/BaselineAllAgentsMag1}
 \end{center}
 \caption{Baseline/All agents comparison \textit{inter-agent vector} magnitude\label{reduced:BaselineAllAgentsMag1}}
 \end{figure}
@@ -698,7 +698,7 @@ Figure~\ref{reduced:BaselineAllAgentsMag1} shows the effect on the \textit{inter
 %BASELINE-ALLAGENTS-DIST.py
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllAgentsDist1}
+\includegraphics[width=9cm]{figures/BaselineAllAgentsDist1}
 \end{center}
 \caption{Baseline/All agents comparison (distance)\label{reduced:BaselineAllAgentsDist1}}
 \end{figure}
@@ -709,7 +709,7 @@ A curious effect of having all the GPS sensors enabled is that as the swarm appr
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=8cm]{figures/ConicalPath}
+\includegraphics[width=7cm]{figures/ConicalPath}
 \end{center}
 \caption{Conical destination trajectories\label{reduced:ConicalPath}}
 \end{figure}
@@ -718,14 +718,14 @@ This effect can be seen in both the magnitudes shown in~Figure~\ref{reduced:Base
 %BASELINE-ALLAGENTS-MAG.py
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllAgentsMag2}
+\includegraphics[width=9cm]{figures/BaselineAllAgentsMag2}
 \end{center}
 \caption[Baseline/All agents magnitude comparison]{Baseline/All agents \textit{inter-agent vector} magnitude comparison (60 seconds)\label{reduced:BaselineAllAgentsMag2}}
 \end{figure}
 %BASELINE-ALLAGENTS-DIST.py
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllAgentsDist2}
+\includegraphics[width=9cm]{figures/BaselineAllAgentsDist2}
 \end{center}
 \caption{Baseline/All agents distance comparison (60 seconds)\label{reduced:BaselineAllAgentsDist2}}
 \end{figure}
@@ -738,31 +738,31 @@ A swarm with the appropriate field effects will propagate towards hexagons made 
 \subsection{Simple multifaceted algorithm}
 The mechanism to enable a coordinator agent is to count the number of neighbours that an agent has~(Algorithm~\ref{algo:neighbourDetect}). This process is already part of the cohesion and repulsion calculations.
 
-\begin{algorithm}
-\DontPrintSemicolon
-\SetAlgoLined
-\KwData{$b,S$}
-\tcc{$b$ is an agent and $S$ is a set of agents}
-\tcc{The set of agent could be provided by an omni directional camera or a set of ultrasonic sensors}
-$N \longleftarrow \emptyset$\;
-\ForEach(\tcc*{$b^{'}$ is each agent in $S$}){$b^{'}$ in $S$}
-{
-  \If(\tcc*{$D_b$ is the neighbour range}){$length(bb') < D_{b}$}
-  {
-     $N \longleftarrow N \cup \{b\}$
-  }
-}
-\tcc{$N$ is a set of Bots $b_1,b_2,\ldots,b_n$}
-\KwRet{$N$}
-\caption[Neighbour Detection]{nbr(b)}\label{algo:neighbourDetect}
-\end{algorithm}
+\begin{figure}
+\begin{algorithmic}[1]
+\Procedure{CheckVisibility}{$b,S$}
+%\tcc{$b$ is an agent and $S$ is a set of agents}
+%\tcc{The set of agent could be provided by an omni directional camera or a set of ultrasonic sensors}
+\State $N \longleftarrow \emptyset$\;
+\For{$b^{'}$ in $S$}
+  \If{$length(bb') < D_{b}$}
+     \State $N \longleftarrow N \cup \{b\}$
+  \EndIf
+\EndFor
+%\tcc{$N$ is a set of Bots $b_1,b_2,\ldots,b_n$}
+\State\textbf{return} $N$
+\EndProcedure
+\end{algorithmic}
+\caption[Neighbour Detection]{nbr(b)}
+\label{algo:neighbourDetect}
+\end{figure}
 
 \subsection{Basic-count effect\label{section:compareBaselineBasicCount1}}
 Figure~\ref{reduced:BaselineBasicCountMag1} and \ref{reduced:BaselineBasicCountDist1} show the comparison of the baseline swarm against the goal-based swarm with reduced GPS usage. Both graphs show that the settling period of the swarm from the chaotic state is very much in line with the settling period of the baseline swarm. This is due to the algorithms effect when the swarm is initially compressed. The neighbour count prevents any agents from being coordinators ($|nbr(b)| > 5$). This is supported by the propagation of the coordinator role in Figure~\ref{fig:SwarmNeighbourCount}. The swarm therefore acts in a similar manner to the baseline. As the simulation progresses the swarm settles into a condition that is similar to baseline with a higher deviation and lower mean resultant \textit{inter-agent vector}. This is due to there being a \textit{direction vector} which impacts on the coordinator agents and propagates to the non-coordinator agents through proximity. This effect is shown in Figure~\ref{metric:StabilityNullVector}. 
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineBasicCountMag1}
+\includegraphics[width=9cm]{figures/BaselineBasicCountMag1}
 \end{center}
 \caption{Baseline/basic-count magnitude potential comparison\label{reduced:BaselineBasicCountMag1}}
 \end{figure}
@@ -771,7 +771,7 @@ Figure~\ref{reduced:BaselineBasicCountMag1} shows that initially the average \te
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineBasicCountDist1}
+\includegraphics[width=9cm]{figures/BaselineBasicCountDist1}
 \end{center}
 \caption{Baseline and basic-count distance comparison\label{reduced:BaselineBasicCountDist1}}
 \end{figure}
@@ -782,7 +782,7 @@ Figure~\ref{reduced:SimpleMulti12} shows a screen shot of the simulator using th
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=7cm]{figures/SimpleMulti2}
+\includegraphics[width=6cm]{figures/SimpleMulti2}
 \end{center}
 \caption[Simple multifaceted agents]{Simple multifaceted agents (\textit{screen shot from simulator})\label{reduced:SimpleMulti12}}
 \end{figure}
@@ -791,18 +791,35 @@ Figure~\ref{reduced:SimpleMulti12} shows a screen shot of the simulator using th
 A complex multifaceted swarm is based upon the full detection of perimeters in a swarm. There are two perimeters that can be detected, convex and concave~\cite{MD:09,MJ:08}. Convex perimeters enclose agents and concave perimeters create voids. Figures~\ref{concave:VoidPerimeter1} and \ref{concave:VoidPerimeter2} show these two perimeter types. The concave perimeter is highlighted in red and the convex perimeter is highlighted in green
 
 \begin{figure}
-\centering
-\subfigure[Void and perimeter]{
-	 \includegraphics[width=4cm]{figures/PerimeterBots1}
-    \label{concave:VoidPerimeter1}
-}
-\subfigure[Multiple perimeters]{
-	 \includegraphics[width=6.5cm]{figures/PerimeterBots2}
-    \label{concave:VoidPerimeter2}
-}
-\caption{Swarm perimeters and voids}
-\label{fig:SwarmVoids}
+\begin{center}
+	 \includegraphics[width=4cm]{figures/PerimeterBots1}\label{concave:VoidPerimeter1}
+\end{center}
+\caption{Void and perimeter}
+\label{concave:VoidPerimeter1}
 \end{figure}
+
+\begin{figure}
+\begin{center}
+	 \includegraphics[width=4cm]{figures/PerimeterBots2}\label{concave:VoidPerimeter2}
+\end{center}
+\caption{Multiple perimeters}
+\label{concave:VoidPerimeter2}
+\end{figure}
+
+
+%% \begin{figure}
+%% \centering
+%% \subfigure[Void and perimeter]{
+%% 	 \includegraphics[width=4cm]{figures/PerimeterBots1}
+%%     \label{concave:VoidPerimeter1}
+%% }
+%% \subfigure[Multiple perimeters]{
+%% 	 \includegraphics[width=6.5cm]{figures/PerimeterBots2}
+%%     \label{concave:VoidPerimeter2}
+%% }
+%% \caption{Swarm perimeters and voids}
+%% \label{fig:SwarmVoids}
+%% \end{figure}
 
 There is an exceptional circumstance that must be considered in perimeter detection. This is covered in Section~\ref{section:PerimeterErrorLocalisation}. Figure~\ref{fig:FullPerimeter1} is a screen shot from the simulator showing both perimeter types detected. The algorithm does not distinguished between the types. 
 
@@ -827,17 +844,18 @@ The process of detecting a perimeter agent is based upon identifying when the ag
 
 The first check is a short circuit count of the number of neighbours. This is the same process used to the basic-count algorithm. If an agent has $\leq 4$ neighbours and the swarm parameters are for a hexagonal swarm configuration then the agent is a perimeter agent and therefore a coordinator. This identification process is shown in~Figure~\ref{SmallNeighbourCount}. 
 
-\begin{algorithm}
-\DontPrintSemicolon
-\SetAlgoLined
-\KwData{$b$}
-\tcc{for $nbr()$ see Equation \ref{eq:Neighbours1}}
-\If{$|nbr(b)| \leq 4$}{
-   \KwRet{True}\;
-}
-\KwRet{False}\;
-\caption{SmallNeighbourCount}\label{SmallNeighbourCount}
-\end{algorithm}
+\begin{figure}
+\begin{algorithmic}[1]
+\Procedure{NeighbourCount}{$b$}
+\If{$|nbr(b)| \leq 4$}
+   \State\textbf{return} $True$
+\EndIf
+\State\textbf{return} $False$
+\EndProcedure
+\end{algorithmic}
+\caption{SmallNeighbourCount}
+\label{SmallNeighbourCount}
+\end{figure}
 
 If the short circuit neighbour count check fails then further conditions must be checked. The additional checks require a dictionary of agent/angular values to be generated~(Figure~\ref{eq:ConcaveVoidPhysics1}). Algorithm~\ref{algo:getNeighbourAngles} shows how the dictionary of agent/angle values are produced.   
 
@@ -859,23 +877,23 @@ Figure~\ref{eq:ConcaveVoidPhysics1} generates the dictionary set of all the neig
 
 Algorithm \ref{algo:getNeighbourAngles} shows the logic to produce the sorted neighbour/angle dictionary. $sort(.)$ sorts the dictionary set generated in~Equation~\ref{eq:ConcaveVoidPhysics1} by ascending angle to produce a dictionary of neighbour agents with their relative angle to the first detected neighbour as shown in~Figure~\ref{reduced:Perimeter1}.
 
-\begin{algorithm}
-\DontPrintSemicolon
-\SetAlgoLined
+\begin{figure}
+\begin{algorithmic}[1]
+\Procedure{NeighbourAngle}{$b$}
+\State $angles \leftarrow \emptyset$
+\For{$b^{'}\in b.neighbours$}
+	\If{$b.neighbours[0] == b^{'}$}
+      \State $angles[b^{'}] = 0$
+	\Else
+		\State $newAngle = b.getAngle(b.neighbours[0], b^{'})$	   \State $angles[b^{'}] = newAngle$
+	\EndIf
+\EndFor
+\State \textbf{return}{$sort(angles)$} 
+\EndProcedure
+\end{algorithmic}
 \caption{NeighbourAngle: Sorted by angle}
-\KwData{b}
-\tcc{$angles$ is a dictionary of agent/angle}
-$angles \leftarrow \emptyset$\;
-\For{$b^{'}\in b.neighbours$}{
-	\eIf{$b.neighbours[0] == b^{'}$}{
-      $angles[b^{'}] = 0$\;
-	}{
-		$newAngle = b.getAngle(b.neighbours[0], b^{'})$\;	   $angles[b^{'}] = newAngle$\;
-	}
-}
-\KwRet{$sort(angles)$} 
 \label{algo:getNeighbourAngles}
-\end{algorithm}
+\end{figure}
 
 Using the angular dictionary from Algorithm~\ref{algo:getNeighbourAngles} it is possible to identify if adjacent neighbours can detect each other. If the agent is within all of its neighbours boundary then it is not on the perimeter~(Algorithm~\ref{algo:checkVisibility}). 
 
@@ -894,25 +912,44 @@ z = \sqrt{x^2 + y^2 - 2xy~\cos(\theta)}
 
 The full visibility check~(Algorithm~\ref{algo:checkVisibility}) takes each pair in turn and using the cosine rule~(Equation~\ref{eq:CosineRule1}) checks for a `visibility gap'. 
 
-\begin{algorithm}
-\DontPrintSemicolon
-\SetAlgoLined
+\begin{figure}
+\begin{algorithmic}[1]
+\Procedure{NeighbourAngle}{$b,angles$}
+\For{$i \leftarrow 0$ to $size(angles)-1$}
+	\If{i == size(angles)-1}
+		\If{$cosrule(b,angles[size(angles)-1][0],angles[i][0]$}
+			\State \textbf{return} $True$ 
+   	\EndIf
+	\ElsIf{$cosrule(b,angles[i + 1][0],angles[i][0]$}
+		\State \textbf{return} $True$ 
+	\EndIf
+\EndFor
+\State \textbf{return} $False$ 
+\EndProcedure
+\end{algorithmic}
 \caption{CheckVisibility}
-\KwData{b,angles}
-\For{$i \leftarrow 0$ \KwTo $size(angles)-1$}{
-	\eIf{i == size(angles)-1}{
-		\If{$cosrule(b,angles[size(angles)-1][0],angles[i][0]$}{
-   		\KwRet{True}
-   	}
-	}
-	{\If{$cosrule(b,angles[i + 1][0],angles[i][0]$}{
-			\KwRet{True}
-		}
-	}
-}
-\KwRet{False}
 \label{algo:checkVisibility}
-\end{algorithm}
+\end{figure}
+
+%% \begin{algorithm}
+%% \DontPrintSemicolon
+%% \SetAlgoLined
+%% \caption{CheckVisibility}
+%% \KwData{b,angles}
+%% \For{$i \leftarrow 0$ \KwTo $size(angles)-1$}{
+%% 	\eIf{i == size(angles)-1}{
+%% 		\If{$cosrule(b,angles[size(angles)-1][0],angles[i][0]$}{
+%%    		\KwRet{True}
+%%    	}
+%% 	}
+%% 	{\If{$cosrule(b,angles[i + 1][0],angles[i][0]$}{
+%% 			\KwRet{True}
+%% 		}
+%% 	}
+%% }
+%% \KwRet{False}
+%% \label{algo:checkVisibility}
+%% \end{algorithm}
 
 There is one exception to the neighbour visibility check. Due to compression of the swarm, which can be caused by an initial deployment configuration~(Figure~\ref{fig:SampleSwarm200-1} page \pageref{fig:SampleSwarm200-1}) or when an obstacle is in the path of the swarm, the agent's neighbours are able to `see' other neighbours but a pair of sequential neighbours could create an angle $> 180^\circ$ as shown in~Figure~\ref{reduced:Perimeter2}. In this case the agent is on the outside of the enclosed neighbour space, the agent is therefore on a perimeter. 
 
@@ -925,45 +962,83 @@ There is one exception to the neighbour visibility check. Due to compression of 
 
 This phenomenon requires the detection process to identify the angles that all the agents create from an arbitrary point, in this case the first identified neighbour. The neighbours must then be checked to determine if any neighbour pair create an angle $> 180^\circ$~(Figure~\ref{reduced:Perimeter1}~Algorithm~\ref{algo:checkConvex}). This process includes a short circuit in that as soon as a gap is found the check terminates. 
 
-\begin{algorithm}
-\DontPrintSemicolon
-\SetAlgoLined
+\begin{figure}
+\begin{algorithmic}[1]
+\Procedure{CheckConvex}{$angles$}
+\For{$i \leftarrow 0$ to $size(angles)-1$}
+	\If{i == size(angles)-1}
+		\If{$360 - angles[loop][1] \geq 180$}
+			\State \textbf{return} $True$ 
+   	\EndIf
+	\ElsIf{$angles[loop + 1][1] - angles[loop][1] \geq 180$}
+		\State \textbf{return} $True$ 
+	\EndIf
+\EndFor
+\State \textbf{return} $False$ 
+\EndProcedure
+\end{algorithmic}
 \caption{CheckConvex}
-\KwData{angles}
-\For{$i \leftarrow 0$ \KwTo $size(angles)-1$}{
-	\eIf{i == size(angles)-1}{
-		\If{$360 - angles[loop][1] \geq 180$}{
-   		\KwRet{True}
-   	}
-	}{
-		\If{$angles[loop + 1][1] - angles[loop][1] \geq 180$}{
-			\KwRet{True}
-		}
-	}
-}
-\KwRet{False}
 \label{algo:checkConvex}
-\end{algorithm}
+\end{figure}
+
+%% \begin{algorithm}
+%% \DontPrintSemicolon
+%% \SetAlgoLined
+%% \caption{CheckConvex}
+%% \KwData{angles}
+%% \For{$i \leftarrow 0$ \KwTo $size(angles)-1$}{
+%% 	\eIf{i == size(angles)-1}{
+%% 		\If{$360 - angles[loop][1] \geq 180$}{
+%%    		\KwRet{True}
+%%    	}
+%% 	}{
+%% 		\If{$angles[loop + 1][1] - angles[loop][1] \geq 180$}{
+%% 			\KwRet{True}
+%% 		}
+%% 	}
+%% }
+%% \KwRet{False}
+%% \label{algo:checkConvex}
+%% \end{algorithm}
 
 The complete perimeter detection algorithm using this `cyclic-angular-neighbour-check' methodology is show in~Algorithm~\ref{algo:checkPerimeter}. The first part of the algorithm is the short circuit check~(\textit{SmallNeighbourCount(b)}). This is only followed by the visibility check (\textit{CheckVisibility(b,angles)}) if the short circuit fails. If the visibility check is confirmed, which is another short circuit method, the convex check is carried out~(CheckConvex(angles)). This sequence ensures the minimum computational overhead for the agent check. 
 
-\begin{algorithm}
-\DontPrintSemicolon
-\SetAlgoLined
+\begin{figure}
+\begin{algorithmic}[1]
+\Procedure{CheckPerimeter}{$b,S$}
+\If{SmallNeighbourCount(b,S)}
+	\State \textbf{return} $False$ 
+\EndIf
+\State $angles = NeighbourAngle(b)$
+\If{CheckVisibility(b,angles)}
+	\If{CheckConvex(angles)}
+		\State \textbf{return} $True$ 
+	\EndIf
+\EndIf
+\State \textbf{return} $False$ 
+\EndProcedure
+\end{algorithmic}
 \caption{CheckPerimeter}
-\KwData{$b,S$}
-\If{SmallNeighbourCount(b,S)}{
-	\KwRet{True}
-}
-$angles = NeighbourAngle(b)$\;
-\If{CheckVisibility(b,angles)}{
-	\If{CheckConvex(angles)}{
-		\KwRet{True}
-	}
-}
-\KwRet{False}
 \label{algo:checkPerimeter}
-\end{algorithm}
+\end{figure}
+
+%% \begin{algorithm}
+%% \DontPrintSemicolon
+%% \SetAlgoLined
+%% \caption{CheckPerimeter}
+%% \KwData{$b,S$}
+%% \If{SmallNeighbourCount(b,S)}{
+%% 	\KwRet{True}
+%% }
+%% $angles = NeighbourAngle(b)$\;
+%% \If{CheckVisibility(b,angles)}{
+%% 	\If{CheckConvex(angles)}{
+%% 		\KwRet{True}
+%% 	}
+%% }
+%% \KwRet{False}
+%% \label{algo:checkPerimeter}
+%% \end{algorithm}
 
 \subsubsection{Perimeter detection errors\label{section:PerimeterErrorLocalisation}}
 With the proximity of the agents needing to be hexagonally connected and the requirement to eliminate inter-agent communications to allow for arbitrary sized swarms, there is the possibility of a localised perimeter detection algorithm error. When a swarm is compressed a localised anomaly can arise where agents are in a hyper-connected structure on a perimeter. When this anomaly occurs the proposed algorithm will produce a false positive result for the affected agents. 
@@ -1004,7 +1079,7 @@ Both Figures~\ref{reduced:BaselineFullPerimeterMag1} and \ref{reduced:BaselineFu
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineFullPerimeterMag1}
+\includegraphics[width=9cm]{figures/BaselineFullPerimeterMag1}
 \end{center}
 \caption{Baseline/Full perimeter magnitude comparison\label{reduced:BaselineFullPerimeterMag1}}
 \end{figure}
@@ -1015,7 +1090,7 @@ Once the swarm has completed its expansion the swarms interacting vectors stabal
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineFullPerimeterDist1}
+\includegraphics[width=9cm]{figures/BaselineFullPerimeterDist1}
 \end{center}
 \caption{Baseline/Full perimeter distance comparison\label{reduced:BaselineFullPerimeterDist1}}
 \end{figure}
@@ -1047,14 +1122,14 @@ Figures \ref{reduced:BaselineAllDist1}, \ref{reduced:BaselineAllMag1}, \ref{redu
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllDist1}
+\includegraphics[width=9cm]{figures/BaselineAllDist1}
 \end{center}
 \caption{Baseline distance comparison\label{reduced:BaselineAllDist1}}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllDist2}
+\includegraphics[width=9cm]{figures/BaselineAllDist2}
 \end{center}
 \caption{Baseline distance comparison\label{reduced:BaselineAllDist2}}
 \end{figure}
@@ -1063,14 +1138,14 @@ Figure~\ref{reduced:BaselineAllDist2} show that the average distance between the
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllMag1}
+\includegraphics[width=9cm]{figures/BaselineAllMag1}
 \end{center}
 \caption{Baseline magnitude comparison\label{reduced:BaselineAllMag1}}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllMag2}
+\includegraphics[width=9cm]{figures/BaselineAllMag2}
 \end{center}
 \caption{Baseline and magnitude comparison\label{reduced:BaselineAllMag2}}
 \end{figure}
@@ -1086,7 +1161,7 @@ The multi-faceted algorithms that are defined above create subsets of coordinato
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SwarmPerimeter1}
+\includegraphics[width=9cm]{figures/SwarmPerimeter1}
 \end{center}
 \caption{200 agent swarm GPS Usage\label{fig:SwarmPerimeter1}}
 \end{figure}
@@ -1121,7 +1196,7 @@ The three algorithms take different amounts of time to stabalise~(Figure~\ref{fi
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SwarmPropagationComparison1}
+\includegraphics[width=9cm]{figures/SwarmPropagationComparison1}
 \end{center}
 \caption{Swarm propagation path comparison\label{reduced:SwarmPropagationPathComparison1}}
 \end{figure}
@@ -1130,7 +1205,7 @@ Figure~\ref{reduced:SwarmPropagationPathComparison1} shows the initial expansion
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SwarmPropagationComparison2}
+\includegraphics[width=9cm]{figures/SwarmPropagationComparison2}
 \end{center}
 \caption{Swarm propagation path comparison\label{reduced:SwarmPropagationPathComparison2}}
 \end{figure}
@@ -1141,7 +1216,7 @@ The effect of the algorithms on the stabilisation period can be seen in~(Figure~
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SwarmPropagationComparison3}
+\includegraphics[width=9cm]{figures/SwarmPropagationComparison3}
 \end{center}
 \caption{Swarm traversal at end of 60s run\label{reduced:SwarmPropagationPathComparison3}}
 \end{figure}
@@ -1219,7 +1294,7 @@ Full Perimeter & (1218.1290381962, 260.3440891182) & 669.4489951522\\ \hline
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SwarmSpeed1}
+\includegraphics[width=9cm]{figures/SwarmSpeed1}
 \end{center}
 \caption{200 agent swarm terminal speed (over 20s period)\label{fig:SwarmSpeed1}}
 \end{figure}
@@ -1231,7 +1306,7 @@ The impact of the bias can be seen in the effect it has upon the number of neigh
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SwarmNeighbourCount}
+\includegraphics[width=9cm]{figures/SwarmNeighbourCount}
 \end{center}
 \caption{Neighbour count effect from \textit{destination vectors}\label{fig:SwarmNeighbourCount}}
 \end{figure}
@@ -1254,7 +1329,7 @@ Full perimeter & 72 & 36\% & 60 \\  \hline
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/SwarmNeighbourCountBalanced}
+\includegraphics[width=9cm]{figures/SwarmNeighbourCountBalanced}
 \end{center}
 \caption{Neighbour count effect from balanced directional bias\label{fig:SwarmNeighbourCountBalanced}}
 \end{figure}
@@ -1263,7 +1338,7 @@ Figure~\ref{fig:SwarmNeighbourCountBalanced} shows the effect reducing the \text
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAll100-60-20-1}
+\includegraphics[width=9cm]{figures/BaselineAll100-60-20-1}
 \end{center}
 \caption{Swarm distance analysis\label{fig:BaselineAll100-60-20-1}}
 \end{figure}
@@ -1272,7 +1347,7 @@ Figure~\ref{fig:BaselineAll100-60-20-1} shows that the stabilisation periods of 
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAll100-60-20-2}
+\includegraphics[width=9cm]{figures/BaselineAll100-60-20-2}
 \end{center}
 \caption{Swarm distance analysis\label{fig:BaselineAll100-60-20-2}}
 \end{figure}
@@ -1283,14 +1358,14 @@ Figures \ref{fig:BaselineAllMag100-60-20-1} and \ref{fig:BaselineAllMag100-60-20
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllMag100-60-20-1}
+\includegraphics[width=9cm]{figures/BaselineAllMag100-60-20-1}
 \end{center}
 \caption{Swarm magnitude analysis\label{fig:BaselineAllMag100-60-20-1}}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllMag100-60-20-2}
+\includegraphics[width=9cm]{figures/BaselineAllMag100-60-20-2}
 \end{center}
 \caption{Swarm magnitude analysis\label{fig:BaselineAllMag100-60-20-2}}
 \end{figure}
@@ -1299,7 +1374,7 @@ Figure~\ref{fig:BaselineAllMag100-60-20-2} shows the balance with the inter-agen
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllPath100-60-20-1}
+\includegraphics[width=9cm]{figures/BaselineAllPath100-60-20-1}
 \end{center}
 \caption{Swarm path analysis\label{fig:BaselineAllPath100-60-20-1}}
 \end{figure}
@@ -1310,14 +1385,14 @@ Figure~\ref{fig:BaselineAllPath100-60-20-3} shows that all the algorithms produc
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllPath100-60-20-2}
+\includegraphics[width=9cm]{figures/BaselineAllPath100-60-20-2}
 \end{center}
 \caption{Swarm path analysis\label{fig:BaselineAllPath100-60-20-2}}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/BaselineAllPath100-60-20-3}
+\includegraphics[width=9cm]{figures/BaselineAllPath100-60-20-3}
 \end{center}
 \caption{Swarm path analysis\label{fig:BaselineAllPath100-60-20-3}}
 \end{figure}

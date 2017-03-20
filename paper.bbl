@@ -1,13 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{AZHMJJM:12}
-M.~S. Alvissalim, B.~Zaman, Z.~A. Hafizh, M.~A. Ma'sum, G.~Jati, W.~Jatmiko,
-  and P.~Mursanto.
-\newblock Swarm quadrotor robots for telecommunication network coverage area
-  expansion in disaster area.
-\newblock In {\em SICE Annual Conference (SICE), 2012 Proceedings of}, pages
-  2256--2261, Aug 2012.
-
 \bibitem{APZDAMC:09}
 Panayiotis Andreou, Demetrios Zeinalipour-Yazti, Maria Andreou, Panos~K
   Chrysanthis, and George Samaras.
@@ -15,27 +7,23 @@ Panayiotis Andreou, Demetrios Zeinalipour-Yazti, Maria Andreou, Panos~K
 \newblock In {\em Mobile Data Management: Systems, Services and Middleware,
   2009. MDM'09. Tenth International Conference on}, pages 244--251. IEEE, 2009.
 
-\bibitem{BAFVM:06}
-Laura Barnes, Wendy Alvis, MaryAnne Fields, Kimon Valavanis, and Wilfrido
-  Moreno.
-\newblock Heterogeneous swarm formation control using bivariate normal
-  functions to generate potential fields.
-\newblock In {\em Distributed Intelligent Systems: Collective Intelligence and
-  Its Applications, 2006. DIS 2006. IEEE Workshop on}, pages 85--94. IEEE,
-  2006.
+\bibitem{AZDPS:11}
+Panayiotis Andreou, Demetrios Zeinalipour-Yazti, Panos~K Chrysanthis, and
+  George Samaras.
+\newblock In-network data acquisition and replication in mobile sensor
+  networks.
+\newblock {\em Distributed and Parallel Databases}, 29(1-2):87--112, 2011.
 
-\bibitem{BAF:06}
-Laura Barnes, Wendy Alvis, MaryAnne Fields, Kimon Valavanis, and Wilfrido
-  Moreno.
-\newblock Swarm formation control with potential fields formed by bivariate
-  normal functions.
-\newblock In {\em Control and Automation, 2006. MED'06. 14th Mediterranean
-  Conference on}, pages 1--7. IEEE, 2006.
+\bibitem{BS:13}
+Jan~Carlo Barca and Y~Ahmet Sekercioglu.
+\newblock Swarm robotics reviewed.
+\newblock {\em Robotica}, 31(03):345--359, 2013.
 
-\bibitem{BM:09}
-{Derek J.} Bennet and C.R. McInnes.
-\newblock Verifiable control of a swarm of unmanned aerial vehicles.
-\newblock {\em Journal of Aerospace Engineering}, 223(7):939--953, 2009.
+\bibitem{VG:05}
+V.~Gazi.
+\newblock Swarm aggregations using artificial potentials and sliding-mode
+  control.
+\newblock {\em IEEE Transactions on Robotics}, 21(6):1208--1214, Dec 2005.
 
 \bibitem{GP:04a}
 V.~Gazi and K.~M. Passino.
@@ -67,45 +55,71 @@ Veysel Gazi and Kevin~M Passino.
 \newblock {\em Swarm stability and optimization}.
 \newblock Springer Science \& Business Media, 2011.
 
-\bibitem{MYP:09}
-Yogeswaran Mohan and SG~Ponnambalam.
-\newblock An extensive review of research in swarm robotics.
-\newblock In {\em Nature \& Biologically Inspired Computing, 2009. NaBIC 2009.
-  World Congress on}, pages 140--145. IEEE, 2009.
+\bibitem{HAY:08}
+Hiroshi Hashimoto, Shinichi Aso, Syo Yokota, Akinori Sasaki, Yasuhiro Ohya, and
+  Hiroyuki Kobayashi.
+\newblock Stability of swarm robot based on local forces of local swarms.
+\newblock In {\em SICE Annual Conference, 2008}, pages 1254--1257. IEEE, 2008.
 
-\bibitem{RWBK:15}
-R.~Ramaithitima, M.~Whitzer, S.~Bhattacharya, and V.~Kumar.
-\newblock Sensor coverage robot swarms using local sensing without metric
-  information.
+\bibitem{MJ:08}
+James D.~McLurkin IV.
+\newblock {\em Analysis and Implementation of Distributed Algorithms for
+  Multi-Robot Systems}.
+\newblock PhD thesis, Massachusetts Institute of Technology, USA, 2008.
+
+\bibitem{KV:16}
+Vijay Kumar.
+\newblock Current projects: Vijay {K}umar {L}ab.
+\newblock \url{http://www.kumarrobotics.org/research/}, 2016.
+
+\bibitem{MD:09}
+James McLurkin and Erik~D Demaine.
+\newblock A distributed boundary detection algorithm for multi-robot systems.
+\newblock In {\em Intelligent Robots and Systems, 2009. IROS 2009. IEEE/RSJ
+  International Conference on}, pages 4791--4798. IEEE, 2009.
+
+\bibitem{MCK:15}
+Y.~Mulgaonkar, G.~Cross, and V.~Kumar.
+\newblock Design of small, safe and robust quadrotor swarms.
 \newblock In {\em 2015 IEEE International Conference on Robotics and Automation
-  (ICRA)}, pages 3408--3415, May 2015.
+  (ICRA)}, pages 2208--2215, May 2015.
 
-\bibitem{RWBK:16}
-R.~Ramaithitima, M.~Whitzer, S.~Bhattacharya, and V.~Kumar.
-\newblock Automated creation of topological maps in unknown environments using
-  a swarm of resource-constrained robots.
-\newblock {\em IEEE Robotics and Automation Letters}, 1(2):746--753, July 2016.
+\bibitem{NIM:09}
+Inaki Navarro and F~Mat{\'\i}a.
+\newblock A proposal of a set of metrics for collective movement of robots.
+\newblock {\em Proc. Workshop on Good Experimental Methodology in Robotics},
+  2009.
 
-\bibitem{SB:06}
-M.~Scheutz and P.~Bauer.
-\newblock A scalable, robust, ultra-low complexity agent swarm for area
-  coverage and interception tasks.
-\newblock In {\em 2006 IEEE Conference on Computer Aided Control System Design,
-  2006 IEEE International Conference on Control Applications, 2006 IEEE
-  International Symposium on Intelligent Control}, pages 1258--1263, Oct 2006.
+\bibitem{PD:06}
+Oliver Purwin and Raffaello D’Andrea.
+\newblock Trajectory generation and control for four wheeled omnidirectional
+  vehicles.
+\newblock {\em Robotics and Autonomous Systems}, 54(1):13 -- 22, 2006.
 
-\bibitem{SK:16}
-A.~M. Schroeder and M.~Kumar.
-\newblock Design of decentralized chemotactic control law for area coverage
-  using swarm of mobile robots.
-\newblock In {\em 2016 American Control Conference (ACC)}, pages 4317--4322,
-  July 2016.
+\bibitem{SHA:07}
+Jeff~S Shamma.
+\newblock {\em Cooperative control of distributed multi-agent systems}.
+\newblock Wiley Online Library, 2007.
 
-\bibitem{YDH:15}
-B.~Yang, Y.~Ding, and K.~Hao.
-\newblock Area coverage searching for swarm robots using dynamic voronoi-based
-  method.
-\newblock In {\em Control Conference (CCC), 2015 34th Chinese}, pages
-  6090--6094, July 2015.
+\bibitem{SG:15}
+J.~Song and S.~Gupta.
+\newblock Slam based shape adaptive coverage control using autonomous vehicles.
+\newblock In {\em System of Systems Engineering Conference (SoSE), 2015 10th},
+  pages 268--273, May 2015.
+
+\bibitem{TG:12}
+G.~Tuna and K.~Gulez.
+\newblock Aided navigation techniques for indoor and outdoor unmanned vehicles.
+\newblock In {\em 2012 5th International Conference on New Technologies,
+  Mobility and Security (NTMS)}, pages 1--4, May 2012.
+
+\bibitem{ZAPS:07}
+Demetrios Zeinalipour-Yazti, Panayiotis Andreou, Panos~K. Chrysanthis, and
+  George Samaras.
+\newblock Senseswarm: A perimeter-based data acquisition framework for mobile
+  sensor networks.
+\newblock In {\em Proceedings of the 4th Workshop on Data Management for Sensor
+  Networks: In Conjunction with 33rd International Conference on Very Large
+  Data Bases}, DMSN '07, pages 13--18, New York, NY, USA, 2007. ACM.
 
 \end{thebibliography}
