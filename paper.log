@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2016.4.11)  18 MAR 2017 11:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2016.4.11)  20 MAR 2017 09:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -314,11 +314,7 @@ Package color Info: Driver file: dvips.def on input line 143.
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
-)) (./paper.aux
-
-LaTeX Warning: Label `tab:FillParameters' multiply defined.
-
-)
+)) (./paper.aux)
 \openout1 = `paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 450.
@@ -337,187 +333,211 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count127
-File: figures/FieldEffects.eps Graphic file (type eps)
- <figures/FieldEffects.eps>
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no Ž in font ptmr7t!
-LaTeX Font Info:    Calculating math sizes for size <14> on input line 610.
-Missing character: There is no â in font cmr10!
-Missing character: There is no € in font cmr10!
-Missing character: There is no Ž in font cmr10!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no Ž in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no Ž in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no Ž in font ptmr7t!
- [1
+
+
+LaTeX Warning: Reference `sec:AlternateBias1' on page 1 undefined on input line
+ 568.
+
+
+LaTeX Warning: Reference `fig:SampleSwarm200-1' on page 1 undefined on input li
+ne 587.
+
+
+LaTeX Warning: Reference `tab:DynamicPhysics1' on page 1 undefined on input lin
+e 588.
+
+File: figures/SampleSwarm200-1.eps Graphic file (type eps)
+<figures/SampleSwarm200-1.eps>
+Overfull \hbox (146.33858pt too wide) in paragraph at lines 593--594
+ [] 
+ []
+
+
+Overfull \hbox (92.34889pt too wide) in paragraph at lines 600--610
+ [] 
+ []
+
+
+LaTeX Warning: Reference `coord:BaselineMagnitude1' on page 1 undefined on inpu
+t line 614.
+
+
+LaTeX Warning: Reference `coord:BaselineDistance1' on page 1 undefined on input
+ line 614.
+
+
+LaTeX Warning: Citation `NIM:09' on page 1 undefined on input line 614.
+
+File: figures/BaselineMagnitude1.eps Graphic file (type eps)
+<figures/BaselineMagnitude1.eps>
+Overfull \hbox (146.33858pt too wide) in paragraph at lines 618--619
+ [] 
+ []
+
+
+LaTeX Warning: Reference `coord:BaselineMagnitude1' on page 1 undefined on inpu
+t line 623.
+
+File: figures/BaselineDistance1.eps Graphic file (type eps)
+<figures/BaselineDistance1.eps>
+Overfull \hbox (146.33858pt too wide) in paragraph at lines 627--628
+ [] 
+ []
+
+[1
 
 
 ]
-File: figures/Obstacle1.eps Graphic file (type eps)
- <figures/Obstacle1.eps>
-LaTeX Font Info:    Calculating math sizes for size <17> on input line 663.
-Missing character: There is no â in font cmr10!
-Missing character: There is no € in font cmr10!
-Missing character: There is no Ž in font cmr10!
-Missing character: There is no â in font cmr10!
-Missing character: There is no € in font cmr10!
-Missing character: There is no Ž in font cmr10!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no Ž in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no Ž in font ptmr7t!
 
-Underfull \hbox (badness 10000) in paragraph at lines 710--710
-[]|\OT1/ptm/b/n/8 Weight
+LaTeX Warning: Reference `coord:BaselineDistance1' on page 2 undefined on input
+ line 632.
+
+
+LaTeX Warning: Reference `coord:BaselineDistance1' on page 2 undefined on input
+ line 632.
+
+
+LaTeX Warning: Reference `coord:SwarmPathBaseline1' on page 2 undefined on inpu
+t line 634.
+
+File: figures/SwarmPathBaseline.eps Graphic file (type eps)
+<figures/SwarmPathBaseline.eps>
+Overfull \hbox (146.33858pt too wide) in paragraph at lines 638--639
+ [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 711--711
-[]|\OT1/ptm/m/n/8 Repulsion
- []
+LaTeX Warning: Citation `SG:15' on page 2 undefined on input line 646.
 
 
-Overfull \hbox (1.3334pt too wide) in paragraph at lines 711--711
-[]|\OT1/ptm/m/n/8 units| 
- []
+LaTeX Warning: Citation `TG:12' on page 2 undefined on input line 646.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 712--712
-[]|\OT1/ptm/m/n/8 Neighbour
- []
+LaTeX Warning: Citation `BS:13' on page 2 undefined on input line 650.
 
 
-Overfull \hbox (1.3334pt too wide) in paragraph at lines 712--712
-[]|\OT1/ptm/m/n/8 units| 
- []
+LaTeX Warning: Reference `sec:Direction1' on page 2 undefined on input line 663
+.
 
 [2]
-File: figures/EXPAND1.eps Graphic file (type eps)
- <figures/EXPAND1.eps>
-File: figures/EXPAND2.eps Graphic file (type eps)
- <figures/EXPAND2.eps>
-File: figures/EXPAND3.eps Graphic file (type eps)
- <figures/EXPAND3.eps>
-File: figures/EXPAND4.eps Graphic file (type eps)
 
-<figures/EXPAND4.eps>
-File: figures/EXPAND5.eps Graphic file (type eps)
- <figures/EXPAND5.eps>
-File: figures/EXPAND6.eps Graphic file (type eps)
- <figures/EXPAND6.eps>
-File: figures/FIELDFILL-MAG.eps Graphic file (type eps)
+LaTeX Warning: Reference `chapter:methods' on page 3 undefined on input line 66
+9.
 
-<figures/FIELDFILL-MAG.eps> [3]
-File: figures/FIELDFILL-MAG-1.eps Graphic file (type eps)
- <figures/FIELDFILL-MAG-1.eps>
-File: figures/FIELDFILL-MAG-2.eps Graphic file (type eps)
 
-<figures/FIELDFILL-MAG-2.eps>
-File: figures/FIELDFILL-DIST.eps Graphic file (type eps)
- <figures/FIELDFILL-DIST.eps>
-File: figures/FIELDFILL-DIST-1.eps Graphic file (type eps)
+LaTeX Warning: Citation `BS:13' on page 3 undefined on input line 676.
 
-<figures/FIELDFILL-DIST-1.eps>
-File: figures/FIELDFILL-DIST-2.eps Graphic file (type eps)
- <figures/FIELDFILL-DIST-2.eps> [4]
-File: figures/FIELDFILL-DIST-3.eps Graphic file (type eps)
 
-<figures/FIELDFILL-DIST-3.eps>
-File: figures/FIELDFILL-MAG-3.eps Graphic file (type eps)
- <figures/FIELDFILL-MAG-3.eps>
-File: figures/FIELDFILL-DIST-3b.eps Graphic file (type eps)
+LaTeX Warning: Reference `eq:BotDirection1' on page 3 undefined on input line 6
+76.
 
-<figures/FIELDFILL-DIST-3b.eps>
-File: figures/FIELDFILL-MAG-3b.eps Graphic file (type eps)
- <figures/FIELDFILL-MAG-3b.eps> [5]
-Underfull \hbox (badness 10000) in paragraph at lines 905--905
-[]|\OT1/ptm/b/n/8 Weight
+
+LaTeX Warning: Reference `reduced:Monolithic1' on page 3 undefined on input lin
+e 678.
+
+File: figures/Monolithic2.eps Graphic file (type eps)
+<figures/Monolithic2.eps>
+
+LaTeX Warning: Reference `reduced:BaselineAllAgentsMag1' on page 3 undefined on
+ input line 688.
+
+
+LaTeX Warning: Reference `reduced:BaselineAllAgentsDist1' on page 3 undefined o
+n input line 688.
+
+File: figures/BaselineAllAgentsMag1.eps Graphic file (type eps)
+<figures/BaselineAllAgentsMag1.eps>
+Overfull \hbox (146.33858pt too wide) in paragraph at lines 692--693
+ [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 906--906
-[]|\OT1/ptm/m/n/8 Repulsion
+LaTeX Warning: Reference `reduced:BaselineAllAgentsMag1' on page 3 undefined on
+ input line 697.
+
+
+LaTeX Warning: Reference `reduced:BaselineAllAgentsMag1' on page 3 undefined on
+ input line 697.
+
+File: figures/BaselineAllAgentsDist1.eps Graphic file (type eps)
+<figures/BaselineAllAgentsDist1.eps>
+Overfull \hbox (146.33858pt too wide) in paragraph at lines 701--702
+ [] 
  []
 
 
-Overfull \hbox (1.3334pt too wide) in paragraph at lines 906--906
-[]|\OT1/ptm/m/n/8 units| 
+LaTeX Warning: Reference `reduced:BaselineAllAgentsDist1' on page 3 undefined o
+n input line 706.
+
+
+LaTeX Warning: Reference `reduced:ConicalPath' on page 3 undefined on input lin
+e 708.
+
+File: figures/ConicalPath.eps Graphic file (type eps)
+<figures/ConicalPath.eps>
+
+LaTeX Warning: Reference `reduced:BaselineAllAgentsMag2' on page 3 undefined on
+ input line 717.
+
+
+LaTeX Warning: Reference `reduced:BaselineAllAgentsDist2' on page 3 undefined o
+n input line 717.
+
+File: figures/BaselineAllAgentsMag2.eps Graphic file (type eps)
+<figures/BaselineAllAgentsMag2.eps>
+Overfull \hbox (146.33858pt too wide) in paragraph at lines 721--722
+ [] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 907--907
-[]|\OT1/ptm/m/n/8 Neighbour
+File: figures/BaselineAllAgentsDist2.eps Graphic file (type eps)
+<figures/BaselineAllAgentsDist2.eps>
+Overfull \hbox (146.33858pt too wide) in paragraph at lines 728--729
+ [] 
  []
 
+[3]
 
-Overfull \hbox (1.3334pt too wide) in paragraph at lines 907--907
-[]|\OT1/ptm/m/n/8 units| 
- []
+LaTeX Warning: Reference `eq:BotDirection1' on page 4 undefined on input line 7
+34.
 
-File: figures/REPEL52-1.eps Graphic file (type eps)
-<figures/REPEL52-1.eps>
-File: figures/REPEL52-2.eps Graphic file (type eps)
- <figures/REPEL52-2.eps>
-File: figures/REPEL52-3.eps Graphic file (type eps)
- <figures/REPEL52-3.eps>
-File: figures/REPEL52-4.eps Graphic file (type eps)
 
-<figures/REPEL52-4.eps>
-File: figures/REPEL52-5.eps Graphic file (type eps)
- <figures/REPEL52-5.eps>
-File: figures/REPEL52-6.eps Graphic file (type eps)
- <figures/REPEL52-6.eps>
-[6]
-File: figures/REPELFILL5055-MAG.eps Graphic file (type eps)
- <figures/REPELFILL5055-MAG.eps>
-File: figures/REPELFILL5055-MAG-1-2.eps Graphic file (type eps)
- <figures/REPELFILL5055-MAG-1-2.eps>
-File: figures/REPELFILL5055-MAG-2-3.eps Graphic file (type eps)
+LaTeX Warning: Reference `sec:AlternateBias1' on page 4 undefined on input line
+ 734.
 
-<figures/REPELFILL5055-MAG-2-3.eps>
-File: figures/REPELFILL5055-MAG-8.eps Graphic file (type eps)
- <figures/REPELFILL5055-MAG-8.eps>
-Underfull \vbox (badness 5345) has occurred while \output is active []
 
- [7]
-File: figures/REPELFILL5055-DIST.eps Graphic file (type eps)
+LaTeX Warning: Reference `reduced:EnergyReductionGPS' on page 4 undefined on in
+put line 734.
 
-<figures/REPELFILL5055-DIST.eps>
-File: figures/REPELFILL5055-DIST-1.eps Graphic file (type eps)
- <figures/REPELFILL5055-DIST-1.eps>
-File: figures/REPELFILL5055-DIST-1-2.eps Graphic file (type eps)
 
-<figures/REPELFILL5055-DIST-1-2.eps>
-File: figures/REPELFILL5055-DIST-2-3.eps Graphic file (type eps)
- <figures/REPELFILL5055-DIST-2-3.eps>
-[8]
-File: figures/REPELFILL5055-DIST-8.eps Graphic file (type eps)
- <figures/REPELFILL5055-DIST-8.eps> (./paper.bbl
-Underfull \hbox (badness 1783) in paragraph at lines 12--17
-[]\OT1/ptm/m/n/8 Panayiotis An-dreou, Demetrios Zeinalipour-Yazti, Maria An-dre
-ou,
- []
+LaTeX Warning: Reference `fig:StableForms' on page 4 undefined on input line 73
+6.
 
-) [9] (./paper.aux)
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: Reference `reduced:SimpleMulti12' on page 4 undefined on input l
+ine 736.
 
- ) 
+[4]
+
+LaTeX Warning: Reference `algo:neighbourDetect' on page 5 undefined on input li
+ne 739.
+
+
+! LaTeX Error: Environment algorithm undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.741 \begin{algorithm}
+                       
+? X
+ 
 Here is how much of TeX's memory you used:
- 5734 strings out of 494954
- 80518 string characters out of 6181003
- 151331 words of memory out of 5000000
- 8937 multiletter control sequences out of 15000+600000
- 37841 words of font info for 104 fonts, out of 8000000 for 9000
+ 5597 strings out of 494954
+ 78365 string characters out of 6181003
+ 147267 words of memory out of 5000000
+ 8831 multiletter control sequences out of 15000+600000
+ 30801 words of font info for 76 fonts, out of 8000000 for 9000
  17 hyphenation exceptions out of 8191
- 36i,19n,38p,1829b,379s stack positions out of 5000i,500n,10000p,200000b,80000s
-
-Output written on paper.dvi (9 pages, 52672 bytes).
+ 36i,11n,38p,1272b,295s stack positions out of 5000i,500n,10000p,200000b,80000s
+Output written on paper.dvi (4 pages, 23340 bytes).

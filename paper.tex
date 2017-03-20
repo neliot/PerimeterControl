@@ -451,7 +451,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Swarm area flooding using field effects}
+\title{Swarm coordination through perimeter detcetion}
 %
 %
 % author names and IEEE memberships
@@ -504,7 +504,7 @@ M.~Brockway are from Northumbria University, UK}
 
 % The paper headers
 \markboth{IEEE Transactions on Automatic Control}%
-{N.~Eliot: Swarm area flooding using field effects}
+{N.~Eliot: Swarm coordination through perimeter detection}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
 % 
@@ -538,11 +538,7 @@ M.~Brockway are from Northumbria University, UK}
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
 %\boldmath
-Area flooding is a technique used to fill an enclosed area with agents such that they are distributed as `effectively' as possible throughout an area. An optimum distribution of agents is not necessarily an even distribution. The distribution of the agents is governed by the field effects and the interaction of agents with obstacles (\textit{interaction vectors}). 
-
-Filling an area can be applied to tasks that require an unknown environment to be analysed or surveyed. Consider a disaster area following a landslide or a building collapsing following an earthquake; the movement in the land and buildings will produce spaces that are unmapped. The unmapped areas may require investigation to locate people, resources or to create some form of sensor network to analyse the conditions within the area such as creating a heat map or to identify the location toxic gases. 
-
-This paper demonstrates two swarm expanding techniques using field effects to perform area filling for the purposes described above.
+This chapter identifies the effect a \textit{destination vector} has upon the motion of a swarm. Three coordination techniques are applied to a swarm and metrics are used to identify the effects. The three coordination techniques are: full perimeter detection, where only edge based agents will have a \textit{destination vector} applied. Partial perimeter detection, where a subset of the perimeter agents are detected and finally all agents in the swarm having a \textit{destination vector} applied. For all the experiments the base parameters of the swarm are fixed ensuring that the only variable will be the \textit{destination vector} that is applied by the coordinating agents. This process allows the impact of the algorithms to be isolated and compared. Section~\ref{sec:AlternateBias1}~discusses the potential variations to the base parameters and the effects this has on controlling the impact of the weightings.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -584,503 +580,862 @@ Swarming, Swarm Dynamics, Mobile Sensor Networks, Algorithms.
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-\section{Swarm modelling}
-Currently, much swarm research uses field effects as the method of modelling inter-agent interactions~\cite{BAF:06, BAFVM:06, BM:09, APZDAMC:09, GP:02, GP:04, GP:04a, GP:05, GP:11, MYP:09}. The models usually use two field effects to implement the swarming characteristic. These effects are \textit{cohesion}, to draw agents closer, and \textit{repulsion} to prevent agents colliding. Fields are the ranges around an agent that determine the effect other agents have upon its movement~(Figure \ref{methods:FieldEffects}). It is usual for the cohesion field to have a radius $C_b$ which is larger than the repulsion radius $R_b$. When an agent $b'$ moves into the \textit{cohesion field} of an agent $b$ then $b'$ is said to be a neighbour of $b$ and is subject to cohesion. When an agent $b'$ moves into the repulsion field of $b$ then $b$ has a tendency to move away from $b'$, i.e. to be repulsed. When an agent $b$ moves too close to an obstacle, i.e. within the obstacle repulsion range $O_b$, it has a tendency to move away from the obstacle.
+%% \section{Introduction}
+\section{Baseline specification}
+To allow an analysis of each algorithm's effect on a swarm a baseline measurement of `background' variance (jitter) is identified. The baseline measurement provides a comparative data set for the experiments. The baseline data set is for a static swarm (no destination vector) with the same internal parameters.
+
+\textit{Assumption 1:} The swarm used for the experiments consists of 200 agents randomly distributed~(Figure~\ref{fig:SampleSwarm200-1}).\\ 
+\textit{Assumption 2:} The field effects and bias will be set as shown in~Figure~\ref{tab:DynamicPhysics1} with the weight adjuster $k_d = 0$ for the baseline.\\
+\textit{Assumption 3:} All destination based experiments will have the weight adjuster set to $k_d = 100$.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=6cm]{figures/FieldEffects}
+\includegraphics[width=14cm]{figures/SampleSwarm200-1}
 \end{center}
-\caption{Agent field effects\label{methods:FieldEffects}}
+\caption[Sample swarm 200 agents initial state]{Sample swarm 200 agents initial state (\textit{screen shot from simulator})\label{fig:SampleSwarm200-1}}
 \end{figure}
 
-Equation (\ref{eq:FlyToCentre1}) identifies the resultant cohesion effect of all the neighbours of $b$. $nbr(.)$ returns a set of all the agents in the swarm that are a neighbour of $b$. A neighbour is any agent that fails within the cohesion field.
+\begin{table}
+\begin{center}
+\begin{tabular}{| p{2.5cm} | c | p{7cm} |}
+\hline
+\bf Weight \bf Component & \bf Hexagonal & \bf Description \\ \hline
+Sample Rate & 100 & ms - Unit sampling interval\\  \hline
+$k_c$ & 5 & weight adjuster for cohesion vector\\  \hline
+$k_r$ & 15 & weight adjuster for repulsion  vector\\  \hline
+$k_d$ & 0/100 & weight adjuster for destination vector 0 for static baseline 100 for destination based\\  \hline
+Neighbour Distance & 70 & units\\  \hline
+Agent Boundary & 80 & units\\  \hline
+Speed & 20 & units/s\\  \hline
+\end{tabular}\caption{Swarm Weighted Model} \label{tab:DynamicPhysics1}
+\end{center}
+\end{table}
 
-\begin{equation}\label{eq:FlyToCentre1}
-v_{c}(b) = \frac{\mathlarger{\sum_{b' \in nbr(b)}}{bb'}}{|nbr(b)|}
-\end{equation}‎
-
-Equation (\ref{eq:Repulsion1}) identifies the resultant repulsion effect of all the neighbours of $b$ where $rep(.)$ returns a set of all agents that are within the repulsion field.
-
-\begin{equation}
-\label{eq:Repulsion1}
-v_{r}(b) =‎ -
-\frac{1}{|R(b)|}
-\left(
-\mathlarger{\mathlarger{\sum_{b' \in rep(b)}}}
-{\left( 1-\frac{|bb'|}{R_b} \right)}
-{bb'}
-\right)
-\end{equation}‎
-
-Using the cohesion and repulsion vectors generated by the relationship of $b$ to its neighbour a resultant vector can be calculated. This vector creates an agent characteristic that can be used as a metric. Summing the vectors creates a resultant vector with a magnitude that affects the agent. Summing the vectors also provides an indication of the direction an agent will move based on the relationship. This is the \textit{inter-agent vector}.
-
-Equation (\ref{eq:InterAgentMovement1}) identifies the \textit{inter-agent vector} for agent $b$ with respect to its neighbours.
-
-\begin{equation}\label{eq:InterAgentMovement1}
-v(b) = v_{c}(b) + v_{r}(b)
-\end{equation}‎
-
-If the system is applying a weighted model then equation~\ref{eq:InterAgentMovement1} becomes:
-
-\begin{equation}\label{eq:InterAgentMovement2}
-v(b) = k_cv_{c}(b) + k_rv_{r}(b)
-\end{equation}‎
-
-To implement the boundary of an area a third component needs to be added to the model in the form of obstacles.
-
-Obstacles, like agents, can be represented as a point in the system. As an agent moves an obstacles may enter its \textit{obstacle repulsion field} causing the agent move away.
-
-In this thesis agents are modelled with a fixed obstacle repulsion distance $O_b$ where a repulsion vector is applied. The repulsion is then a vector of magnitude $O_b$. If more than one obstacle is within the field effect agent the total repulsion vector is the sum of the repulsion vectors due to each obstacle~(Figure~\ref{methods:Obstacle1}). The result is normalised and scaled such that the magnitude is the same as the field distance~$O_b$.
+The results for the baseline experimental swarm are shown in~Figures~\ref{coord:BaselineMagnitude1} and~\ref{coord:BaselineDistance1}. The metrics used are the distance \cite{NIM:09} and resultant inter-agent magnitudes (\textit{inter-agent vector}).
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=6cm]{figures/Obstacle1}
+\includegraphics[width=14cm]{figures/BaselineMagnitude1}
 \end{center}
-\caption{Obstacle repulsion \label{methods:Obstacle1}}
+\caption{Baseline internal movement - magnitude\label{coord:BaselineMagnitude1}}
 \end{figure}
 
-%% $O$ is a set of $N$ obstacles.
-%% 
-%% \begin{center} \label{eq:Obstacle1}
-%% \begin{equation}‎
-%% O \buildrel \Delta \over =‎ \{o_1\ldots o_N\}
-%% \end{equation}‎
-%% \end{center}
+Figure~\ref{coord:BaselineMagnitude1} shows the magnitude between $t_0$ and approximately $t_{48}$ dominated by repulsion ($|k_rv_r| > |k_cv_c|$). This indicates that the swarm is undergoing a rapid expansion as the bias within the swarm shows a high level of repulsion. Between approximately $t_{48}$ and $t_{100}$ the magnitude is positive but rising which indicates the swarm is cohesive and will remain a cohesive unit but it is still expanding. At approximately $t_{110}$ the swarm has completed it's expansion and has reached a settled state with the `background' movement maintaining the swarm's structure with $|k_rv_r| < |k_cv_c|$. The residual `jitter' is at its minimum for the configuration and the agent distribution is at its optimum for the cohesion and repulsion settings. The resultant $|k_rv_r| < |k_cv_c|$ is due to the cohesion field being larger than the repulsion field which prevents the swarm `breaking up'. 
 
-%% $o' \in O:|bo'| < O_b$ the set of obstacles that are within range of agent $b$, where $O$ is the set of obstacles. 
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineDistance1}
+\end{center}
+\caption{Baseline internal movement - distance\label{coord:BaselineDistance1}}
+\end{figure}
 
-%% \begin{center} \label{eq:Obstacle4}
-%% \begin{equation}‎
-%% R(b) \buildrel \Delta \over =‎ \{o' \in O:|bo'| < O_b\}
-%% \end{equation}‎
-%% \end{center}
+Figure~\ref{coord:BaselineDistance1} shows the internal movement and the deviation from the mean for the swarm based on the inter-agent distances. There is no \textit{destination vector} applied so all internal movement is being generated by the cohesion and repulsion vectors. The swarm is initially in a chaotic state but once the agents have expanded a stable hexagonal formation evolves. Figure~\ref{coord:BaselineDistance1} shows the first 30s of the simulation which is sufficient time for the swarm to `settle' and transform to its most stable state. Due to the metric only showing inter-agent distances it is not possible to determine if the swarm will remain cohesive.
 
-Figure~\ref{eq:Obstacle2} shows the resultant repulsion vector $v_o(b)$ for an agent. $\{o\ \in O:|bo| <= O_b\}$ is the set of obstacles that are within range of agent $b$. $O$ is the set of obstacles. The obstacles are identified using the distance between an agent and an obstacle $|bo|$ and comparing the result to the fixed obstacle repulsion range~$O_b$. The result is calculated by scaling the normalised sum of the normalised vectors $(ob)\string^$ by $O_b$.
+The centroid path for the baseline swarm is shown in~FIgure~\ref{coord:SwarmPathBaseline1}. Due to there being no \textit{destination vector} for the swarm the centroid changes positions based on the inter-agent positional changes caused by the \textit{interaction vectors}. These changes are the result of each agents attempting to attain a state of equilibrium within their `clusters'.
 
-\begin{center} \label{eq:Obstacle2}
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/SwarmPathBaseline}
+\end{center}
+\caption{Baseline swarm path\label{coord:SwarmPathBaseline1}}
+\end{figure}
+
+These baseline measurements are used to identify the changes that occur in the structure of a swarm when changes are made to the weightings of the field effects, the number of coordination agents and the \textit{destination vector} weighting.
+
+\section{Destination vector application}
+Many mechanisms can be used to influence a swarm to travel in a specific direction. These mechanisms generally involve the use of sensors such as magnetometers or GPS's to achieve a directional coordinate \cite{SG:15,TG:12}. 
+
+This thesis aims to produce algorithms that will reduce the number of active sensors that are needed for the directional coordination of a swarm. When reducing the number of active sensors the algorithms must maintain sufficient coordination of agents to influence the swarm's direction and therefore create an overall \textit{destination vector} to a swarms movement. Reducing the number of active sensors will reduce the net energy usage of the sensors and potentially increase the sensors viable lifetime. Another aspect of the algorithms is that they should minimise the internal disturbance (jitter) created by the \textit{destination vector}.
+
+There are two distinct approaches to configuring agents: all the agents are configured identically (homogeneous swarm) or the agents are in a selection of different configurations (heterogeneous swarm)~\cite{BS:13}. 
+
+The following assumptions are made in this thesis:
+
+\textit{Assumption 1:} All agents are identical (homogeneous) but are able select subsystems as necessary and adopt different roles depending upon the algorithm being used to coordinate the swarm. \\
+\textit{Assumption 2:} As the swarm progresses towards a destination the role of an agent can change such that all the agents are identical in construct but they can enable and disable sensors as necessary. This will allow agents within the swarm to self promote to the coordinator role should a set of conditions arise.\\
+\textit{Assumption 3:} All agent in the swarm are autonomous and each agent has its own power supply. 
+
+Reducing the usage of sensors will reduce the net power consumption of the swarm and increase the time that an agent can be a part of a swarm. If the purpose of the swarm is reconnaissance then the reduction in energy usage may allow a longer traversal time, or allow the swarm to travel further. As agents in the swarm will use there resources at different rates some agents may be lost due to resource exhaustion. The algorithms should therefore be resilient to this.
+
+\section{Swarm destination vector}
+The following assumptions are made in this thesis:
+
+\textit{Assumption 1:} The direction of the swarm is based upon having a fixed goal that is known to all the agents (Section \ref{sec:Direction1}). \\
+\textit{Assumption 2:} The goal is migrated towards based on a simulated GPS signal and the bias $k_d$ is applied to the \textit{destination vector} to influence the movement of the agents. 
+
+The swarm's destination is established by the coordinator agents influencing the non-coordinator agents. This influence is applied through the coordinators proximity to non-coordinator agents (cohesion). Coordinator agents are identified by a set of conditions. The conditions are the activators for the coordinator identification algorithms.
+
+\section{Identifying the coordinator role}
+For an agent to change its role from a standard agent to a coordinator there needs to an algorithm that identifies a set of conditions to trigger the change. This same algorithm also triggers an agent to revert to being a standard agent. The coordinator selection algorithm is separate from the agent coordination algorithms discussed in chapter~\ref{chapter:methods}.
+
+In this thesis three algorithms are presented and compared. In the first algorithm, all agents have the role of a coordinator permanently. This will be referred to as the all-agent algorithm. The other two mechanisms employ a selection criteria to identify if the simulated GPS sensor should be enabled. These two algorithms are: full-perimeter detection and the partial perimeter detection. Partial perimeter detection will be referred to as the basic-count algorithm.
+
+There are many other ways in which the coordinator role could be established such as randomly enabling a GPS for a set period of time or oscillating the role on and off but they are beyond the scope of this thesis.
+
+\section{Monolithic swarm - (all-agent)} 
+In a monolithic swarm \cite{BS:13} the propagation towards the goal is achieved by all the agents using a GPS signal to give each agents' movement a \textit{direction vector} towards a required goal~(Equation~\ref{eq:BotDirection1}). There is no selection criteria and no computational overhead for the agents.
+
+Figure~\ref{reduced:Monolithic1} shows a screen shot from the swarm simulator with all agents GPS's enabled. This can be seen as the agents highlighted with a ring around them. The small `tail' on each agent is the \textit{movement vector}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=7cm]{figures/Monolithic2}
+\end{center}
+\caption[Monolithic agents]{Monolithic agents (Circles indicate all agents are using GPS, \textit{screen shot from simulator}) \label{reduced:Monolithic1}}
+\end{figure}
+
+\subsection{Baseline and effect of no perimeter detection\label{section:compareBaselineNoPerimeter}}
+To identify the effect of the all-agents algorithm the simulation is executed using the same parameters as the baseline swarm with the added \textit{destination vector} on all the agents. The effect of introducing this bias on the swarms internal characteristics is shown in~Figures~\ref{reduced:BaselineAllAgentsMag1} and~\ref{reduced:BaselineAllAgentsDist1}.
+%BASELINE-ALLAGENTS-MAG.py
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllAgentsMag1}
+\end{center}
+\caption{Baseline/All agents comparison \textit{inter-agent vector} magnitude\label{reduced:BaselineAllAgentsMag1}}
+\end{figure}
+
+Figure~\ref{reduced:BaselineAllAgentsMag1} shows the effect on the \textit{inter-agent vector} magnitude of the swarm: the average resultant magnitude is lower than the baseline. This is due to there being a greater distribution of \textit{inter-agent vector} magnitudes from the disturbance caused by the \textit{destination vector} on all of the agents and the swarm is therefore less cohesive. The graph also shows that there is a higher variation from the mean; again this is due to the change in the bias of all the agents. The agents are moving towards a goal and are therefore not moving to an equilibrium distribution. Figure~\ref{reduced:BaselineAllAgentsMag1}~also shows that the \textit{direction vector} increases the time it takes for the swarm to distribute the agents and although the deviation diminishes the swarm cannot overcome the \textit{direction vector's} effect and the swarm appears chaotic.
+%BASELINE-ALLAGENTS-DIST.py
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllAgentsDist1}
+\end{center}
+\caption{Baseline/All agents comparison (distance)\label{reduced:BaselineAllAgentsDist1}}
+\end{figure}
+
+Figure~\ref{reduced:BaselineAllAgentsDist1} shows the effect on the inter-agent distances. The average distance is lower than the baseline. This effect is caused by the \textit{direction vector} reducing the effect of the repulsion field. The agents therefore compress slightly due to the cohesion.
+
+A curious effect of having all the GPS sensors enabled is that as the swarm approaches the destination there is an increased compression effect and the internal disturbance increases. This is the result of the agents `pulling' in a cone effect. The agents paths converge on the destination~Figure~\ref{reduced:ConicalPath}. This effect is caused by the number of agents being effected by a \textit{direction vector}. This effect is less identifiable if a swarm's target is at a greater distance.  
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=8cm]{figures/ConicalPath}
+\end{center}
+\caption{Conical destination trajectories\label{reduced:ConicalPath}}
+\end{figure}
+
+This effect can be seen in both the magnitudes shown in~Figure~\ref{reduced:BaselineAllAgentsMag2} and in the distances shown in~Figure~\ref{reduced:BaselineAllAgentsDist2} which both show the averages initially decreasing but then increasing again as the swarm approaches the destination. This is accompanied by a greater standard deviation caused by the \textit{direction vector} affecting the priority of the swarm as agents are drawn to the destination reducing the effect of the \textit{inter-agent vectors} creating stable structures.
+%BASELINE-ALLAGENTS-MAG.py
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllAgentsMag2}
+\end{center}
+\caption[Baseline/All agents magnitude comparison]{Baseline/All agents \textit{inter-agent vector} magnitude comparison (60 seconds)\label{reduced:BaselineAllAgentsMag2}}
+\end{figure}
+%BASELINE-ALLAGENTS-DIST.py
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllAgentsDist2}
+\end{center}
+\caption{Baseline/All agents distance comparison (60 seconds)\label{reduced:BaselineAllAgentsDist2}}
+\end{figure}
+
+\section{Simple multifaceted swarm (basic-count)} 
+In a simple multifaceted swarm the propagation towards the goal is achieved by generating a \textit{destination vector} for an agent when the agent conforms to a simple counting rule. This \textit{destination vector} is obtained by using the agent's GPS to identify its current coordinate and generating a vector from that coordinate to a specific destination point. This rule creates a subset of agents that apply a local \textit{direction vector} to their movement. This has the effect of creating a directional effect on the whole swarm. The aggregate \textit{direction vector} magnitude of the swarm is less than that produced when all agents apply a \textit{direction vector}. This reduction is further diluted by agents without the \textit{direction vector} calculating a \textit{movement vector} to an equilibrium position~(Equation~\ref{eq:BotDirection1}). This change in the aggregate \textit{direction vector} will impact on a swarm's `jitter'. This is discussed in more detail in~Section~\ref{sec:AlternateBias1}. With there only being a limited number of peripheral agents invoking their GPS signal there will also be a net reduction in the energy usage of the swarm~(Figure~\ref{reduced:EnergyReductionGPS}).
+
+A swarm with the appropriate field effects will propagate towards hexagons made from a central agent and six neighbours~(Figure~\ref{fig:StableForms}). A swarm can be influenced by its surroundings, which involves the interaction of other agents (as neighbours) and obstacles which can cause a compression of the agents. Compression can also occur during the stabilisation phase of a swarm. These situations can cause an agent to have less than 6 neighbours but still be surrounded. A general rule therefore to detect a rudimentary boundary of a hexagonal swarm is to calculate the number of neighbours an agent has. If the total is less than five ($nbr(b) < 5$) then there is a high probability that the agent is either in a void within the swarm or on an external perimeter. If an agent is on a perimeter or a void the it should enable its GPS and become a coordinator and provide a directional bias to the swarm via its \textit{direction vector}. This coordinator role affects the immediate neighbours \textit{movement vector} through cohesion/repulsion~(Figure~\ref{reduced:SimpleMulti12}). This simple detection algorithm allows a directional bias to be induced into a swarm with minimal computational impact on the coordinator agents.
+
+\subsection{Simple multifaceted algorithm}
+The mechanism to enable a coordinator agent is to count the number of neighbours that an agent has~(Algorithm~\ref{algo:neighbourDetect}). This process is already part of the cohesion and repulsion calculations.
+
+\begin{algorithm}
+\DontPrintSemicolon
+\SetAlgoLined
+\KwData{$b,S$}
+\tcc{$b$ is an agent and $S$ is a set of agents}
+\tcc{The set of agent could be provided by an omni directional camera or a set of ultrasonic sensors}
+$N \longleftarrow \emptyset$\;
+\ForEach(\tcc*{$b^{'}$ is each agent in $S$}){$b^{'}$ in $S$}
+{
+  \If(\tcc*{$D_b$ is the neighbour range}){$length(bb') < D_{b}$}
+  {
+     $N \longleftarrow N \cup \{b\}$
+  }
+}
+\tcc{$N$ is a set of Bots $b_1,b_2,\ldots,b_n$}
+\KwRet{$N$}
+\caption[Neighbour Detection]{nbr(b)}\label{algo:neighbourDetect}
+\end{algorithm}
+
+\subsection{Basic-count effect\label{section:compareBaselineBasicCount1}}
+Figure~\ref{reduced:BaselineBasicCountMag1} and \ref{reduced:BaselineBasicCountDist1} show the comparison of the baseline swarm against the goal-based swarm with reduced GPS usage. Both graphs show that the settling period of the swarm from the chaotic state is very much in line with the settling period of the baseline swarm. This is due to the algorithms effect when the swarm is initially compressed. The neighbour count prevents any agents from being coordinators ($|nbr(b)| > 5$). This is supported by the propagation of the coordinator role in Figure~\ref{fig:SwarmNeighbourCount}. The swarm therefore acts in a similar manner to the baseline. As the simulation progresses the swarm settles into a condition that is similar to baseline with a higher deviation and lower mean resultant \textit{inter-agent vector}. This is due to there being a \textit{direction vector} which impacts on the coordinator agents and propagates to the non-coordinator agents through proximity. This effect is shown in Figure~\ref{metric:StabilityNullVector}. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineBasicCountMag1}
+\end{center}
+\caption{Baseline/basic-count magnitude potential comparison\label{reduced:BaselineBasicCountMag1}}
+\end{figure}
+
+Figure~\ref{reduced:BaselineBasicCountMag1} shows that initially the average \textit{inter-agent vector magnitude} can be seen to follow the same trend as the baseline. This is expected as the algorithms selection criteria is such that no GPS sensors are enabled when the swarm is compressed and the agents will have a neighbour count well above the trigger level for the coordinator role. When the swarm expands sufficiently the trigger level is met by some agents and there is a gradual increase in the number of coordinators. This also creates a greater distribution of resultant \textit{interaction vectors}, shown as the change in the standard deviation. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineBasicCountDist1}
+\end{center}
+\caption{Baseline and basic-count distance comparison\label{reduced:BaselineBasicCountDist1}}
+\end{figure}
+ 
+Figure~\ref{reduced:BaselineBasicCountDist1} shows that the impact of the directional bias allows the agents to move closer together. This increased closeness reduces the effective area coverage of the swarm. 
+
+Figure~\ref{reduced:SimpleMulti12} shows a screen shot of the simulator using the basic-count algorithm. The reduction in GPS usage is limited to edge based agents of the swarm. Some perimeter agents are not identified as a coordinator due to the number of neighbours they have being $\geq5$. These agents tend to be indented on a perimeter edge. This feature will be discussed in more detail in chapter~\ref{chapter:ConcaveReduction}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=7cm]{figures/SimpleMulti2}
+\end{center}
+\caption[Simple multifaceted agents]{Simple multifaceted agents (\textit{screen shot from simulator})\label{reduced:SimpleMulti12}}
+\end{figure}
+
+\section{Complex multifaceted swarm (full-perimeter)}\label{sec:complexMulti} 
+A complex multifaceted swarm is based upon the full detection of perimeters in a swarm. There are two perimeters that can be detected, convex and concave~\cite{MD:09,MJ:08}. Convex perimeters enclose agents and concave perimeters create voids. Figures~\ref{concave:VoidPerimeter1} and \ref{concave:VoidPerimeter2} show these two perimeter types. The concave perimeter is highlighted in red and the convex perimeter is highlighted in green
+
+\begin{figure}
+\centering
+\subfigure[Void and perimeter]{
+	 \includegraphics[width=4cm]{figures/PerimeterBots1}
+    \label{concave:VoidPerimeter1}
+}
+\subfigure[Multiple perimeters]{
+	 \includegraphics[width=6.5cm]{figures/PerimeterBots2}
+    \label{concave:VoidPerimeter2}
+}
+\caption{Swarm perimeters and voids}
+\label{fig:SwarmVoids}
+\end{figure}
+
+There is an exceptional circumstance that must be considered in perimeter detection. This is covered in Section~\ref{section:PerimeterErrorLocalisation}. Figure~\ref{fig:FullPerimeter1} is a screen shot from the simulator showing both perimeter types detected. The algorithm does not distinguished between the types. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=7cm]{figures/FullPerimeter}
+\end{center}
+\caption[Swarm with full perimeter detection]{Swarm with full perimeter detection (\textit{screen shot from simulator})\label{fig:FullPerimeter1}}
+\end{figure}
+
+The full-perimeter algorithm allows a predictable subset of agents to be identified. This subset can be used to influence the overall direction of the swarm. The full-perimeter detection algorithm detects similar agents to the basic-count algorithm but also identifies `indented' agents that the basic-count algorithm ignores. The basic-count algorithm identifies these agents as having a neighbour count beyond the threshold. These additionally detected agents are used in void reduction which is discussed in chapter~\ref{chapter:ConcaveReduction}.
+
+\subsection{Full-perimeter coordinator detection}\label{sec:PerimeterAgentDetection} 
+The process of detecting a perimeter agent is based upon identifying when the agent in not surrounded by interconnected neighbours~(Figure~\ref{reduced:Perimeter1}). The process has several conditional checks that detect the status of an agent, each step is discussed below. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=6cm]{figures/Perimeter1}
+\end{center}
+\caption{Complex multifaceted agents \label{reduced:Perimeter1}}
+\end{figure}
+
+The first check is a short circuit count of the number of neighbours. This is the same process used to the basic-count algorithm. If an agent has $\leq 4$ neighbours and the swarm parameters are for a hexagonal swarm configuration then the agent is a perimeter agent and therefore a coordinator. This identification process is shown in~Figure~\ref{SmallNeighbourCount}. 
+
+\begin{algorithm}
+\DontPrintSemicolon
+\SetAlgoLined
+\KwData{$b$}
+\tcc{for $nbr()$ see Equation \ref{eq:Neighbours1}}
+\If{$|nbr(b)| \leq 4$}{
+   \KwRet{True}\;
+}
+\KwRet{False}\;
+\caption{SmallNeighbourCount}\label{SmallNeighbourCount}
+\end{algorithm}
+
+If the short circuit neighbour count check fails then further conditions must be checked. The additional checks require a dictionary of agent/angular values to be generated~(Figure~\ref{eq:ConcaveVoidPhysics1}). Algorithm~\ref{algo:getNeighbourAngles} shows how the dictionary of agent/angle values are produced.   
+
+\begin{center}
 \begin{equation}‎
-v_o(b) =‎ O_b\Bigg(\mathlarger{\mathlarger{\mathlarger{\sum}}}_{o \in O:|ob| <= O_b}(ob)\string^\Bigg)\string^
+\label{eq:ConcaveVoidPhysics1}
+S_b \buildrel \Delta \over =‎ \{(b',\angle\{(b'~b~b^0)) : b' \in nbr(b)\}
 \end{equation}‎
 \end{center}
 
-%% \begin{center} \label{eq:Obstacle3}
+Figure~\ref{eq:ConcaveVoidPhysics1} generates the dictionary set of all the neighbours along with an angle that each of the agent's neighbour's make with the first detected neighbour.
+%% 
+%% \begin{center}
 %% \begin{equation}‎
-%% v_o(b) =‎ |l_o(b)|O_b
+%% \label{eq:ConcaveVoidPhysics2}
+%% G_b \buildrel \Delta \over =‎ gap(S_b,\angle<180^\circ)
 %% \end{equation}‎
-%% \end{center}as shown in equation~\ref{eq:InterAgentMovement3}.
+%% \end{center}
 
-The resultant swarm model is shown in~equation~\ref{eq:InterAgentMovement3}: 
+Algorithm \ref{algo:getNeighbourAngles} shows the logic to produce the sorted neighbour/angle dictionary. $sort(.)$ sorts the dictionary set generated in~Equation~\ref{eq:ConcaveVoidPhysics1} by ascending angle to produce a dictionary of neighbour agents with their relative angle to the first detected neighbour as shown in~Figure~\ref{reduced:Perimeter1}.
 
-\begin{equation}\label{eq:InterAgentMovement3}
-v(b) = k_cv_{c}(b) + k_rv_{r}(b) + k_ov_{o}(b)
+\begin{algorithm}
+\DontPrintSemicolon
+\SetAlgoLined
+\caption{NeighbourAngle: Sorted by angle}
+\KwData{b}
+\tcc{$angles$ is a dictionary of agent/angle}
+$angles \leftarrow \emptyset$\;
+\For{$b^{'}\in b.neighbours$}{
+	\eIf{$b.neighbours[0] == b^{'}$}{
+      $angles[b^{'}] = 0$\;
+	}{
+		$newAngle = b.getAngle(b.neighbours[0], b^{'})$\;	   $angles[b^{'}] = newAngle$\;
+	}
+}
+\KwRet{$sort(angles)$} 
+\label{algo:getNeighbourAngles}
+\end{algorithm}
+
+Using the angular dictionary from Algorithm~\ref{algo:getNeighbourAngles} it is possible to identify if adjacent neighbours can detect each other. If the agent is within all of its neighbours boundary then it is not on the perimeter~(Algorithm~\ref{algo:checkVisibility}). 
+
+As the agents are monolithic all agents have the same field effects the `visibility' of two neighbours can be determined. The angle and distance of each neighbour pair and the angle they create allows cosine rule to be used to calculate the distance the neighbours are apart as shown in~Equation~\ref{eq:CosineRule1} and~Figure~\ref{reduced:Triangulate}. The distance is then checked against the neighbour range field effect. If the distance is $\leq N_b$ where $N_b$ is the \textit{neighbour field} then the agent can assume the neighbours have `sight' of each other. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=4.5cm]{figures/Triangulate}
+\end{center}
+\caption{Neighbour visibility\label{reduced:Triangulate}}
+\end{figure}
+
+\begin{equation}\label{eq:CosineRule1}
+z = \sqrt{x^2 + y^2 - 2xy~\cos(\theta)}
 \end{equation}‎
 
-\section{Area flooding}\label{chapter:flooding}
-The concept of using a swarm to provide coverage over unknown areas is a current area of research. Alvissalim et al. (2012) discuss the application of commercially available drones to provide a communication infrastructure across an unknown disaster areas~\cite{AZHMJJM:12}. Scheutz and Bauer (2006) use both cohesion and repulsion as a mechanism to create coverage of an area that requires protection in an adversarial environment~\cite{SB:06}. In their paper they do not use cohesion to ensure the swarm remains a cohesive unit, rather they have all the agents using a \textit{destination vector} to cause agents to converge on a target and the repulsion vector prevents collisions. The cohesive effect is not required due to all agents having a common goal with no requirement for the agents to remain in close proximity during the terrain traversal. Ramaithitima et al. in 2015 and 2016, working as part of Vijay Kumar's research group at the University of Pennsylvania, use the idea of filling an area through a deployment strategy that requires the swarm to identify the placement of agents in a given space. The agents are then `shuffled' into an identified position. The technique applied in 2015~\cite{RWBK:15} is based upon coverage path planning and involves adding agents when required and does not require a global positioning reference. In their 2016 paper~\cite{RWBK:16} they use Voronoi graphs to achieve the same effect. Yang et al. (2015)~\cite{YDH:15} also use Voronoi graphs to achieve their swarm coverage goal. The use of Voronoi graphs requires inter-agent communications. Schroeder and M. Kumar (2016) use the bio-inspired swarming technique of creating chemical trails (pheromones) combined with a foraging approach which they refer to as a `food foraging' technique~\cite{SK:16}.
+The full visibility check~(Algorithm~\ref{algo:checkVisibility}) takes each pair in turn and using the cosine rule~(Equation~\ref{eq:CosineRule1}) checks for a `visibility gap'. 
 
-The techniques used in this paper are similar to Schroeder and M. Kumar in that the agents do not require a global positioning system and differ from Alvissalim et al., Scheutz and Bauer, and Ramaithitima et al. in that the space filling is achieved with a fixed sized swarm. 
+\begin{algorithm}
+\DontPrintSemicolon
+\SetAlgoLined
+\caption{CheckVisibility}
+\KwData{b,angles}
+\For{$i \leftarrow 0$ \KwTo $size(angles)-1$}{
+	\eIf{i == size(angles)-1}{
+		\If{$cosrule(b,angles[size(angles)-1][0],angles[i][0]$}{
+   		\KwRet{True}
+   	}
+	}
+	{\If{$cosrule(b,angles[i + 1][0],angles[i][0]$}{
+			\KwRet{True}
+		}
+	}
+}
+\KwRet{False}
+\label{algo:checkVisibility}
+\end{algorithm}
 
-The expansion fill is implemented using two techniques. The main principle behind both techniques is to increase the repulsion field effect of the agents over time to increase the area coverage of the agents. The expansion fill can use both the cohesion and repulsion field effects in a similar manner to a static swarm in free space. This technique ensures all the agents remain in close proximity and as far as possible the agents form a single entity. Alternatively the expansion fill can be implemented using only a repulsion field effect. Cohesion can be eliminated in an enclosed space as the agents have a limited range of movement (bounded by a perimeter). When agents move to a repulsion boundary, either an area perimeter or an obstacle, they are repelled. As the space is finite the repulsion `pushes' the agents back into the swarm countering the expansion that is induced by the \textit{interaction vectors}. If the repulsion field effect creates a swarm that reaches all the boundaries the repulsion imposes a compression effect as the \textit{interaction-vector} `pushes' the agents into the boundaries. 
+There is one exception to the neighbour visibility check. Due to compression of the swarm, which can be caused by an initial deployment configuration~(Figure~\ref{fig:SampleSwarm200-1} page \pageref{fig:SampleSwarm200-1}) or when an obstacle is in the path of the swarm, the agent's neighbours are able to `see' other neighbours but a pair of sequential neighbours could create an angle $> 180^\circ$ as shown in~Figure~\ref{reduced:Perimeter2}. In this case the agent is on the outside of the enclosed neighbour space, the agent is therefore on a perimeter. 
 
-\section{Field effect modification with cohesion and repulsion}
-The concept behind the field effect expansion is to increase both the repulsion and cohesion fields over a period of time. This increase in the field effects makes the agents increase the distance between each other expanding the swarm as a whole. The expansion increases until, due to boundary compression, the swarm is unable to expand further. In an extreme case the expansion will result in a set of field effects that create a mesh based swarm structure rather than the desired hexagonal structure that the field effects should create. Identifying either the change in modality or the inability to expand, which can be identified by the \textit{inter-agent vector magnitude} increase or a reduction in the inter-agent distance stability indicates area saturation has occured.
+\begin{figure}
+\begin{center}
+\includegraphics[width=5.5cm]{figures/Perimeter2}
+\end{center}
+\caption{Convex multifaceted agents \label{reduced:Perimeter2}}
+\end{figure}
 
-To test this hypothesis a swarm is modelled in the simulator. The model consists of an obstacle-based enclosed space and a swarm consisting of 60 agents. The experiments parameters for the simulation are shown in~Table~\ref{tab:FillParameters}
+This phenomenon requires the detection process to identify the angles that all the agents create from an arbitrary point, in this case the first identified neighbour. The neighbours must then be checked to determine if any neighbour pair create an angle $> 180^\circ$~(Figure~\ref{reduced:Perimeter1}~Algorithm~\ref{algo:checkConvex}). This process includes a short circuit in that as soon as a gap is found the check terminates. 
+
+\begin{algorithm}
+\DontPrintSemicolon
+\SetAlgoLined
+\caption{CheckConvex}
+\KwData{angles}
+\For{$i \leftarrow 0$ \KwTo $size(angles)-1$}{
+	\eIf{i == size(angles)-1}{
+		\If{$360 - angles[loop][1] \geq 180$}{
+   		\KwRet{True}
+   	}
+	}{
+		\If{$angles[loop + 1][1] - angles[loop][1] \geq 180$}{
+			\KwRet{True}
+		}
+	}
+}
+\KwRet{False}
+\label{algo:checkConvex}
+\end{algorithm}
+
+The complete perimeter detection algorithm using this `cyclic-angular-neighbour-check' methodology is show in~Algorithm~\ref{algo:checkPerimeter}. The first part of the algorithm is the short circuit check~(\textit{SmallNeighbourCount(b)}). This is only followed by the visibility check (\textit{CheckVisibility(b,angles)}) if the short circuit fails. If the visibility check is confirmed, which is another short circuit method, the convex check is carried out~(CheckConvex(angles)). This sequence ensures the minimum computational overhead for the agent check. 
+
+\begin{algorithm}
+\DontPrintSemicolon
+\SetAlgoLined
+\caption{CheckPerimeter}
+\KwData{$b,S$}
+\If{SmallNeighbourCount(b,S)}{
+	\KwRet{True}
+}
+$angles = NeighbourAngle(b)$\;
+\If{CheckVisibility(b,angles)}{
+	\If{CheckConvex(angles)}{
+		\KwRet{True}
+	}
+}
+\KwRet{False}
+\label{algo:checkPerimeter}
+\end{algorithm}
+
+\subsubsection{Perimeter detection errors\label{section:PerimeterErrorLocalisation}}
+With the proximity of the agents needing to be hexagonally connected and the requirement to eliminate inter-agent communications to allow for arbitrary sized swarms, there is the possibility of a localised perimeter detection algorithm error. When a swarm is compressed a localised anomaly can arise where agents are in a hyper-connected structure on a perimeter. When this anomaly occurs the proposed algorithm will produce a false positive result for the affected agents. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=5cm]{figures/PerimeterError1}
+\end{center}
+\caption{Perimeter detection error\label{reduced:CompressedRangeError}}
+\end{figure}
+
+Figure~\ref{reduced:CompressedRangeError} shows two agents $b^{'}$ and $b^{''}$. The agents have visibility of each other as shown by the green field effects. The agents can also `see' another agent beyond their immediate neighbour. Agent $b^{'}$ is influenced by $b^{''}$ and neighbour 1. Agent $b^{'}$ is influenced by $b^{''}$ and neighbour 5. Due to these interactions both agents could calculate that they are surrounded by neighbours and are therefore not a part of the perimeter. The visibility issue is indicated by the red lines between $b^{''}$ and 5, and $b^{'}$ and 1. Neighbours 1 and 5 have no visibility of each other. Due to the connectivity shown in red there is a possibility of a failure in full perimeter detection as agents 5 and 1 cannot detect each other. 
+
+The possible pathways that could be detected as the perimeter are: $5 \rightarrow b^{'} \rightarrow 1$, $5 \rightarrow b^{''} \rightarrow 1$. A third alternative of $5 \rightarrow b^{'} \rightarrow b^{''} \rightarrow 1$ could also be used but it is not strictly a true perimeter route as the previous routes are shorter.  
+
+This problem can be resolved fully by introducing a communications channel that would allow the affected agents to negotiate a resolution to chose one of the shorter pathways~\cite{MD:09}, as there is no communications available this is not an option. In this thesis the error is limited to a very specific set of circumstances which will only occur during the initial expansion phase or during obstacle avoidance. The algorithm described in~Section~\ref{sec:PerimeterAgentDetection} selects both agents as being perimeter agents therefore the problem can is resolved by using the pseudo-perimeter ($5 \rightarrow b^{'} \rightarrow b^{''} \rightarrow 1$) ensuring a continuous perimeter is detected. 
+
+The screen shot below shows the algorithm resolving the issue to the pseudo-perimeter in the simulator~(Figure~\ref{reduced:PerimeterAnomaly}).
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=5cm]{figures/PerimeterAnomaly}
+\end{center}
+\caption{Simulator perimeter detection\label{reduced:PerimeterAnomaly}}
+\end{figure}
+
+\subsubsection{Perimeter and void detection}\label{sec:PerimeterVoidDetection} 
+The focus of this thesis is the control of arbitrary sized swarms. The identification of the inner and outer perimeters would require a communications mechanism to determine which type of perimeter an agent was a part of~\cite{ZAPS:07,MD:09}. A mean angle $< 180^\circ$ would indicate a void. A mean angle $> 180^\circ$ would indicate an outer perimeter which may be enclose inside a swarm as shown in~Figure~\ref{concave:VoidPerimeter2} on page \pageref{concave:VoidPerimeter2}.  
+
+The communications architecture would prevent swarms of an arbitrary size from being coordinated due to the $O(n^{2})$ message propagation time factor~(Figure~\ref{methods:MessagePropogation})~\cite{SHA:07}. It should be noted however that introducing the communications layer would increase the potential functionality of the swarm and may have practical applications in other scenarios where smaller swarms are appropriate. 
+
+A further issue of introducing a communications infrastructure would be the increase in the energy usage of the swarm. Identification of the perimeter type is therefore not practical in context of this thesis.
+
+\subsection{Baseline/full perimeter comparison\label{section:compareBaselineFullPerimeter}}
+Figures~\ref{reduced:BaselineFullPerimeterMag1} and \ref{reduced:BaselineFullPerimeterDist1} show the comparisons of the baseline swarm against the goal based swarm using full perimeter detection. 
+
+Both Figures~\ref{reduced:BaselineFullPerimeterMag1} and \ref{reduced:BaselineFullPerimeterDist1} show that the settling period of the swarm from the chaotic state occurs at a very similar rate to the baseline but the swarm does not settle into a condition that has the same stability as the baseline. This deviation can be expected as the algorithms selection criteria is such that when the swarm is highly compressed there will be a limited number of perimeter agents effecting the directional bias of the swarm and the majority of internal logic will be the \textit{interaction vectors} expanding the swarm.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineFullPerimeterMag1}
+\end{center}
+\caption{Baseline/Full perimeter magnitude comparison\label{reduced:BaselineFullPerimeterMag1}}
+\end{figure}
+
+Figure~\ref{reduced:BaselineFullPerimeterMag1} shows the magnitude metric for the simulation. Up to the point where the magnitude reaches zero ($\approx$ 4.8 seconds / 48 cycles) the swarm is undergoing expansion and the \textit{inter-agent vectors} have a higher repulsive magnitude. Up to this point it is not possible to determine if the swarm is a cohesive entity. Once the \textit{inter-agent vector magnitude} becomes positive the swarm is known to be cohesive. Once the \textit{interaction vectors magnitudes} subside the directional bias from the coordinator agents \textit{destination vectors} will influence the swarm's direction. 
+
+Once the swarm has completed its expansion the swarms interacting vectors stabalise to an optimum level for the swarm environment parameters. The level of interaction between the vectors produces an increase in the jitter compared to the baseline. This change is induced by the coordinators \textit{destination vectors}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineFullPerimeterDist1}
+\end{center}
+\caption{Baseline/Full perimeter distance comparison\label{reduced:BaselineFullPerimeterDist1}}
+\end{figure}
+
+Figure~\ref{reduced:BaselineFullPerimeterDist1} shows the swarm expanding as the average distance increases. The expansion eventually settles to a level where the agents are separated but the average distribution is less than the baseline. The reduction in the inter-agent distances is caused by a change induced by the \textit{destination vectors} of the coordinators reducing the repulsion effect. The level of jitter is also greater than the baseline again this is caused by the \textit{destination vectors} preventing the non-coordinator agents from moving towards an equilibrium state.
+
+\subsection{Complex Multifaceted Swarm (full-perimeter) - Simulation}
+The simulation shows that once the swarm has stabilised the majority of agents are still disrupted by the introduction of the \textit{destination vectors}. This results in the swarm's agents having to move more to maintain the hexagonal structures. The agents that are on the perimeter tend to have 3 or more neighbours. 
+
+The experiment demonstrates that the perimeter detection algorithm is a practical technique to apply to the detection of a swarm subset to reduce GPS usage. However the environmental parameters the impact of the \textit{destination vectors}create a high level of jitter within the swarm.
+
+\section{Baseline and effect comparison\label{section:compareBaselineAll1}}
+To compare the three algorithms and their effects the metric defined in chapter~\ref{chapter:metric} is combined with the swarm's emergent properties. The internal movement (jitter), the terminal speed of the centroid of the swarm and the effect on the path of the swarm must are considered. 
+
+Analysing the path and speed of a swarm requires the centroid to be identified~\cite{HAY:08,VG:05,GP:02,GP:04,GP:04a,GP:05,GP:11}. The centroid is then tracked over time as the swarm progresses to its a goal~(Equation~\ref{eq:Centroid1}).
+
+The centroid of the swarm is determined by taking the coordinate position of each agent and calculating the mean of the $x$ and $y$ positions.
+
+\begin{equation}\label{eq:Centroid1}
+C_s = \frac{1}{|S|}\mathlarger{\sum_{b' \in S}} b'
+\end{equation}‎
+
+Equation~\ref{eq:Centroid1} calculates the coordinates for the centre of the swarm ($C_s$) as an $x,y$ coordinate where $S$ is the swarm and $b^{'}$ is the coordinate $x,y$ for each agent and $|S|$ is the number of agents in the swarm.
+
+Comparing swarms with these metrics generates a fuller understanding of the effects the algorithms and allows suitable applications to be identified.
+
+\subsection{Internal movement comparison\label{section:stabilityComparison1}}
+Figures \ref{reduced:BaselineAllDist1}, \ref{reduced:BaselineAllMag1}, \ref{reduced:BaselineAllDist2}, and \ref{reduced:BaselineAllMag2} identify the jitter based on distance and the \textit{inter-agent vector magnitudes} for the coordintion algorithms and the baseline. Both the metrics show that as the number of coordinator agents increases the jitter increases. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllDist1}
+\end{center}
+\caption{Baseline distance comparison\label{reduced:BaselineAllDist1}}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllDist2}
+\end{center}
+\caption{Baseline distance comparison\label{reduced:BaselineAllDist2}}
+\end{figure}
+
+Figure~\ref{reduced:BaselineAllDist2} show that the average distance between the agents is reduced when less coordinators are used. This indicates that for the same sized swarm with the same field effects the area covered by the swarm is reduced as the effect of the repulsion is hampered by the coordinators. It also shows that the time taken for the swarm to stabilises is increased due to the \textit{destination vectors} impacting on the agents ability to produce stable structures~(Figure~\ref{reduced:BaselineAllDist1}). 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllMag1}
+\end{center}
+\caption{Baseline magnitude comparison\label{reduced:BaselineAllMag1}}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllMag2}
+\end{center}
+\caption{Baseline and magnitude comparison\label{reduced:BaselineAllMag2}}
+\end{figure}
+
+Figures \ref{reduced:BaselineAllMag1} and \ref{reduced:BaselineAllMag2} highlight that a highly compressed swarm's magnitude, indicated by a negative magnitude, will overwhelm most of a swarms activity. This can be expected due to the size of the magnitudes that are affecting the swarm's movement. When all agents in a swarm are coordinators the directional effect can break through the highly cohesive stabilising vectors but this increases the level of jitter making the swarm's internal movement less predictable.
+
+The directional algorithm that introduces the least amount of jitter is the basic-count algorithm. The basic-count algorithm is also the simplest of the multi-faceted algorithms to implement with a minimal computational overhead for the agents. 
+
+Figure~\ref{reduced:BaselineAllMag2} shows a closer view of the swarms following the stabilisation period between 17.5s and 20s. The basic-count algorithm is produces the least disruption to the agents and has the highest average \textit{inter-agent vector magnitude} indicating the swarm has a higher tendency to remain cohesive with the widest distribution. This effect is caused by the increase in the cohesion effect when the agents are more distant. This demonstrates that the algorithm produces a swarm that covers a greater area. The increased area coverage is confirmed by Figure~\ref{reduced:BaselineAllDist2} which shown the greatest average inter-agent distance. The `all-agent' algorithm has the smallest resultant \textit{inter-agent vector magnitude} indicating that the swarm is more highly compressed (more repulsion is in operation). This is corroborated by the inter-agent distribution shown in~Figure~\ref{reduced:BaselineAllDist2}.
+
+\subsection{Swarm GPS utilisation\label{section:compareGPSUages1}}
+The multi-faceted algorithms that are defined above create subsets of coordinator agents for the application of a \textit{destination vector} bias of a swarm. These subsets can be identified to identify the GPS usage in the swarm at each time cycle ($t$). This allows a profile of the algorithms coordinator role identification process to be isolated to identify the level of GPS utilisation in the swarm.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/SwarmPerimeter1}
+\end{center}
+\caption{200 agent swarm GPS Usage\label{fig:SwarmPerimeter1}}
+\end{figure}
+
+Figure~\ref{fig:SwarmPerimeter1} shows the development of the GPS utilisation of the swarm using the `all-agent' coordination and the perimeter detection (multi-faceted) algorithms over the period of a 60s simulation. 
+
+\subsubsection{All agent GPS utilisation\label{section:SwarmPerimeter2}}
+Figure~\ref{fig:SwarmPerimeter1} shows the `all-agent' algorithm as a simple flat constant of 200 agents which is 100\% of the swarm's agents. The directional bias is therefore constant throughout the simulation. 
+
+\subsubsection{Basic-count GPS utilisation\label{section:SwarmPerimeter3}}
+In Figure~\ref{fig:SwarmPerimeter1} the `basic-count' algorithm is shown in blue. Due to the swarm being compressed the basic-count effect is initially limited. There are no coordinators identified at $t=0$. This is due to the compression of the agents in the initial deployment. As the simulation progresses the chaotic stage expands the swarm and disperses the agents such that each agent develops less neighbours. The coordinator detection algorithm then begins to identify a subset on the perimeter. This process continues and eventually settles, shown by the plateau in the graph. Figure~\ref{fig:SwarmPerimeter1} shows there is a slight change in the swarm structure at 8 seconds, this is due to anomalies in the swarm being corrected by the effect of the cohesion and repulsion field effects. Once the anomalies percolate out of the swarm the structure stabalises and the number of coordinators stops fluctuating.
+
+\subsubsection{Full perimeter GPS utilisation\label{section:SwarmPerimeter4}}
+The full perimeter detection algorithm starts with a subset immediately as shown in green in Figure~\ref{fig:SwarmPerimeter1}. This is due to the algorithm always detecting a full perimeter based on neighbour visibility. This has an immediate effect on the swarm as there is always a degree of \textit{destination vector magnitude} influence on the swarm, even during the chaotic expansion phase~Figure~\ref{reduced:SwarmPropagationPathComparison1}. However, the \textit{interaction vector magnitudes} are much larger than the \textit{destination vector magnitude} so the progression towards the goal is hampered and the path of the swarm is erratic. The introduction of the \textit{destination vector} influence from the very begin also disrupts the swarms expansion and increases the duration of the chaotic period. As the swarm expands the algorithm detects more agents as coordinators as the number of perimeter agents increases.
+
+\subsection{Swarm path propagation comparison\label{section:compareBaselineAll1}}
+All algorithms do eventually settle to a stable structure (for their environment parameters) with agents distributed in lattice structures. The time taken for each algorithm to achieve their stable distribution varies. This is due to the level of influence the directional bias has on the swarm. Figure~\ref{tab:GPSUsage} shows the settled coordinator distributions at 12s into the simulation.
 
 \begin{table}
 \begin{center}
-\begin{tabular}{| p{1.5cm} | p{1.5cm} | p{4.0cm} |}
+\begin{tabular}{| p{2.5cm} | c | c | p{5cm} |}
 \hline
-\bf Parameter & \bf Value  & \bf Description \\ \hline
-$k_c$         & 5          & weight adjuster for cohesion bias\\ \hline
-$k_r$         & 60         & weight adjuster for repulsion bias\\ \hline
-Sample rate   & 100ms      & proximity sensor rate\\ \hline
-Speed         & 20 units/s & agent speed\\ \hline
-\end{tabular}\caption{Swarm parameters} \label{tab:FillParameters}
+GPS Model & Bots GPS & \% usage & Description \\ \hline
+All-agents & 200 & 100\% & All agents are coordinators \\ \hline
+Basic-count & 40 & 20\% & Minimal counting algorithm\\ \hline
+Full perimeter & 72 & 36\% & Void detection and perimeter (capable of supporting void reduction)\\  \hline
+\end{tabular}\caption{Swarm GPS enabled coordinators} \label{tab:GPSUsage}
 \end{center}
 \end{table}
 
-The field effects are incremented in turn, neighbour range followed by repulsion range. After each repulsion field change the swarm is allowed to redistribute itself and stabilise. Table~\ref{tab:BaselineConcaveReduction} shows the field settings that are used for the simulation. The field effect are selected so as to ensure the swarm parameters have the potential to create a hexagonal swarm. 
+The three algorithms take different amounts of time to stabalise~(Figure~\ref{fig:SwarmPerimeter1}) this has an impact on how long it takes each of the algorithms to impact the swarms movement towards the destination. This effect can be seen in~Figure~\ref{reduced:SwarmPropagationPathComparison1} that shows the paths that each algorithm produces. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/SwarmPropagationComparison1}
+\end{center}
+\caption{Swarm propagation path comparison\label{reduced:SwarmPropagationPathComparison1}}
+\end{figure}
+
+Figure~\ref{reduced:SwarmPropagationPathComparison1} shows the initial expansion phase of the swarm from deployment. Figure~\ref{reduced:SwarmPropagationPathComparison2} shows the paths for the full simulation runs and the baseline comparison.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/SwarmPropagationComparison2}
+\end{center}
+\caption{Swarm propagation path comparison\label{reduced:SwarmPropagationPathComparison2}}
+\end{figure}
+
+Using all agents as coordinators results in the swarm immediately moving in the direction of the destination. The full perimeter detection has a limited effect on the direction of travel until the internal vectors start to balance and the internal magnitudes can be affected by a \textit{destination vectors} at which point the swarm travels in the direction of the destination. The basic-count algorithm stabilises and then moves towards the destination in a similar manner to the full perimeter except in the initial compressed chaotic stage the basic-count algorithm develops in the same manner as the baseline swarm where there are no coordinators. These experimental results demonstrate that reducing the GPS utilisation has two effects on the swarms propagation. Firstly it is possible to reduce the number of GPS sensors required to coordinate a swarm and it is possible to manage the `jitter' while applying a directional bias on a swarm using \textit{destination vectors}. 
+
+The effect of the algorithms on the stabilisation period can be seen in~(Figure~\ref{reduced:SwarmPropagationPathComparison3}) which shows the swarm paths at the end of the 60 seconds simulation period. The relative positions shows the distances that the swarm is able to travel while employing the three algorithms, this is based on the swarm centroid. The baseline centroid path shows that without a \textit{destination vector} being applied the swarm's centroid moves but it is based upon the \textit{interaction vectors} only and there is no directional bias.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/SwarmPropagationComparison3}
+\end{center}
+\caption{Swarm traversal at end of 60s run\label{reduced:SwarmPropagationPathComparison3}}
+\end{figure}
+
+\subsection{Speed of Swarm (Based on centroid)}
+To determine the speed a swarm is travelling a single reference point needs to be identified. A swarm's speed is measured based upon the position of its centroid, as discussed by Gazi and Passino~\cite{GP:04, GP:02}.
+
+The speed at which the swarm travels is calculated as the distance the centroid moves~(Figure~\ref{eq:SwarmDistance1}) over a set time~(Figure~\ref{eq:SwarmSpeed1}). Figure~\ref{eq:SwarmDistance1} shows the formulae for the distance a swarm has travelled over a set period of time, $t \rightarrow t^{1}$ where $d$ is the distance the centroid has travelled, $x,y$ is the centroid of the swarm and $t$ is time.
+
+\begin{equation}\label{eq:SwarmDistance1}
+d = \sqrt{(x_{t}-x_{t^1})^2+(y_{t}-y_{t^1})^2}
+\end{equation}‎
+
+\begin{equation}\label{eq:SwarmSpeed1}
+S_s = \frac{d}{n}
+\end{equation}‎
+
+Equation~\ref{eq:SwarmSpeed1} shows how the speed is calculated based on the distance in Equation~\ref{eq:SwarmDistance1}. $S_s$ is the speed of the swarms centroid and $n$ is the number of time increments.
+
+Once the swarm has stabilised it migrates towards the destination. Each of the algorithms has an effect on how many coordinators are used to control the direction of the swarm~(Figure~\ref{fig:SwarmPerimeter1}). The impact of the number of coordinators is expected to affect the propagation speed of the swarm towards its destination. Based upon the final positions of the swarms over the last 20 seconds of their simulations it is shown that there was only a marginal impact on the speed of the swarm once stabilised~(Figure~\ref{fig:SwarmSpeed1}). The difference in the algorithms only affects the time it takes the swarm to stabilise to the level that the \textit{destination vectors} can influence the swarms movement.
+
+The results also show a reduction in energy usage (GPS usage) is possible with minimal effect on the overall speed of the swarm (taken from the centroid). 
+
+Although the agents within the swarm have travelled the same distances the overall path of swarms has been affected~(Table~\ref{tab:SwarmSpeed2}).
+
+The time frame for the results in~Tables~\ref{tab:SwarmSpeed1},~\ref{tab:SwarmSpeed2}~and~\ref{tab:SwarmSpeed3} are for a time slice from 40~-~60~seconds in the simulation.
 
 \begin{table}
 \begin{center}
-\begin{tabular}{| p{1.5cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.5cm} |}
+\begin{tabular}{| l | l |}
 \hline
-\bf Weight \bf component & \bf 1 & \bf 2 & \bf 3 & \bf 4 & \bf 5 & \bf 6 & \bf 7 & \\ \hline
-Repulsion Boundary & 50 & -  & 60 & -  & 70 & -  & 80 & units\\  \hline
-Neighbour Distance & 60 & 70 & -  & 80 & -  & 90 & -  & units\\  \hline
-\end{tabular}\caption{field effect expansion sequence} \label{tab:FillSequence}
-\end{center}
-\end{table}
-
-Figures~\ref{emerge:Expand1}, \ref{emerge:Expand2}, \ref{emerge:Expand3}, \ref{emerge:Expand4}, \ref{emerge:Expand5} and \ref{emerge:Expand6} show the stages that the swarm progresses through during the simulation. Figure~\ref{emerge:Expand1} shows the initial deployment of the 60 agents within the enclosed environment. Figure~\ref{emerge:Expand6} shows the stage at which the experiment terminates due to area saturation.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=5.5cm]{figures/EXPAND1}
-\end{center}
-\caption{Stage 1\label{emerge:Expand1}}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=5.5cm]{figures/EXPAND2}
-\end{center}
-\caption{Stage 2\label{emerge:Expand2}}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=5.5cm]{figures/EXPAND3}
-\end{center}
-\caption{Stage 3\label{emerge:Expand3}}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=5.5cm]{figures/EXPAND4}
-\end{center}
-\caption{Stage 4\label{emerge:Expand4}}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=5.5cm]{figures/EXPAND5}
-\end{center}
-\caption{Stage 5\label{emerge:Expand5}}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=5.5cm]{figures/EXPAND6}
-\end{center}
-\caption{Stage 6\label{emerge:Expand6}}
-\end{figure}
-
-%% \begin{figure}
-%% \centering
-%% \subfigure[Stage 1]{
-%% 	 \includegraphics[width=5.5cm]{figures/EXPAND1}
-%% 	 \label{emerge:Expand1}
-%% }
-%% \subfigure[Stage 2]{
-%% 	 \includegraphics[width=5.5cm]{figures/EXPAND2}
-%% 	 \label{emerge:Expand2}
-%% }
-%% \subfigure[Stage 3]{
-%% 	 \includegraphics[width=5.5cm]{figures/EXPAND3}
-%% 	 \label{emerge:Expand3}
-%% }
-%% \subfigure[Stage 4]{
-%% 	 \includegraphics[width=5.5cm]{figures/EXPAND4}
-%% 	 \label{emerge:Expand4}
-%% }
-%% \subfigure[Stage 5]{
-%% 	 \includegraphics[width=5.5cm]{figures/EXPAND5}
-%% 	 \label{emerge:Expand5}
-%% }
-%% \subfigure[Stage 6]{
-%% 	 \includegraphics[width=5.5cm]{figures/EXPAND6}
-%% 	 \label{emerge:Expand6}
-%% }
-%% \caption{Space filling via field effect expansion}
-%% \label{methods:ExpansionFill}
-%% \end{figure}
-
-After the initial deployment the system is allowed to settle~Figure~(\ref{emerge:Expand2}) following the settling period the parameters are increased and the swarm settles again. Figure~\ref{emerge:Expand3}~shows how the change in parameters can cause the system to become unstable, the top right section of the swarm has became multi-modal yet there is still a section of the swarm that has not expanded to the boundary perimeter. As the swarm stabilises this compressed section of the swarm `pushes' through the swarm and the swarm increases in volume filling more of the space~(Figure~\ref{emerge:Expand4}). This process continues until changes in the parameters are unable to increase the distribution of the agents and the distances remain almost constant. Increasing the field effects further causes the swarm to become multi-modal as shown in~Figures~\ref{emerge:Expand5} and~\ref{emerge:Expand6}.
-
-These effects can be identified through a combination of the \textit{inter-agent magnitude metric} and the distance metric.
-
-\subsection{Magnitude analysis}
-Figure~\ref{emerge:FIELDFILL-MAG} shows the resultant magnitude for the swarm for the entire simulation. Between 100 seconds and 105 seconds there is a significant change in the magnitude where the value becomes negative. This indicates there is a compression effect on the swarm and it is unable to expand the inter-agent distances.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-MAG}
-\end{center}
-\caption{Magnitude metric 0-120 seconds\label{emerge:FIELDFILL-MAG}}
-\end{figure}
-
-Figure~\ref{emerge:FIELDFILL-MAG-1} shows the initial deployment status of the swarm and the first repulsion increase at 25 seconds. When the repulsion field is increased, the average \textit{inter-agent magnitude} falls and the variation increases. The agents redistribute themselves which takes until approximately 65 seconds and a new baseline is established for the field effects.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-MAG-1}
-\end{center}
-\caption{Magnitude metric 0-60 seconds\label{emerge:FIELDFILL-MAG-1}}
-\end{figure}
-
-The next increment at 65 seconds creates a similar reaction to the magnitude and variance and the swarm settles to another baseline, however, the new baseline has a variance which drops the rseultant magnitude to below zero. This indicates that some of the swarm is experiencing a compression effect which will result in the swarm body moving towards an uncompressed area. At 85 seconds the next repulsion increase is made and the reaction of the swarm metrics indicates something has changed in how the swarm is reacting. The average \textit{inter-agent magnitude} rises and the variance increases. This change is the effect of an increase in the modality of the swarm which indicates that the swarm is fully distributed within the environment as the neighbour field effect is detecting additional neighbour agents. The final increment at 108 seconds creates an even greater increase in the variance, this is caused by a further increase in the modal distribution of the agents and the swarm is being compressed by the boundary of the space.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-MAG-2}
-\end{center}
-\caption{Magnitude metric 60-120 seconds\label{emerge:FIELDFILL-MAG-2}}
-\end{figure}
-
-\subsection{Distance analysis}
-Figure~\ref{emerge:FIELDFILL-DIST}~shows the distance metric for the simulation. The initial deployment is shown at 0 seconds followed by incremental changes in the distances and variance of the distances as each increment is made in the field effects. The simulation terminates after 12 seconds.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-DIST}
-\end{center}
-\caption{Distance metric 0-120 seconds\label{emerge:FIELDFILL-DIST}}
-\end{figure}
-
-Figure~\ref{emerge:FIELDFILL-DIST-1} shows the initial expansion increasing the field distance causing the agents to `spread' throughout the space. each increment having a settling period as the swarm expands.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-DIST-1}
-\end{center}
-\caption{Distance metric 0-60 seconds\label{emerge:FIELDFILL-DIST-1}}
-\end{figure}
-
-Figure~\ref{emerge:FIELDFILL-DIST-2}~shows the simulation from 60-120 seconds. between 60 and 85 seconds an increment is made in the feild effects and the swarm expands. At 85 seconds there is further increment, however the effect on the distribution is different. The distribution of the agents has changed due to the modality of the swarm. The average distance has increased and there is an increase in the variance. This would indicate that the swam has fully expanded and is unable to expand further. The final increment at 105 seconds can be seen to further impact on the modality indicating the area is saturated.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-DIST-2}
-\end{center}
-\caption{Distance metric 60-120 seconds\label{emerge:FIELDFILL-DIST-2}}
-\end{figure}
-
-\subsection{Combined magnitude and distance analysis}
-Combining the results of the distance and \textit{inter-agent magnitude} metrics provides a more indepth view of the effects changing the field effects has upon the swarms structure.
-
-There is a significant change in the \textit{inter-agent magnitude} when the field effects are incremented to 70 units for repulsion and 80 units for neighbour distance~(Figures \ref{emerge:FIELDFILL-MAG-3} and \ref{emerge:FIELDFILL-MAG-3b}). There is no significant change in the inter-agent distances~(Figures \ref{emerge:FIELDFILL-DIST-3} and \ref{emerge:FIELDFILL-DIST-3b}). Until this point the average \textit{inter-agent magnitude} is positive which indicates an aggregate cohesion in the swarm. After the increment there is an aggregate repulsion in the swarm indicating the swarm is being compressed and the repulsion field effect vector magnitude is greater than the cohesion field effect vector magnitude. A positive cohesion does not indicate the space is not filled only that the swarm still shows a tendency to remain a cohesive entity.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-DIST-3}
-\end{center}
-\caption{Distance metric 80-110 seconds\label{emerge:FIELDFILL-DIST-3}}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-MAG-3}
-\end{center}
-\caption{Magnitude metric 80-110 seconds\label{emerge:FIELDFILL-MAG-3}}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-DIST-3b}
-\end{center}
-\caption{Distance metric 100-120 seconds\label{emerge:FIELDFILL-DIST-3b}}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/FIELDFILL-MAG-3b}
-\end{center}
-\caption{Magnitude metric 100-120 seconds\label{emerge:FIELDFILL-MAG-3b}}
-\end{figure}
-
-\section{Field effect modification with repulsion only}
-The previous mechanism for area filling uses a swarm that utilising both repulsion and cohesion to ensure the swarm remains, as far as is possible, a single entity. When using repulsion only it is accepted that the agents are in a restricted area and not being cohesive is not and issue as the field effects can be expanded until the agents interact with each other and the boundary. A similar approach was used by Scheutz and Bauer in 2006~\cite{SB:06}. The repulsion field effect in this paper is used with a fixed sized swarm and the repulsion field is increase over time. The simulation for this experiment uses 52 agents in the same confined space as the previous experiment. The parameters are shown below: 
-
-\begin{table}
-\begin{center}
-\begin{tabular}{| p{1.5cm} | p{1.5cm} | p{4.0cm} |}
-\hline
-\bf Parameter & \bf Value  & \bf Description \\ \hline
-$k_c$         & 0          & weight adjuster for cohesion vector\\ \hline
-$k_r$         & 15         & weight adjuster for repulsion vector\\ \hline
-Sample rate   & 100 ms      & proximity sensor rate\\ \hline
-Speed         & 20 units/s & agent speed\\ \hline
-\end{tabular}\caption{Swarm parameters repulsion only} \label{tab:FillParameters}
+GPS Model & Start \\ \hline
+All-agents & (922.5254184933, 379.965865509344) \\ \hline
+Basic-count & (828.5991571583, 433.5750489635) \\ \hline
+Full perimeter & (848.1131820415, 410.9739402922) \\ \hline
+\end{tabular}\caption{Swarm centroid after stabilisation (40s)} \label{tab:SwarmSpeed1}
 \end{center}
 \end{table}
 
 \begin{table}
 \begin{center}
-%\begin{tabular}{| p{2cm} | p{0.5cm} | p{0.5cm} | p{0.5cm} | p{0.5cm} | p{0.5cm} | p{0.5cm} | p{1cm} |}
-\begin{tabular}{| p{1.5cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.3cm} | p{0.5cm} |}
+\begin{tabular}{| l | l |}
 \hline
-\bf Weight \bf component & \bf 1 & \bf 2 & \bf 3 & \bf 4 & \bf 5 & \bf 6 & \\ \hline
-Repulsion Boundary & 50 & 51 & 52 & 53 & 54 & 55 & units\\  \hline
-Neighbour Distance & 70 & 70 & 70 & 70 & 70 & 70 & units\\  \hline
-\end{tabular}\caption{field effect expansion sequence} \label{tab:BaselineConcaveReduction}
+GPS Model & End  \\ \hline
+All-agents & (1294.5940641812, 233.788749492987) \\ \hline
+Basic-count & (1201.4534856023, 289.7373900729) \\ \hline
+Full perimeter & (1218.1290381962, 260.3440891182)\\ \hline
+\end{tabular}\caption{Swarm centroid after stabilisation (60s)} \label{tab:SwarmSpeed2}
 \end{center}
 \end{table}
 
-The theory behind this type of flood filling is as follows; Cohesion and repulsion acting against each other causes jitter, removing the cohesion allows the swarm to expand to its maximum volume with all agents distributed so they no longer interact at which point jitter will cease. The boundary created by the enclosed space will effect the expanding swarm by repelling the agents back into the swarm preventing expansion therefore the swarm movement will propogate to fill vacant areas. Jitter will initially be seen as the swarm equalises and it will decrease to zero when the swarm is fully expanded. There will be a point in the swarms expansion when the agents will not be able to extend to a zero repulsion point and there will be a permanent interaction between the perimeter and agents. This condition is the exit point for the repulsion flood fill.
+\begin{table}
+\begin{center}
+\begin{tabular}{| l | l | l |}
+\hline
+GPS Model & Distance & Speed \\ \hline
+All-agents &  399.7534569593 & 19.987672848 \\  \hline
+Basic-count & 399.6368631077 & 19.9818431554 \\ \hline
+Full perimeter & 399.5010461444 & 19.9750523072 \\  \hline
+\end{tabular}\caption{Swarm distance and speed after stabilisation (40s-60s)} \label{tab:SwarmSpeed3}
+\end{center}
+\end{table}
 
-Figures~\ref{emerge:Repel52-1}, \ref{emerge:Repel52-2}, \ref{emerge:Repel52-3}, \ref{emerge:Repel52-4}, \ref{emerge:Repel52-5} and \ref{emerge:Repel52-6} show the stages that a field-repulsion-area-fill propagates through. The initial deployment is shown in~Figure~\ref{emerge:Repel52-1}. When the simulation starts the swarm immediately expands~(Figure~\ref{emerge:Repel52-2}) and all the agents stabilise to a position where thier movement stops. The field effect is increased and the swarm distribution movement commences. This cycle continues until the swarm is unable to resolve to a neutral expansion point.
+\begin{table}
+\begin{center}
+\begin{tabular}{| l | l | l |}
+\hline
+GPS Model & End & Distance \\ \hline
+All-agents & (1294.5940641812, 233.788749492987) & 588.5813143506\\ \hline
+Basic-count & (1201.4534856023, 289.7373900729) & 696.0606134399\\ \hline
+Full Perimeter & (1218.1290381962, 260.3440891182) & 669.4489951522\\ \hline
+\end{tabular}\caption[Distance to destination after run]{Distance to destination after run \textit{(end = [1841,15])}}\label{tab:SwarmDistanceEnd}
+\end{center}
+\end{table}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=5.5cm]{figures/REPEL52-1}
+\includegraphics[width=14cm]{figures/SwarmSpeed1}
 \end{center}
-\caption{Stage 1\label{emerge:Repel52-1}}
+\caption{200 agent swarm terminal speed (over 20s period)\label{fig:SwarmSpeed1}}
+\end{figure}
+
+\subsection{Alternate weightings for directional bias}\label{sec:AlternateBias1}
+The overall effect of the directional bias is effected by the number of coordinator agents in a swarm. Increasing the bias effects the jitter therefore balancing the weighting should have a positive effect in reducing the jitter.
+
+The impact of the bias can be seen in the effect it has upon the number of neighbours an agent has during the path propagation.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/SwarmNeighbourCount}
+\end{center}
+\caption{Neighbour count effect from \textit{destination vectors}\label{fig:SwarmNeighbourCount}}
+\end{figure}
+
+Figure~\ref{fig:SwarmNeighbourCount} shows that for each of the algorithms the lattice effect (determined by neighbour count) takes longer to settle the more coordinators there are. In the case of the `all agent' coordinated swarm the agents are affected most significantly and therefore exhibit the high variation in magnitudes and distances.
+
+The coordinator statistics demonstrates~Table~\ref{tab:GPSUsage} the weighting of the \textit{destination vectors} can be adjusted to produce an overall effect that is similar for each algorithm. If the weightings are adjusted taking the basic-count as the baseline goal-based swarm then the `all agents' and `full perimeter' algorithms can be weighted proportionally such that they have an overall \textit{direction vector magnitude} that is similar to the basic-count~Table~\ref{tab:GPSWeighting}. The effects of this is shown in Figures~\ref{fig:BaselineAll100-60-20-1}, \ref{fig:BaselineAllMag100-60-20-1}, and \ref{fig:SwarmNeighbourCountBalanced}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{| l | c | c | l |}
+\hline
+GPS Model & Bots GPS & \% Usage & Weighting \\ \hline
+All-agents & 200 & 100\% & 20 \\ \hline
+Basic-count & 40 & 20\% & 100 \\ \hline
+Full perimeter & 72 & 36\% & 60 \\  \hline
+\end{tabular}\caption{Swarm GPS proportional weighting}\label{tab:GPSWeighting}
+\end{center}
+\end{table}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/SwarmNeighbourCountBalanced}
+\end{center}
+\caption{Neighbour count effect from balanced directional bias\label{fig:SwarmNeighbourCountBalanced}}
+\end{figure}
+
+Figure~\ref{fig:SwarmNeighbourCountBalanced} shows the effect reducing the \textit{destination vector magnitude} has on the swarm structure. The reduction brings the stability (jitter) of the three algorithms in line such that all the algorithms have a similar impact on the swarm producing swarms with more stable structures while still creating a goal based affect. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAll100-60-20-1}
+\end{center}
+\caption{Swarm distance analysis\label{fig:BaselineAll100-60-20-1}}
+\end{figure}
+
+Figure~\ref{fig:BaselineAll100-60-20-1} shows that the stabilisation periods of all the algorithms are much closer when the bias is proportional and the chaotic stage for all the algorithms appear to be reduced to be within the same time frame as the baseline.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAll100-60-20-2}
+\end{center}
+\caption{Swarm distance analysis\label{fig:BaselineAll100-60-20-2}}
+\end{figure}
+
+Figure~\ref{fig:BaselineAll100-60-20-2} shows that the resultant distance is also very close and the deviations are also very close. These results indicate that it is possible to reduce the internal jitter that is caused by an algorithm by adjusting the bias to weighting to be proportional to the number of agents that apply the directional influence.
+
+Figures \ref{fig:BaselineAllMag100-60-20-1} and \ref{fig:BaselineAllMag100-60-20-2} show that the magnitude is also affected by the balancing of the directional bias. \ref{fig:BaselineAllMag100-60-20-1} shows the chaotic phase with the rapid expansion with the negative magnitude. This if followed by the stable period. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllMag100-60-20-1}
+\end{center}
+\caption{Swarm magnitude analysis\label{fig:BaselineAllMag100-60-20-1}}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=5.5cm]{figures/REPEL52-2}
+\includegraphics[width=14cm]{figures/BaselineAllMag100-60-20-2}
 \end{center}
-\caption{Stage 2\label{emerge:Repel52-2}}
+\caption{Swarm magnitude analysis\label{fig:BaselineAllMag100-60-20-2}}
+\end{figure}
+
+Figure~\ref{fig:BaselineAllMag100-60-20-2} shows the balance with the inter-agent magnitude for all the algorithms at a very similar level. It is noticeable however that the basic-count algorithm still has the lowest jitter.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllPath100-60-20-1}
+\end{center}
+\caption{Swarm path analysis\label{fig:BaselineAllPath100-60-20-1}}
+\end{figure}
+
+Figure~\ref{fig:BaselineAllPath100-60-20-1} shows that with the adjusted weightings the swarms still progress towards their goal. Figure~\ref{fig:BaselineAllPath100-60-20-2} shows that the reduced weightings impact on the directional path of the swarm and all the algorithms are effected by the \textit{interaction vector magnitudes} during the initial expansion disrupting the swarm path.
+
+Figure~\ref{fig:BaselineAllPath100-60-20-3} shows that all the algorithms produce a goal-based swarm with the `all-agent' algorithm furthest progress towards the end point. This is due to the instant directional influence of the algorithm. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{figures/BaselineAllPath100-60-20-2}
+\end{center}
+\caption{Swarm path analysis\label{fig:BaselineAllPath100-60-20-2}}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=5.5cm]{figures/REPEL52-3}
+\includegraphics[width=14cm]{figures/BaselineAllPath100-60-20-3}
 \end{center}
-\caption{Stage 3\label{emerge:Repel52-3}}
+\caption{Swarm path analysis\label{fig:BaselineAllPath100-60-20-3}}
 \end{figure}
+
+\subsection{Swarm coordination evaluation\label{reduced:coordinationEvaluation}}
+Comparing the three metrics it is possible to determine the coordination effects based on the requirements of the swarm.
+
+The resultant terminal speed of the swarm, based on the centroid, is minimally effected by the algorithm. 
+
+The ability of the swarm to propagate towards a destination is hampered by reducing the number of coordinators as the stabilisation of the swarms structure reduces the \textit{destination vector magnitude}. The most effected algorithm is the basic-count algorithm which is unable to influence the swarm at deployment due to compression reducing the number of coordinators and lessening the aggregate \textit{destination vector magnitude}. The full perimeter algorithm creates a greater aggregate \textit{destination vector} more quickly than the basic-count algorithm, however the algorithm does induce additional jitter. The `all-agent' algorithm has an immediate aggregate \textit{destination vector magnitude} but this algorithm also induces jitter such that the hexagonal lattice start to fail.
+ 
+Increasing the number of coordinators increases the amount of internal disturbance within the swarm which can affect a sensor array in terms of its ability to function efficiently. Adjusting the weighting of $k_d$ can improve this as discussed in~Section~\ref{sec:AlternateBias1}. The algorithm that is most improved by adjusting the weightings is the `all-agent' algorithm such that it allows the hexagonal lattice to form and still produces an immediate directional bias through the aggregate \textit{destination vectors}.  
+
+The computational overhead of each of the algorithms differs only in the logic that is required for swarm coordination. The is no computation overhead for the `all-agents` algorithm. The computational requirements of the basic-count algorithm is a simple count of neighbours and the full perimeter requires sweeps of angles and visibility checks which may impact on processor speeds for implementation. 
+
+The main energy difference between the algorithms is the use of the GPS sensor which is a high energy consumption device. Therefore for general purpose coordination the basic-count algorithm provides the lowest GPS energy requirement and also minimal computational overhead.
+
+\section{Energy efficiency evaluation\label{reduced:EnergyReductionGPS}}
+The effect of an algorithm also effects the amount of gross energy that is used by the swarm in creating the directional effect. If we consider different size physical agents the overall effect of the algorithm can impact on the practical use of the swarm.
+
+The following evaluation is based on analysing the motor and GPS usage and ignores the energy consumption of sensors and agent processor units.
+
+Reducing the number of GPS modules being used at any point in time will impact the overall use of energy by the swarm. Comparing current GPS modules it was found that on average GPS modules consume approximately 44mA, for a 3.3V GPS. This equates to approximately 145mW of power as given by Ohm's Law. 
+
+%% \begin{equation}
+%% \label{eq:wattage}
+%% W = V * I
+%% \end{equation}
+
+The energy usage of a motor will depend upon the power requirements required for agent movement (dependant on agent size and weight). It is assumed that the agents will utilise an omni ball movement system to provide universal movement. Most omni ball systems utilise 3 motors to control the movement~(Figure~\ref{fig:OmniBall}), other configuration are possible such as the four wheeled omni directional wheelbase\cite{PD:06}.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=5.5cm]{figures/REPEL52-4}
+\includegraphics[width=6cm]{figures/OmniBall}
 \end{center}
-\caption{Stage 4\label{emerge:Repel52-4}}
+\caption{Omni ball motor arrangement \label{fig:OmniBall}}
 \end{figure}
 
+Three possible scenarios of different motor requirements are compared for possible energy savings.
+
+The three scenarios are for 3A, 1A and 400mA motors.
+
+The scenario assumes a GPS is being used in all the agents as shown in~(Table~\ref{tab:GPSUsage}) the energy consumption will be based on a swarm size of 200 agents.
+
+\begin{table}
+\begin{center}
+%\fontsize{8}{8}\selectfont
+\begin{tabular}{| r | r | r | r |}
+\hline
+Motor & Watts  & No GPS & With GPS \\ \hline
+100mA &  0.33W &  0.99W & 1.1352W\\ \hline
+1A    &  3.3W  &  9.90W & 10.0452W\\ \hline
+3A    &  9.9W  & 29.70W & 29.8452W\\ \hline
+\end{tabular}\caption{Energy consumption per agent} \label{tab:Energy1}
+\end{center}
+\end{table}
+
+\begin{table}
+%\fontsize{8}{8}\selectfont
+\begin{center}
+\begin{tabular}{| c | r | r | r |}
+\hline
+{\parbox{2cm}{\centering Motor}} & {\parbox{2cm}{\centering All\\100/0}} & {\parbox{2cm}{\centering Full\\36/64}} & {\parbox{2cm}{\centering Basic \\20/80}} \\ \hline
+100mA &  227.04W &  208.4544W &  203.808W\\ \hline
+1A    & 2009.04W & 1990.4544W & 1985.808W\\ \hline
+3A    & 5969.04W & 5950.4544W & 5945.808W\\ \hline
+\end{tabular}\caption{Energy consumption of swarm} \label{tab:Energy2}
+\end{center}
+\end{table}
+
+\begin{table}
+%\fontsize{8}{8}\selectfont
+\begin{center}
+\begin{tabular}{| c | r | r | r |}
+\hline
+{\parbox{2cm}{\centering Motor}} & {\parbox{2cm}{\centering All\\100/0}} & {\parbox{2cm}{\centering Full\\36/64}} & {\parbox{2cm}{\centering Basic \\20/80}} \\ \hline
+100mA & 0\% & 8.186\% & 10.232\% \\ \hline
+1A    & 0\% & 0.925\% &  1.156\% \\ \hline
+3A    & 0\% & 0.311\% &  0.389\% \\ \hline
+\end{tabular}\caption{Energy consumption of swarm} \label{tab:Energy3}
+\end{center}
+\end{table}
+
+The tables above demonstrate the most effective savings in energy can be achieved by using smaller motors. This implies using smaller agents will provide the most appropriate platform to use GPS energy conservation. This efficiency saving falls in line with the current trend in using smaller agents in swarms as described by Mulgaonkar et al.~\cite{KV:16,MCK:15} who work as part of the research group at the University of Pennsylvania.
+
+\section{Message Propagation Performance\label{methods:MessagePropogation}}
+Many algorithms depend upon the propagation of messages throughout a swarm to determine many of the characteristics that allow it to be controlled~\cite{MD:09}. However message propagation has an ($O(n^2)$) propagation profile which effects the speed at which a swarm can react to characteristic changes~\cite{SHA:07}. This could be countered by a reduction in the speed that agents move within a swarm to counter the message propagation delays. 
+
+The perimeter detection algorithms employed in this thesis have been reduced from ($O(n^2)$) to zero by limiting the agents information needs to simple proximity information from a sensor. This is a bio-inspired approach taken from the flocking of birds and shoaling of fish.
+
+By reducing the message propagation to zero the scalability of the perimeter and void reduction algorithms are improved. Most research using message propagation techniques use swarms of at most 50 agents, as discussed this thesis is based upon the control of arbitrary sized swarms.
+
+By localising the information requirements of an agent the storage requirements for message propagation are removed. Collating any characteristics of a swarm will require some form of local storage. As the messages propagate through a swarm more and more data is generated and data must be communicated and stored by each agent along with agent identifiers and some form of time stamp so data can be expired. In the case of the SenseSwarm algorithm this data is stored as a table of all agents, their coordinates, and a message id. This information is used to allows an agent to determine if it is at the lowest point in the swarm and therefore a perimeter agent~\cite{ZAPS:07}.
+
+\subsection{SenseSwarm Message Propagation Comparison}
 \begin{figure}
 \begin{center}
-\includegraphics[width=5.5cm]{figures/REPEL52-5}
+\includegraphics[width=6cm]{figures/MessagePropogation1}
 \end{center}
-\caption{Stage 5\label{emerge:Repel52-5}}
+\caption{Message Propagation \label{methods:MessagePropogation1}}
 \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=5.5cm]{figures/REPEL52-6}
-\end{center}
-\caption{Stage 6\label{emerge:Repel52-6}}
-\end{figure}
+The SenseSwarm~\cite{ZAPS:07, APZDAMC:09, AZDPS:11} algorithm detects perimeters using a mechanism by which a lowest point in the swarm is identified. This is achieved by each agent collating a table of every agents coordinates. Each message consists of an `agent identifier' and a `message id'. The message is constructed by an agent and forwarded to each of its neighbours. If a message is received with the same `agent identifier' and `message id' as a previous message it is discarded. If the message is detected for the first time then the message is forwarded to all of the neighbour-agent's neighbours.
+
+for $(n_1)$ the message propagation will be:-
+
+$n_1 \to \{n_3, n_2, n_7\}$ \\
+$n_3 \to \{n_2, n_5\}$\\
+$n_7 \to \{n_2\}$\\
+$n_2 \to \{n_5, n_4\}$\\
+$n_5 \to \{n_6\}$\\
+$n_4 \to \{n_6\}$\\
+
+The SenseSwarm algorithm works by locating the lowest agent in the swarm and then that agent propagating a message left and right to next lowest neighbours to identify the swarms outer edge. 
+
+The SenseSwarm mechanism does not detect internal voids and is therefore not suitable for concave reduction as discussed in chapter~\ref{chapter:ConcaveReduction}.
 
 
-%% \begin{figure}
-%% \centering
-%% \subfigure[Stage 1]{
-%% 	 \includegraphics[width=5.5cm]{figures/REPEL52-1}
-%% 	 \label{emerge:Repel52-1}
-%% }
-%% \subfigure[Stage 2]{
-%% 	 \includegraphics[width=5.5cm]{figures/REPEL52-2}
-%% 	 \label{emerge:Repel52-2}
-%% }
-%% \subfigure[Stage 3]{
-%% 	 \includegraphics[width=5.5cm]{figures/REPEL52-3}
-%% 	 \label{emerge:Repel52-3}
-%% }
-%% \subfigure[Stage 4]{
-%% 	 \includegraphics[width=5.5cm]{figures/REPEL52-4}
-%% 	 \label{emerge:Repel52-4}
-%% }
-%% \subfigure[Stage 5]{
-%% 	 \includegraphics[width=5.5cm]{figures/REPEL52-5}
-%% 	 \label{emerge:Repel52-5}
-%% }
-%% \subfigure[Stage 6]{
-%% 	 \includegraphics[width=5.5cm]{figures/REPEL52-6}
-%% 	 \label{emerge:Repel52-6}
-%% }
-%% \subfigure[Stage 7]{
-%% 	 \includegraphics[width=5.5cm]{figures/REPEL52-7}
-%% 	 \label{emerge:Repel52-7}
-%% }
-%% \subfigure[Stage 8]{
-%% 	 \includegraphics[width=5.5cm]{figures/REPEL52-8}
-%% 	 \label{emerge:Repel52-8}
-%% }
-%% \caption{Space filling via repulsion}
-%% \label{emerge:SwarmFloodRepel}
-%% \end{figure}
-
-\subsection{\textit{Inter-agent magnitude} analysis}
-Figure~\ref{emerge:REPELFILL5055-MAG} shows the \textit{inter-agent vector magnitude} produced between the agents. The initial deployment of the swarm shows a large negative value due to the swarm being in a highly compressed state. This causes the swarm to expand rapidly. Following the initial expansion the agents enter a phase of very close adjustment as their positions move towards a maximum expansion point. Eventually the agents are distributed to their maximum positions with the \textit{inter-agent vector magnitude} stabilises to zero with no variation. At this stage the swarm has stopped moving. This effect cannot be detected by using the distance metric which will simply show a distribution distance with a fixed variance. Having a fixed variance does not indicate the agents have stopped moving as agents could be moving in sympathy to each other creating a net change of zero.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-MAG}
-\end{center}
-\caption{Magnitude metric 0-450 seconds\label{emerge:REPELFILL5055-MAG}}
-\end{figure}
-
-Figure~\ref{emerge:REPELFILL5055-MAG-1-2} shows the initial settling period of the swarm in greater detail between 0 and 65 seconds. The graph shows that the settling period lasts for approximately 55 seconds following the initial expansion of the swarm from 0 to 10 seconds. The initial deployment of swarm has a highly negative \textit{interaction vector magnitude} causing rapid expansion. From 10 second until approx 62 seconds the agents \textit{inter-agent vectors} cause the agents to spread within the space. When the agents reach the limits of the repulsion field effect they stop moving. The \textit{inter-agent vector magnitude} stabalises to zero and all the agents stop moving.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-MAG-1-2}
-\end{center}
-\caption{Magnitude metric 0-65 seconds\label{emerge:REPELFILL5055-MAG-1-2}}
-\end{figure}
-
-Figure~\ref{emerge:REPELFILL5055-MAG-2-3} shows a detailed view of the magnitude for the swarm at the first repulsion field increment at approximately 73.5 seconds. The repulsion field effect is incremented by 1 unit. The field effect change is sufficient to allow agents to be within the neighbour field effect range. The agents are already distributed from the initial expansion so there is a `trickling' movement that occurs as the agents increase the area of the swarm within the space. The area containment is not causing any distrurbance to the swarm at this stage so the swarm settles to zero (84.5 seconds). As with the initial expansion all the agents are distributed such that they are on or beyond the limits of the repulsion field effect and the swarm stops moving. This process of incrementing the field effect and the swarm stablising continues until the field effect causes the swarm to expand to a point that it fills the area and the agents are unable to move sufficiently to stop interacting.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-MAG-2-3}
-\end{center}
-\caption{Magnitude metric 70-85 seconds\label{emerge:REPELFILL5055-MAG-2-3}}
-\end{figure}
-
-Figure~\ref{emerge:REPELFILL5055-MAG-8} shows the final part of the simulation where the swarm's resultant magnitude is unable to stablise completely. The graph shows the increment at approximately 230 seconds creating swarm movement which slowly increasing towards zero as the swrm expands however the \textit{inter-agent vector magnitude} is not able to reach zero. The swarm's agents are bound by the space cannot distribute themselves to a point where the field effect overlap is overcome. The \textit{inter-agent vector magnitude} average remains below 0 indicating there is a `pressure' that cannot be overcome and the agents are in continuous movement. At this stage it is possible for all the agents to obtain a state of equilibrium and for the average magnitude to stablise but owing to their containment the average magnitude would not be able to rise to zero. The swarm has therefore expanded to fill the space.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-MAG-8}
-\end{center}
-\caption{Magnitude metric 235-315 seconds\label{emerge:REPELFILL5055-MAG-8}}
-\end{figure}
-
-\subsection{Distance analysis}
-Figure~\ref{emerge:REPELFILL5055-DIST} shows the distance metric for the same simulation as above. The initial deployment shows the agents are quite close together but immediately expand, the variance reduces as the agents become more evenly distributed. 
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-DIST}
-\end{center}
-\caption{Distance metric 0-450 seconds\label{emerge:REPELFILL5055-DIST}}
-\end{figure}
-
-Figure~\ref{emerge:REPELFILL5055-DIST-1} shows the period when the swarm has initially expanded to a point that the distances appear to stabilise. The stable state is shown as a constant average distance with a constant variance. It cannot be assumed that the agents have stopped moving at this point in the simulation. Agents could change positions such that the average variance is unaffected although this is unlikely. Over this same period the magnitude is zero as shown in~Figure~\ref{emerge:REPELFILL5055-MAG}. These two facts therefore allow the swarms state to be fully realised. The agents are distributed unevenly and are static.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-DIST-1}
-\end{center}
-\caption{Distance metric 60-75 seconds\label{emerge:REPELFILL5055-DIST-1}}
-\end{figure}
-
-Figure~\ref{emerge:REPELFILL5055-DIST-1-2} shows the effect of the first increment of the repulsion field effect increment (50-51 units). The swarm agents move to equalise the \textit{inter-agent vectors} by increasing the distance between the agents. The average distance changes very little due to the irregular distribution of the agents (there is no cohesion to help balance the distribution). The variance in the distance has reduced as the agents are more evenly distributed. At this stage the agents are not filling the space (\textit{inter-agent vector magnitude} has resolved to 0)~(Figure~\ref{emerge:REPELFILL5055-MAG-2-3}). The two metrics together indicate that the swarm's agent distribution is more even but the swarm is not filling the space.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-DIST-1-2}
-\end{center}
-\caption{Distance metric 70-85 seconds\label{emerge:REPELFILL5055-DIST-1-2}}
-\end{figure}
-
-Figure~\ref{emerge:REPELFILL5055-DIST-2-3} shows that at each increment the inter-agent average distances varies but the variance decreases as the swarm stabilises and the distribution improves. This improvement in distribution is the agents `spreading' more evenly as the swarm expands within the area. However after the last field effect increase at 230 seconds the swarm is no longer able to stabilise to a static state. 
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-DIST-2-3}
-\end{center}
-\caption{Distance metric 180-280 seconds\label{emerge:REPELFILL5055-DIST-2-3}}
-\end{figure}
-
-Figure~\ref{emerge:REPELFILL5055-DIST-8} shows the effect of the final increment. The swarm expands but is unable to stabilise the system. The average distances fluctuate as the agents move to balance the \textit{inter-agent vectors} but the distances are unable to increase any further. The inter-agent distances are effected by the positioning of some of the agents preventing a regular shape to be formed this causes the distance variance to increase and the swarms structure starts to oscillate. These characteristics indicate that the area may be fully filled. The magnitude at this point is below zero~Figure~\ref{emerge:REPELFILL5055-MAG-8} which indicates expansion of the swarm is posible but not occuring. The conclusion therefore is that the swarm is fully expanded. The magnitude indicates a tendency for the swarm to expand but the distances are not increasing in line with the magnitude increase. 
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=8.5cm]{figures/REPELFILL5055-DIST-8}
-\end{center}
-\caption{Distance metric 235-315 seconds\label{emerge:REPELFILL5055-DIST-8}}
-\end{figure}
-
-\section{Conclusion}
-Both of the flood fill techniques work successfully in filling the space. The use of the distance metric is limited in showing the full state state of a swarm due there being no indication of a static state. The \textit{inter-agent vector} metric provides an indication of the ability of the swarm to expand. Using the two metrics together allows the level of the flood filling of a space to be identified. A large distribution in distances indicates possible spaces in the distribution of the agents and ensuring the average \textit{inter-agent vector magnitude} becomes negative ensures the swarm will resolve anomalies in the distribution.
-
-The difference in the approaches of using cohesion combined with repulsion and repulsion only provide two very different characteristics for determining the exit condition for the flood fill. The combination of repulsion and cohesion fields together result in a swarm that moves not only to fill the space but also to accommodate inter-agent relationships as a result the swarm is unable to obtain a static state. Using repulsion only provides clear indications when the space is not filling a space and allows `gaps' to occur in the swarms structure as the cohesion is not present even when agents are within visible `range'.
 
 \bibliographystyle{plain}
 \bibliography{thesis}
