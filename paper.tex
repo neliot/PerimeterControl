@@ -645,11 +645,11 @@ These baseline measurements are used to identify the changes that occur in the s
 \section{Destination vector application}
 Many mechanisms can be used to influence a swarm to travel in a specific direction. These mechanisms generally involve the use of sensors such as magnetometers or GPS's to achieve a directional coordinate \cite{SG:15,TG:12}. 
 
-This thesis aims to produce algorithms that will reduce the number of active sensors that are needed for the directional coordination of a swarm. When reducing the number of active sensors the algorithms must maintain sufficient coordination of agents to influence the swarm's direction and therefore create an overall \textit{destination vector} to a swarms movement. Reducing the number of active sensors will reduce the net energy usage of the sensors and potentially increase the sensors viable lifetime. Another aspect of the algorithms is that they should minimise the internal disturbance (jitter) created by the \textit{destination vector}.
+This paper aims to produce algorithms that will reduce the number of active sensors that are needed for the directional coordination of a swarm. When reducing the number of active sensors the algorithms must maintain sufficient coordination of agents to influence the swarm's direction and therefore create an overall \textit{destination vector} to a swarms movement. Reducing the number of active sensors will reduce the net energy usage of the sensors and potentially increase the sensors viable lifetime. Another aspect of the algorithms is that they should minimise the internal disturbance (jitter) created by the \textit{destination vector}.
 
 There are two distinct approaches to configuring agents: all the agents are configured identically (homogeneous swarm) or the agents are in a selection of different configurations (heterogeneous swarm)~\cite{BS:13}. 
 
-The following assumptions are made in this thesis:
+The following assumptions are made in this paper:
 
 \textit{Assumption 1:} All agents are identical (homogeneous) but are able select subsystems as necessary and adopt different roles depending upon the algorithm being used to coordinate the swarm. \\
 \textit{Assumption 2:} As the swarm progresses towards a destination the role of an agent can change such that all the agents are identical in construct but they can enable and disable sensors as necessary. This will allow agents within the swarm to self promote to the coordinator role should a set of conditions arise.\\
@@ -658,7 +658,7 @@ The following assumptions are made in this thesis:
 Reducing the usage of sensors will reduce the net power consumption of the swarm and increase the time that an agent can be a part of a swarm. If the purpose of the swarm is reconnaissance then the reduction in energy usage may allow a longer traversal time, or allow the swarm to travel further. As agents in the swarm will use there resources at different rates some agents may be lost due to resource exhaustion. The algorithms should therefore be resilient to this.
 
 \section{Swarm destination vector}
-The following assumptions are made in this thesis:
+The following assumptions are made in this paper:
 
 \textit{Assumption 1:} The direction of the swarm is based upon having a fixed goal that is known to all the agents. \\
 \textit{Assumption 2:} The goal is migrated towards based on a simulated GPS signal and the bias $k_d$ is applied to the \textit{destination vector} to influence the movement of the agents. 
@@ -668,9 +668,9 @@ The swarm's destination is established by the coordinator agents influencing the
 \section{Identifying the coordinator role}
 For an agent to change its role from a standard agent to a coordinator there needs to an algorithm that identifies a set of conditions to trigger the change. This same algorithm also triggers an agent to revert to being a standard agent. The coordinator selection algorithm is separate from the agent coordination algorithms that determine cohesion and repulsion.
 
-In this thesis three algorithms are presented and compared. In the first algorithm, all agents have the role of a coordinator permanently. This will be referred to as the all-agent algorithm. The other two mechanisms employ a selection criteria to identify if the simulated GPS sensor should be enabled. These two algorithms are: full-perimeter detection and the partial perimeter detection. Partial perimeter detection will be referred to as the basic-count algorithm.
+In this paper three algorithms are presented and compared. In the first algorithm, all agents have the role of a coordinator permanently. This will be referred to as the all-agent algorithm. The other two mechanisms employ a selection criteria to identify if the simulated GPS sensor should be enabled. These two algorithms are: full-perimeter detection and the partial perimeter detection. Partial perimeter detection will be referred to as the basic-count algorithm.
 
-There are many other ways in which the coordinator role could be established such as randomly enabling a GPS for a set period of time or oscillating the role on and off but they are beyond the scope of this thesis.
+There are many other ways in which the coordinator role could be established such as randomly enabling a GPS for a set period of time or oscillating the role on and off but they are beyond the scope of this paper.
 
 \section{Monolithic swarm - (all-agent)} 
 In a monolithic swarm \cite{BS:13} the propagation towards the goal is achieved by all the agents using a GPS signal to give each agents' movement a \textit{direction vector} towards a required goal. There is no selection criteria and no computational overhead for the agents.
@@ -1054,7 +1054,7 @@ Figure~\ref{reduced:CompressedRangeError} shows two agents $b^{'}$ and $b^{''}$.
 
 The possible pathways that could be detected as the perimeter are: $5 \rightarrow b^{'} \rightarrow 1$, $5 \rightarrow b^{''} \rightarrow 1$. A third alternative of $5 \rightarrow b^{'} \rightarrow b^{''} \rightarrow 1$ could also be used but it is not strictly a true perimeter route as the previous routes are shorter.  
 
-This problem can be resolved fully by introducing a communications channel that would allow the affected agents to negotiate a resolution to chose one of the shorter pathways~\cite{MD:09}, as there is no communications available this is not an option. In this thesis the error is limited to a very specific set of circumstances which will only occur during the initial expansion phase or during obstacle avoidance. The algorithm described in~Section~\ref{sec:PerimeterAgentDetection} selects both agents as being perimeter agents therefore the problem can is resolved by using the pseudo-perimeter ($5 \rightarrow b^{'} \rightarrow b^{''} \rightarrow 1$) ensuring a continuous perimeter is detected. 
+This problem can be resolved fully by introducing a communications channel that would allow the affected agents to negotiate a resolution to chose one of the shorter pathways~\cite{MD:09}, as there is no communications available this is not an option. In this paper the error is limited to a very specific set of circumstances which will only occur during the initial expansion phase or during obstacle avoidance. The algorithm described in~Section~\ref{sec:PerimeterAgentDetection} selects both agents as being perimeter agents therefore the problem can is resolved by using the pseudo-perimeter ($5 \rightarrow b^{'} \rightarrow b^{''} \rightarrow 1$) ensuring a continuous perimeter is detected. 
 
 The screen shot below shows the algorithm resolving the issue to the pseudo-perimeter in the simulator~(Figure~\ref{reduced:PerimeterAnomaly}).
 
@@ -1066,11 +1066,11 @@ The screen shot below shows the algorithm resolving the issue to the pseudo-peri
 \end{figure}
 
 \subsubsection{Perimeter and void detection}\label{sec:PerimeterVoidDetection} 
-The focus of this thesis is the control of arbitrary sized swarms. The identification of the inner and outer perimeters would require a communications mechanism to determine which type of perimeter an agent was a part of~\cite{ZAPS:07,MD:09}. A mean angle $< 180^\circ$ would indicate a void. A mean angle $> 180^\circ$ would indicate an outer perimeter which may be enclose inside a swarm as shown in~Figure~\ref{concave:VoidPerimeter2} on page \pageref{concave:VoidPerimeter2}.  
+The focus of this paper is the control of arbitrary sized swarms. The identification of the inner and outer perimeters would require a communications mechanism to determine which type of perimeter an agent was a part of~\cite{ZAPS:07,MD:09}. A mean angle $< 180^\circ$ would indicate a void. A mean angle $> 180^\circ$ would indicate an outer perimeter which may be enclose inside a swarm as shown in~Figure~\ref{concave:VoidPerimeter2} on page \pageref{concave:VoidPerimeter2}.  
 
 The communications architecture would prevent swarms of an arbitrary size from being coordinated due to the $O(n^{2})$ message propagation time factor~(Figure~\ref{methods:MessagePropogation})~\cite{SHA:07}. It should be noted however that introducing the communications layer would increase the potential functionality of the swarm and may have practical applications in other scenarios where smaller swarms are appropriate. 
 
-A further issue of introducing a communications infrastructure would be the increase in the energy usage of the swarm. Identification of the perimeter type is therefore not practical in context of this thesis.
+A further issue of introducing a communications infrastructure would be the increase in the energy usage of the swarm. Identification of the perimeter type is therefore not practical in context of this paper.
 
 \subsection{Baseline/full perimeter comparison\label{section:compareBaselineFullPerimeter}}
 Figures~\ref{reduced:BaselineFullPerimeterMag1} and \ref{reduced:BaselineFullPerimeterDist1} show the comparisons of the baseline swarm against the goal based swarm using full perimeter detection. 
@@ -1481,9 +1481,9 @@ The tables above demonstrate the most effective savings in energy can be achieve
 \section{Message Propagation Performance\label{methods:MessagePropogation}}
 Many algorithms depend upon the propagation of messages throughout a swarm to determine many of the characteristics that allow it to be controlled~\cite{MD:09}. However message propagation has an ($O(n^2)$) propagation profile which effects the speed at which a swarm can react to characteristic changes~\cite{SHA:07}. This could be countered by a reduction in the speed that agents move within a swarm to counter the message propagation delays. 
 
-The perimeter detection algorithms employed in this thesis have been reduced from ($O(n^2)$) to zero by limiting the agents information needs to simple proximity information from a sensor. This is a bio-inspired approach taken from the flocking of birds and shoaling of fish.
+The perimeter detection algorithms employed in this paper have been reduced from ($O(n^2)$) to zero by limiting the agents information needs to simple proximity information from a sensor. This is a bio-inspired approach taken from the flocking of birds and shoaling of fish.
 
-By reducing the message propagation to zero the scalability of the perimeter and void reduction algorithms are improved. Most research using message propagation techniques use swarms of at most 50 agents, as discussed this thesis is based upon the control of arbitrary sized swarms.
+By reducing the message propagation to zero the scalability of the perimeter and void reduction algorithms are improved. Most research using message propagation techniques use swarms of at most 50 agents, as discussed this paper is based upon the control of arbitrary sized swarms.
 
 By localising the information requirements of an agent the storage requirements for message propagation are removed. Collating any characteristics of a swarm will require some form of local storage. As the messages propagate through a swarm more and more data is generated and data must be communicated and stored by each agent along with agent identifiers and some form of time stamp so data can be expired. In the case of the SenseSwarm algorithm this data is stored as a table of all agents, their coordinates, and a message id. This information is used to allows an agent to determine if it is at the lowest point in the swarm and therefore a perimeter agent~\cite{ZAPS:07}.
 
