@@ -597,7 +597,7 @@ To allow an analysis of each algorithm's effect on a swarm a baseline measuremen
 
 \begin{table}
 \begin{center}
-\begin{tabular}{| p{1.5cm} | c | p{4cm} |}
+\begin{tabular}{| p{1.5cm} | c | p{3.5cm} |}
 \hline
 \bf Weight \bf Component & \bf Hexagonal & \bf Description \\ \hline
 Sample Rate & 100 & ms - Unit sampling interval\\  \hline
@@ -660,20 +660,20 @@ Reducing the usage of sensors will reduce the net power consumption of the swarm
 \section{Swarm destination vector}
 The following assumptions are made in this thesis:
 
-\textit{Assumption 1:} The direction of the swarm is based upon having a fixed goal that is known to all the agents (Section \ref{sec:Direction1}). \\
+\textit{Assumption 1:} The direction of the swarm is based upon having a fixed goal that is known to all the agents. \\
 \textit{Assumption 2:} The goal is migrated towards based on a simulated GPS signal and the bias $k_d$ is applied to the \textit{destination vector} to influence the movement of the agents. 
 
 The swarm's destination is established by the coordinator agents influencing the non-coordinator agents. This influence is applied through the coordinators proximity to non-coordinator agents (cohesion). Coordinator agents are identified by a set of conditions. The conditions are the activators for the coordinator identification algorithms.
 
 \section{Identifying the coordinator role}
-For an agent to change its role from a standard agent to a coordinator there needs to an algorithm that identifies a set of conditions to trigger the change. This same algorithm also triggers an agent to revert to being a standard agent. The coordinator selection algorithm is separate from the agent coordination algorithms discussed in chapter~\ref{chapter:methods}.
+For an agent to change its role from a standard agent to a coordinator there needs to an algorithm that identifies a set of conditions to trigger the change. This same algorithm also triggers an agent to revert to being a standard agent. The coordinator selection algorithm is separate from the agent coordination algorithms that determine cohesion and repulsion.
 
 In this thesis three algorithms are presented and compared. In the first algorithm, all agents have the role of a coordinator permanently. This will be referred to as the all-agent algorithm. The other two mechanisms employ a selection criteria to identify if the simulated GPS sensor should be enabled. These two algorithms are: full-perimeter detection and the partial perimeter detection. Partial perimeter detection will be referred to as the basic-count algorithm.
 
 There are many other ways in which the coordinator role could be established such as randomly enabling a GPS for a set period of time or oscillating the role on and off but they are beyond the scope of this thesis.
 
 \section{Monolithic swarm - (all-agent)} 
-In a monolithic swarm \cite{BS:13} the propagation towards the goal is achieved by all the agents using a GPS signal to give each agents' movement a \textit{direction vector} towards a required goal~(Equation~\ref{eq:BotDirection1}). There is no selection criteria and no computational overhead for the agents.
+In a monolithic swarm \cite{BS:13} the propagation towards the goal is achieved by all the agents using a GPS signal to give each agents' movement a \textit{direction vector} towards a required goal. There is no selection criteria and no computational overhead for the agents.
 
 Figure~\ref{reduced:Monolithic1} shows a screen shot from the swarm simulator with all agents GPS's enabled. This can be seen as the agents highlighted with a ring around them. The small `tail' on each agent is the \textit{movement vector}.
 
@@ -731,9 +731,9 @@ This effect can be seen in both the magnitudes shown in~Figure~\ref{reduced:Base
 \end{figure}
 
 \section{Simple multifaceted swarm (basic-count)} 
-In a simple multifaceted swarm the propagation towards the goal is achieved by generating a \textit{destination vector} for an agent when the agent conforms to a simple counting rule. This \textit{destination vector} is obtained by using the agent's GPS to identify its current coordinate and generating a vector from that coordinate to a specific destination point. This rule creates a subset of agents that apply a local \textit{direction vector} to their movement. This has the effect of creating a directional effect on the whole swarm. The aggregate \textit{direction vector} magnitude of the swarm is less than that produced when all agents apply a \textit{direction vector}. This reduction is further diluted by agents without the \textit{direction vector} calculating a \textit{movement vector} to an equilibrium position~(Equation~\ref{eq:BotDirection1}). This change in the aggregate \textit{direction vector} will impact on a swarm's `jitter'. This is discussed in more detail in~Section~\ref{sec:AlternateBias1}. With there only being a limited number of peripheral agents invoking their GPS signal there will also be a net reduction in the energy usage of the swarm~(Figure~\ref{reduced:EnergyReductionGPS}).
+In a simple multifaceted swarm the propagation towards the goal is achieved by generating a \textit{destination vector} for an agent when the agent conforms to a simple counting rule. This \textit{destination vector} is obtained by using the agent's GPS to identify its current coordinate and generating a vector from that coordinate to a specific destination point. This rule creates a subset of agents that apply a local \textit{direction vector} to their movement. This has the effect of creating a directional effect on the whole swarm. The aggregate \textit{direction vector} magnitude of the swarm is less than that produced when all agents apply a \textit{direction vector}. This reduction is further diluted by agents without the \textit{direction vector} calculating a \textit{movement vector} to an equilibrium position. This change in the aggregate \textit{direction vector} will impact on a swarm's `jitter'. This is discussed in more detail in~Section~\ref{sec:AlternateBias1}. With there only being a limited number of peripheral agents invoking their GPS signal there will also be a net reduction in the energy usage of the swarm~(Figure~\ref{reduced:EnergyReductionGPS}).
 
-A swarm with the appropriate field effects will propagate towards hexagons made from a central agent and six neighbours~(Figure~\ref{fig:StableForms}). A swarm can be influenced by its surroundings, which involves the interaction of other agents (as neighbours) and obstacles which can cause a compression of the agents. Compression can also occur during the stabilisation phase of a swarm. These situations can cause an agent to have less than 6 neighbours but still be surrounded. A general rule therefore to detect a rudimentary boundary of a hexagonal swarm is to calculate the number of neighbours an agent has. If the total is less than five ($nbr(b) < 5$) then there is a high probability that the agent is either in a void within the swarm or on an external perimeter. If an agent is on a perimeter or a void the it should enable its GPS and become a coordinator and provide a directional bias to the swarm via its \textit{direction vector}. This coordinator role affects the immediate neighbours \textit{movement vector} through cohesion/repulsion~(Figure~\ref{reduced:SimpleMulti12}). This simple detection algorithm allows a directional bias to be induced into a swarm with minimal computational impact on the coordinator agents.
+A swarm with the appropriate field effects will propagate towards hexagons made from a central agent and six neighbours. A swarm can be influenced by its surroundings, which involves the interaction of other agents (as neighbours) and obstacles which can cause a compression of the agents. Compression can also occur during the stabilisation phase of a swarm. These situations can cause an agent to have less than 6 neighbours but still be surrounded. A general rule therefore to detect a rudimentary boundary of a hexagonal swarm is to calculate the number of neighbours an agent has. If the total is less than five ($nbr(b) < 5$) then there is a high probability that the agent is either in a void within the swarm or on an external perimeter. If an agent is on a perimeter or a void the it should enable its GPS and become a coordinator and provide a directional bias to the swarm via its \textit{direction vector}. This coordinator role affects the immediate neighbours \textit{movement vector} through cohesion/repulsion~(Figure~\ref{reduced:SimpleMulti12}). This simple detection algorithm allows a directional bias to be induced into a swarm with minimal computational impact on the coordinator agents.
 
 \subsection{Simple multifaceted algorithm}
 The mechanism to enable a coordinator agent is to count the number of neighbours that an agent has~(Algorithm~\ref{algo:neighbourDetect}). This process is already part of the cohesion and repulsion calculations.
@@ -758,7 +758,7 @@ The mechanism to enable a coordinator agent is to count the number of neighbours
 \end{figure}
 
 \subsection{Basic-count effect\label{section:compareBaselineBasicCount1}}
-Figure~\ref{reduced:BaselineBasicCountMag1} and \ref{reduced:BaselineBasicCountDist1} show the comparison of the baseline swarm against the goal-based swarm with reduced GPS usage. Both graphs show that the settling period of the swarm from the chaotic state is very much in line with the settling period of the baseline swarm. This is due to the algorithms effect when the swarm is initially compressed. The neighbour count prevents any agents from being coordinators ($|nbr(b)| > 5$). This is supported by the propagation of the coordinator role in Figure~\ref{fig:SwarmNeighbourCount}. The swarm therefore acts in a similar manner to the baseline. As the simulation progresses the swarm settles into a condition that is similar to baseline with a higher deviation and lower mean resultant \textit{inter-agent vector}. This is due to there being a \textit{direction vector} which impacts on the coordinator agents and propagates to the non-coordinator agents through proximity. This effect is shown in Figure~\ref{metric:StabilityNullVector}. 
+Figure~\ref{reduced:BaselineBasicCountMag1} and \ref{reduced:BaselineBasicCountDist1} show the comparison of the baseline swarm against the goal-based swarm with reduced GPS usage. Both graphs show that the settling period of the swarm from the chaotic state is very much in line with the settling period of the baseline swarm. This is due to the algorithms effect when the swarm is initially compressed. The neighbour count prevents any agents from being coordinators ($|nbr(b)| > 5$). This is supported by the propagation of the coordinator role in Figure~\ref{fig:SwarmNeighbourCount}. The swarm therefore acts in a similar manner to the baseline. As the simulation progresses the swarm settles into a condition that is similar to baseline with a higher deviation and lower mean resultant \textit{inter-agent vector}. This is due to there being a \textit{direction vector} which impacts on the coordinator agents and propagates to the non-coordinator agents through proximity. 
 
 \begin{figure}
 \begin{center}
@@ -778,7 +778,7 @@ Figure~\ref{reduced:BaselineBasicCountMag1} shows that initially the average \te
  
 Figure~\ref{reduced:BaselineBasicCountDist1} shows that the impact of the directional bias allows the agents to move closer together. This increased closeness reduces the effective area coverage of the swarm. 
 
-Figure~\ref{reduced:SimpleMulti12} shows a screen shot of the simulator using the basic-count algorithm. The reduction in GPS usage is limited to edge based agents of the swarm. Some perimeter agents are not identified as a coordinator due to the number of neighbours they have being $\geq5$. These agents tend to be indented on a perimeter edge. This feature will be discussed in more detail in chapter~\ref{chapter:ConcaveReduction}.
+Figure~\ref{reduced:SimpleMulti12} shows a screen shot of the simulator using the basic-count algorithm. The reduction in GPS usage is limited to edge based agents of the swarm. Some perimeter agents are not identified as a coordinator due to the number of neighbours they have being $\geq5$. These agents tend to be indented on a perimeter edge.
 
 \begin{figure}
 \begin{center}
@@ -830,7 +830,7 @@ There is an exceptional circumstance that must be considered in perimeter detect
 \caption[Swarm with full perimeter detection]{Swarm with full perimeter detection (\textit{screen shot from simulator})\label{fig:FullPerimeter1}}
 \end{figure}
 
-The full-perimeter algorithm allows a predictable subset of agents to be identified. This subset can be used to influence the overall direction of the swarm. The full-perimeter detection algorithm detects similar agents to the basic-count algorithm but also identifies `indented' agents that the basic-count algorithm ignores. The basic-count algorithm identifies these agents as having a neighbour count beyond the threshold. These additionally detected agents are used in void reduction which is discussed in chapter~\ref{chapter:ConcaveReduction}.
+The full-perimeter algorithm allows a predictable subset of agents to be identified. This subset can be used to influence the overall direction of the swarm. The full-perimeter detection algorithm detects similar agents to the basic-count algorithm but also identifies `indented' agents that the basic-count algorithm ignores. The basic-count algorithm identifies these agents as having a neighbour count beyond the threshold.
 
 \subsection{Full-perimeter coordinator detection}\label{sec:PerimeterAgentDetection} 
 The process of detecting a perimeter agent is based upon identifying when the agent in not surrounded by interconnected neighbours~(Figure~\ref{reduced:Perimeter1}). The process has several conditional checks that detect the status of an agent, each step is discussed below. 
@@ -1103,7 +1103,7 @@ The simulation shows that once the swarm has stabilised the majority of agents a
 The experiment demonstrates that the perimeter detection algorithm is a practical technique to apply to the detection of a swarm subset to reduce GPS usage. However the environmental parameters the impact of the \textit{destination vectors}create a high level of jitter within the swarm.
 
 \section{Baseline and effect comparison\label{section:compareBaselineAll1}}
-To compare the three algorithms and their effects the metric defined in chapter~\ref{chapter:metric} is combined with the swarm's emergent properties. The internal movement (jitter), the terminal speed of the centroid of the swarm and the effect on the path of the swarm must are considered. 
+To compare the three algorithms and their effects the metrics applied. The internal movement (jitter), the terminal speed of the centroid of the swarm and the effect on the path of the swarm are considered. 
 
 Analysing the path and speed of a swarm requires the centroid to be identified~\cite{HAY:08,VG:05,GP:02,GP:04,GP:04a,GP:05,GP:11}. The centroid is then tracked over time as the swarm progresses to its a goal~(Equation~\ref{eq:Centroid1}).
 
@@ -1182,7 +1182,7 @@ All algorithms do eventually settle to a stable structure (for their environment
 
 \begin{table}
 \begin{center}
-\begin{tabular}{| p{2.5cm} | c | c | p{5cm} |}
+\begin{tabular}{| p{1.5cm} | c | c | p{3cm} |}
 \hline
 GPS Model & Bots GPS & \% usage & Description \\ \hline
 All-agents & 200 & 100\% & All agents are coordinators \\ \hline
@@ -1282,7 +1282,7 @@ Full perimeter & 399.5010461444 & 19.9750523072 \\  \hline
 
 \begin{table}
 \begin{center}
-\begin{tabular}{| l | l | l |}
+\begin{tabular}{| p{1.2cm} | l | l |}
 \hline
 GPS Model & End & Distance \\ \hline
 All-agents & (1294.5940641812, 233.788749492987) & 588.5813143506\\ \hline
@@ -1455,7 +1455,7 @@ Motor & Watts  & No GPS & With GPS \\ \hline
 \begin{center}
 \begin{tabular}{| c | r | r | r |}
 \hline
-{\parbox{2cm}{\centering Motor}} & {\parbox{2cm}{\centering All\\100/0}} & {\parbox{2cm}{\centering Full\\36/64}} & {\parbox{2cm}{\centering Basic \\20/80}} \\ \hline
+{\parbox{1.5cm}{\centering Motor}} & {\parbox{1cm}{\centering All\\100/0}} & {\parbox{1.5cm}{\centering Full\\36/64}} & {\parbox{1.5cm}{\centering Basic \\20/80}} \\ \hline
 100mA &  227.04W &  208.4544W &  203.808W\\ \hline
 1A    & 2009.04W & 1990.4544W & 1985.808W\\ \hline
 3A    & 5969.04W & 5950.4544W & 5945.808W\\ \hline
@@ -1468,7 +1468,7 @@ Motor & Watts  & No GPS & With GPS \\ \hline
 \begin{center}
 \begin{tabular}{| c | r | r | r |}
 \hline
-{\parbox{2cm}{\centering Motor}} & {\parbox{2cm}{\centering All\\100/0}} & {\parbox{2cm}{\centering Full\\36/64}} & {\parbox{2cm}{\centering Basic \\20/80}} \\ \hline
+{\parbox{1.5cm}{\centering Motor}} & {\parbox{1cm}{\centering All\\100/0}} & {\parbox{1,5cm}{\centering Full\\36/64}} & {\parbox{1.5cm}{\centering Basic \\20/80}} \\ \hline
 100mA & 0\% & 8.186\% & 10.232\% \\ \hline
 1A    & 0\% & 0.925\% &  1.156\% \\ \hline
 3A    & 0\% & 0.311\% &  0.389\% \\ \hline
@@ -1507,10 +1507,6 @@ $n_5 \to \{n_6\}$\\
 $n_4 \to \{n_6\}$\\
 
 The SenseSwarm algorithm works by locating the lowest agent in the swarm and then that agent propagating a message left and right to next lowest neighbours to identify the swarms outer edge. 
-
-The SenseSwarm mechanism does not detect internal voids and is therefore not suitable for concave reduction as discussed in chapter~\ref{chapter:ConcaveReduction}.
-
-
 
 \bibliographystyle{plain}
 \bibliography{thesis}

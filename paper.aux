@@ -50,6 +50,8 @@
 \newlabel{concave:VoidPerimeter1}{{VII}{5}}
 \@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Void and perimeter}}{5}}
 \newlabel{concave:VoidPerimeter1}{{15}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-A}}Full-perimeter coordinator detection}{5}}
+\newlabel{sec:PerimeterAgentDetection}{{\unhbox \voidb@x \hbox {VII-A}}{5}}
 \newlabel{concave:VoidPerimeter2}{{VII}{5}}
 \@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Multiple perimeters}}{5}}
 \newlabel{concave:VoidPerimeter2}{{16}{5}}
@@ -57,8 +59,6 @@
 \newlabel{fig:FullPerimeter1}{{17}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Complex multifaceted agents }}{6}}
 \newlabel{reduced:Perimeter1}{{18}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-A}}Full-perimeter coordinator detection}{6}}
-\newlabel{sec:PerimeterAgentDetection}{{\unhbox \voidb@x \hbox {VII-A}}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces SmallNeighbourCount}}{6}}
 \newlabel{SmallNeighbourCount}{{19}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces NeighbourAngle: Sorted by angle}}{6}}
@@ -85,9 +85,9 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {27}{\ignorespaces Simulator perimeter detection}}{8}}
 \newlabel{reduced:PerimeterAnomaly}{{27}{8}}
 \newlabel{sec:PerimeterVoidDetection}{{\unhbox \voidb@x \hbox {VII-A}2}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VII-A}2}Perimeter and void detection}{8}}
 \@writefile{lof}{\contentsline {figure}{\numberline {28}{\ignorespaces Baseline/Full perimeter magnitude comparison}}{8}}
 \newlabel{reduced:BaselineFullPerimeterMag1}{{28}{8}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {VII-A}2}Perimeter and void detection}{8}}
 \newlabel{section:compareBaselineFullPerimeter}{{\unhbox \voidb@x \hbox {VII-B}}{8}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-B}}Baseline/full perimeter comparison}{8}}
 \citation{HAY:08,VG:05,GP:02,GP:04,GP:04a,GP:05,GP:11}
@@ -96,11 +96,11 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-C}}Complex Multifaceted Swarm (full-perimeter) - Simulation}{9}}
 \newlabel{section:compareBaselineAll1}{{VIII}{9}}
 \@writefile{toc}{\contentsline {section}{\numberline {VIII}Baseline and effect comparison}{9}}
+\newlabel{eq:Centroid1}{{3}{9}}
 \@writefile{lof}{\contentsline {figure}{\numberline {30}{\ignorespaces Baseline distance comparison}}{9}}
 \newlabel{reduced:BaselineAllDist1}{{30}{9}}
 \@writefile{lof}{\contentsline {figure}{\numberline {31}{\ignorespaces Baseline distance comparison}}{9}}
 \newlabel{reduced:BaselineAllDist2}{{31}{9}}
-\newlabel{eq:Centroid1}{{3}{9}}
 \newlabel{section:stabilityComparison1}{{\unhbox \voidb@x \hbox {VIII-A}}{9}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-A}}Internal movement comparison}{9}}
 \@writefile{lof}{\contentsline {figure}{\numberline {32}{\ignorespaces Baseline magnitude comparison}}{10}}
@@ -135,8 +135,6 @@
 \newlabel{tab:SwarmSpeed1}{{III}{12}}
 \@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Swarm centroid after stabilisation (60s)}}{12}}
 \newlabel{tab:SwarmSpeed2}{{IV}{12}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-E}}Alternate weightings for directional bias}{12}}
-\newlabel{sec:AlternateBias1}{{\unhbox \voidb@x \hbox {VIII-E}}{12}}
 \@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Swarm distance and speed after stabilisation (40s-60s)}}{12}}
 \newlabel{tab:SwarmSpeed3}{{V}{12}}
 \@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Distance to destination after run}}{12}}
@@ -145,8 +143,10 @@
 \newlabel{fig:SwarmSpeed1}{{38}{12}}
 \@writefile{lof}{\contentsline {figure}{\numberline {39}{\ignorespaces Neighbour count effect from \textit  {destination vectors}}}{12}}
 \newlabel{fig:SwarmNeighbourCount}{{39}{12}}
-\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces Swarm GPS proportional weighting}}{12}}
-\newlabel{tab:GPSWeighting}{{VII}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-E}}Alternate weightings for directional bias}{12}}
+\newlabel{sec:AlternateBias1}{{\unhbox \voidb@x \hbox {VIII-E}}{12}}
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces Swarm GPS proportional weighting}}{13}}
+\newlabel{tab:GPSWeighting}{{VII}{13}}
 \@writefile{lof}{\contentsline {figure}{\numberline {40}{\ignorespaces Neighbour count effect from balanced directional bias}}{13}}
 \newlabel{fig:SwarmNeighbourCountBalanced}{{40}{13}}
 \@writefile{lof}{\contentsline {figure}{\numberline {41}{\ignorespaces Swarm distance analysis}}{13}}
@@ -160,35 +160,35 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {45}{\ignorespaces Swarm path analysis}}{13}}
 \newlabel{fig:BaselineAllPath100-60-20-1}{{45}{13}}
 \citation{PD:06}
+\citation{KV:16,MCK:15}
+\citation{MD:09}
+\citation{SHA:07}
 \@writefile{lof}{\contentsline {figure}{\numberline {46}{\ignorespaces Swarm path analysis}}{14}}
 \newlabel{fig:BaselineAllPath100-60-20-2}{{46}{14}}
 \@writefile{lof}{\contentsline {figure}{\numberline {47}{\ignorespaces Swarm path analysis}}{14}}
 \newlabel{fig:BaselineAllPath100-60-20-3}{{47}{14}}
 \newlabel{reduced:coordinationEvaluation}{{\unhbox \voidb@x \hbox {VIII-F}}{14}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VIII-F}}Swarm coordination evaluation}{14}}
-\@writefile{lof}{\contentsline {figure}{\numberline {48}{\ignorespaces Omni ball motor arrangement }}{14}}
-\newlabel{fig:OmniBall}{{48}{14}}
 \newlabel{reduced:EnergyReductionGPS}{{IX}{14}}
 \@writefile{toc}{\contentsline {section}{\numberline {IX}Energy efficiency evaluation}{14}}
-\citation{KV:16,MCK:15}
-\citation{MD:09}
-\citation{SHA:07}
 \citation{ZAPS:07}
 \citation{ZAPS:07,APZDAMC:09,AZDPS:11}
 \bibstyle{plain}
 \bibdata{thesis}
+\bibcite{APZDAMC:09}{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {48}{\ignorespaces Omni ball motor arrangement }}{15}}
+\newlabel{fig:OmniBall}{{48}{15}}
 \@writefile{lot}{\contentsline {table}{\numberline {VIII}{\ignorespaces Energy consumption per agent}}{15}}
 \newlabel{tab:Energy1}{{VIII}{15}}
-\@writefile{lot}{\contentsline {table}{\numberline {IX}{\ignorespaces Energy consumption of swarm}}{15}}
-\newlabel{tab:Energy2}{{IX}{15}}
 \newlabel{methods:MessagePropogation}{{X}{15}}
 \@writefile{toc}{\contentsline {section}{\numberline {X}Message Propagation Performance}{15}}
+\@writefile{lot}{\contentsline {table}{\numberline {IX}{\ignorespaces Energy consumption of swarm}}{15}}
+\newlabel{tab:Energy2}{{IX}{15}}
 \@writefile{lot}{\contentsline {table}{\numberline {X}{\ignorespaces Energy consumption of swarm}}{15}}
 \newlabel{tab:Energy3}{{X}{15}}
 \@writefile{lof}{\contentsline {figure}{\numberline {49}{\ignorespaces Message Propagation }}{15}}
 \newlabel{methods:MessagePropogation1}{{49}{15}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {X-A}}SenseSwarm Message Propagation Comparison}{15}}
-\bibcite{APZDAMC:09}{1}
 \bibcite{AZDPS:11}{2}
 \bibcite{BS:13}{3}
 \bibcite{VG:05}{4}
