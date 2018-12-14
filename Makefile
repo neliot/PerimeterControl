@@ -1,10 +1,8 @@
 paper: paper.tex thesis.bib IEEEtran.cls figures
-	latex paper
+	pdflatex paper
 	bibtex paper
-	latex paper
-	latex paper
-	dvips -Ppdf paper
-	ps2pdf -dCompatibility=1.5 -dPDFSETTINGS=/prepress -dEmbedAllFonts=true paper.ps
+	pdflatex paper
+	pdflatex paper
 
 MYFILE = paper.txt
 clean:
