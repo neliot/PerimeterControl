@@ -1,9 +1,9 @@
-PWD /home/neil/neil@eliot.org.uk/NE-PhD/Writeup/Journal/IEEE/new/PerimeterControl
+PWD /home/neil/neil@eliot.org.uk/NE-PhD/Writeup/Journal/IEEE/PerimeterControl
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/neil/neil@eliot.org.uk/NE-PhD/Writeup/Journal/IEEE/new/PerimeterControl/paper.tex
+INPUT /home/neil/neil@eliot.org.uk/NE-PhD/Writeup/Journal/IEEE/PerimeterControl/paper.tex
 OUTPUT paper.log
 INPUT ieeeaccess.cls
 INPUT ieeeaccess.cls
@@ -116,8 +116,8 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
-INPUT /usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
-INPUT /usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+INPUT /usr/share/texmf/tex/latex/xcolor/xcolor.sty
+INPUT /usr/share/texmf/tex/latex/xcolor/xcolor.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/standalone/standalone.sty
