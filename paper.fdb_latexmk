@@ -1,15 +1,14 @@
 # Fdb version 3
-["bibtex paper"] 1546516676 "paper.aux" "paper.bbl" "paper" 1546516724
+["bibtex paper"] 0 "paper.aux" "paper.bbl" "paper" 0
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/plain.bst" 1480098433 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "paper.aux" 1546516724 16255 08b77d9d2e6be13d59630feda846da34 ""
+  "paper.aux" 1546516833 15542 e1f01c4d585e06713ebf568407014152 ""
   "paper.bcf" 0 -1 0 ""
   "thesis.bib" 1546515259 171268 b85ee9fb3d6e4b75be7526d8a73de341 ""
   (generated)
   "paper.bbl"
-  "paper.blg"
-["pdflatex"] 1546516723 "/home/neil/neil@eliot.org.uk/NE-PhD/Writeup/Journal/IEEE/PerimeterControl/paper.tex" "paper.pdf" "paper" 1546516724
+["pdflatex"] 1546516833 "/home/neil/neil@eliot.org.uk/NE-PhD/Writeup/Journal/IEEE/PerimeterControl/paper.tex" "paper.pdf" "paper" 1546516833
   "/etc/texmf/web2c/texmf.cnf" 1531921153 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/neil/neil@eliot.org.uk/NE-PhD/Writeup/Journal/IEEE/PerimeterControl/paper.tex" 1546516723 87295 3d43b60baf7f9a4f7a1fa466ddd37bbe ""
+  "/home/neil/neil@eliot.org.uk/NE-PhD/Writeup/Journal/IEEE/PerimeterControl/paper.tex" 1546516831 87301 c6bd32313fe576af5195dd4aba192fea ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/helvetic/phvb8r.tfm" 1480098688 4484 b828043cbd581d289d955903c1339981 ""
@@ -202,10 +201,10 @@
   "images/kenda.pdf" 1544612867 10091 912fcf733a2542d351e31a947dc9e4a4 ""
   "images/moon.pdf" 1544612867 28361 3b10e11e1910579b08b196b9f2c20d4a ""
   "notaglineLogo.png" 1544612868 3150 e273b7aed356b5f76c6d0b072166d68c ""
-  "paper.aux" 1546516724 16255 08b77d9d2e6be13d59630feda846da34 ""
-  "paper.bbl" 1546516676 7834 d09560d08f4a8408f46e110834ea2097 "bibtex paper"
-  "paper.tex" 1546516723 87295 3d43b60baf7f9a4f7a1fa466ddd37bbe ""
+  "paper.aux" 1546516833 8 a94a2480d3289e625eea47cd1b285758 ""
+  "paper.bbl" 0 -1 0 "bibtex paper"
+  "paper.tex" 1546516831 87301 c6bd32313fe576af5195dd4aba192fea ""
   (generated)
-  "paper.log"
   "paper.aux"
   "paper.pdf"
+  "paper.log"
