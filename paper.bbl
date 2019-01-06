@@ -47,6 +47,11 @@ Samitha~W Ekanayake and Pubudu~N Pathirana.
 \newblock {\em International Journal of Advanced Robotic Systems},
   7(3):173--190, 2010.
 
+\bibitem{EKB:18}
+N.~Eliot, D.~Kendall, and M.~Brockway.
+\newblock A new metric for the analysis of swarms using potential fields.
+\newblock {\em IEEE Access}, 6:63258--63267, 2018.
+
 \bibitem{VG:05}
 V.~Gazi.
 \newblock Swarm aggregations using artificial potentials and sliding-mode
@@ -108,29 +113,31 @@ S.~P. Hou, C.~C. Cheah, and J.~J.~E. Slotine.
 \newblock In {\em Robotics and Automation, 2009. ICRA '09. IEEE International
   Conference on}, pages 1929--1934, May 2009.
 
-\bibitem{IT:10}
-Amelia~Ritahani Ismail and Jon Timmis.
-\newblock Towards self-healing swarm robotic systems inspired by granuloma
-  formation.
-\newblock In {\em Engineering of Complex Computer Systems (ICECCS), 2010 15th
-  IEEE International Conference on}, pages 313--314. IEEE, 2010.
-
 \bibitem{MJ:08}
 James D.~McLurkin IV.
 \newblock {\em Analysis and Implementation of Distributed Algorithms for
   Multi-Robot Systems}.
 \newblock PhD thesis, Massachusetts Institute of Technology, USA, 2008.
 
+\bibitem{KC:08}
+H.~Kawabayashi and Y.~W. Chen.
+\newblock Interactive system of artificial fish school based on the extended
+  boid model.
+\newblock In {\em Intelligent Information Hiding and Multimedia Signal
+  Processing, 2008. IIHMSP '08 International Conference on}, pages 721--724,
+  Aug 2008.
+
+\bibitem{MPYV:02}
+M.~A. Kovacina, D.~Palmer, Guang Yang, and R.~Vaidyanathan.
+\newblock Multi-agent control algorithms for chemical cloud detection and
+  mapping using unmanned air vehicles.
+\newblock In {\em IEEE/RSJ International Conference on Intelligent Robots and
+  Systems}, volume~3, pages 2782--2788 vol.3, Sep. 2002.
+
 \bibitem{KV:16}
 Vijay Kumar.
 \newblock Current projects: Vijay {K}umar {L}ab.
 \newblock \url{http://www.kumarrobotics.org/research/}, 2016.
-
-\bibitem{GN:08}
-Geunho Lee and Nak~Young Chong.
-\newblock Self-configurable mobile robot swarms with hole repair capability.
-\newblock In {\em Intelligent Robots and Systems, 2008. IROS 2008. IEEE/RSJ
-  International Conference on}, pages 1403--1408, Sept 2008.
 
 \bibitem{MD:09}
 James McLurkin and Erik~D Demaine.
@@ -162,18 +169,11 @@ Oliver Purwin and Raffaello D’Andrea.
   vehicles.
 \newblock {\em Robotics and Autonomous Systems}, 54(1):13 -- 22, 2006.
 
-\bibitem{RMT:15}
-J.~H. Roach, R.~J. Marks, and B.~B. Thompson.
-\newblock Recovery from sensor failure in an evolving multiobjective swarm.
-\newblock {\em IEEE Transactions on Systems, Man, and Cybernetics: Systems},
-  45(1):170--174, Jan 2015.
-
-\bibitem{DHMRZ:06}
-Y.~s.~Dai, M.~Hinchey, M.~Madhusoodan, J.~L. Rash, and X.~Zou.
-\newblock A prototype model for self-healing and self-reproduction in swarm
-  robotics system.
-\newblock In {\em 2006 2nd IEEE International Symposium on Dependable,
-  Autonomic and Secure Computing}, pages 3--10, Sept 2006.
+\bibitem{REY:87}
+Craig~W Reynolds.
+\newblock Flocks, herds and schools: A distributed behavioral model.
+\newblock In {\em ACM SIGGRAPH computer graphics}, volume~21, pages 25--34.
+  ACM, 1987.
 
 \bibitem{SHA:07}
 Jeff~S Shamma.
@@ -192,12 +192,13 @@ G.~Tuna and K.~Gulez.
 \newblock In {\em 2012 5th International Conference on New Technologies,
   Mobility and Security (NTMS)}, pages 1--4, May 2012.
 
-\bibitem{VH:09}
-E.~Vassev and M.~Hinchey.
-\newblock Assl specification and code generation of self-healing behavior for
-  nasa swarm-based systems.
-\newblock In {\em 2009 Sixth IEEE Conference and Workshops on Engineering of
-  Autonomic and Autonomous Systems}, pages 77--86, April 2009.
+\bibitem{YH:14}
+Y.~T. Yao and R.~H. Hwang.
+\newblock Analysis of swarm behavior of users' gps data based on boids model.
+\newblock In {\em Internet of Things (iThings), 2014 IEEE International
+  Conference on, and Green Computing and Communications (GreenCom), IEEE and
+  Cyber, Physical and Social Computing(CPSCom), IEEE}, pages 421--427, Sept
+  2014.
 
 \bibitem{ZAPS:07}
 Demetrios Zeinalipour-Yazti, Panayiotis Andreou, Panos~K. Chrysanthis, and

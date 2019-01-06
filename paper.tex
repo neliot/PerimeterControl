@@ -98,28 +98,25 @@ Currently, much swarm research uses field effects as the method of modelling int
 
 \Figure[t!](topskip=0pt, botskip=0pt, midskip=0pt){figures/stableswarm} {Agent field effects.\label{methods:FieldEffects}}
 
-When cohesion and repulsion (\textit{inter-agent vectors}) are the only field effects creating a swarming effect the number of stable structures that can develop is limited. These structures, which are constructed from triangles, are either straight edges or partial lattices. Partial lattices can create concave anomalies (\textit{dents}) and convex anomalies (\textit{peaks}) in a perimeter~(Fig.~\ref{concave:SwarmStableShape1}). An anomaly is any construct within the swarm that is not a hexagonal lattice or an agent distribution that causes the swarm to deviate from having only convex or flat edges. The advantage of creating a well structured swarm can be realised in two classes of swarm application; \textit{Reconnaissance}, by creating a more uniform structure that eliminates blank spots, and \textit{Object Containment}, when using a swarm to surround a target.  
+When cohesion and repulsion (\textit{inter-agent vectors}) are the only field effects creating a swarming effect the number of stable structures that can develop is limited. These structures, which are constructed from triangles, are either straight edges or partial lattices. Partial lattices can create concave anomalies (\textit{dents}) and convex anomalies (\textit{peaks}) in a perimeter~(Fig.~\ref{concave:SwarmStableShape1}). 
 
 \Figure[t!](topskip=0pt, botskip=0pt, midskip=0pt)[width=7.5cm]{figures/SwarmStableShape1}
 {Stable swarm edges\label{concave:SwarmStableShape1}}
 
-%% \begin{figure}
-%% \begin{center}
-%% \includegraphics[width=5cm]{figures/SwarmStableShape1}
-%% \end{center}
-%% \caption{Stable swarm edges\label{concave:SwarmStableShape1}}
-%% \end{figure}
-The problem with these anomalies is that, although they are stable due to the balancing of the \textit{inter-agent vectors}, they create non-uniform structures that may be unsuitable for tasks that require a uniform swarm formation.
-
-\textit{Concave reduction} is a form of self-healing, it is a process that creates a movement that makes a swarm coalesce towards a more geometrically stable shape. This is achieved by removing voids and concave edges. The techniques defined in this paper function without the need for inter-agent or global messaging using only local proximity detection.
+\textit{Permimeter Control} is a method of identifying a subset of a swarm that then uses a GPS signal to coordinate the progress of the swarm to a destination. This papers proposes two subset identification methods. The first subset (\textit{basic count}) is identified by identifying agents with a limited number of neighbours. The second subset (\textit{full perimeter}) is identified by detecting agents that make up any perimeters within the swarm. The paper then compares the coordination of a swarm based upon a baseline of using all agents to coordinate a swarm to a destination to identify the efficiency of the methods based on swarm progress and energy utilisation. 
 
 \section{Related Work}\label{sec:RelatedWork}
-Research has identified several approaches to resolving swarm structure issues. A prototype framework for self-healing swarms was developed by Dai et al. which considered the problem of agent failure in hostile environments~\cite{DHMRZ:06}. This is in line with work carried out by Vassev and Hinchey who model swarm deployment using ASSL (Autonomic System Specification Language)~\cite{VH:09}. This technique was used by NASA (National Aeronautics and Space Administration) when developing their ANTS (Autonomous Nano Technology Swarm) for use in asteroid belt exploration. This line of research is more focused towards an agent's internal systems failure rather than the removal of anomalies in a swarm distribution. Roach et al. takes a different approach and focuses on the effects of sensor failure and the effect that has on agent distribution~\cite{RMT:15}. The closest research to concave reduction, as discussed in this paper, is that of Lee and Chong who identify the issue of concave edges within swarms in an attempt to create regular lattice formations~\cite{GN:08}. The main focus of their paper is the restructuring of the internal distribution of inter-agent formations. The research by Ismail and Timmis used the approach of \textit{bio-inspired} healing using \textit{granuloma formation}, a biological method for encapsulating an antigen~\cite{IT:10}. They also consider the effects failed agents can have upon a swarm when traversing a terrain \cite{TIBW:16}. 
-Concave reduction is an extension of the work discussed by Ismail and Timmis in their papers on `self-healing' \cite{IT:10} and the effects of failed agents \cite{TIBW:16}. It also builds upon Lee and Chong's work on identifying concave edges~\cite{GN:08}. The technique also draws on the work of McLurkin and Demaine who have developed algorithms to detect perimeter types~\cite{MD:09}. The technique employed in this paper does not require the identification of the perimeter type as this would require a communications infrastructure.
+Research has identified several approaches to swarm coordination. Coordination of agent movement was proposed by Reynolds in his "Boid" model in 1987~\cite{REY:87}. This model uses a directional component based on neighbour orientation. The agents communicate with each other to determine a directional vector that is then applied to their movement. This technique has been extended by many authors to incorporate a more strategic advantage in the directional component of the swarms movement. Kawabayashi and Chen proposed an extended model that added predator avoidance and other bounds to make the movement more "organic" but did not add a goal based direction~\cite{KC:08}. Yao and Hwang used GPS signals to identify human movements to be boid-like~\cite{YH:14}. Kovacina et al. took the approach of allowing each agent to select a random direction, which was combined with the orientation of an agents neighbours as a mechanism to move a swarm~\cite{MPYV:02}, this is very similar to how the Boid model functions. The main problem with this approach is that although the swarm is directional there is no destination-based goal.   
+
+
+The closest research to perimeter control, as discussed in this paper, is that of 
+
+The technique employed in this paper does not require the identification of the perimeter type as this would require a communications infrastructure.
+
 \section{Baseline specification}
 To allow an analysis of each algorithm's effect on a swarm a baseline measurement of `background' variance (jitter) is identified. The baseline measurement provides a comparative data set for the experiments. The baseline data set is for a static swarm (no destination vector) with the same internal parameters.
 
-\textit{Assumption 1:} The swarm used for the experiments consists of 200 agents randomly distributed~(Figure~\ref{fig:SampleSwarm200-1}).\\ 
+\noindent\textit{Assumption 1:} The swarm used for the experiments consists of 200 agents randomly distributed~(Figure~\ref{fig:SampleSwarm200-1}).\\ 
 \textit{Assumption 2:} The field effects and bias will be set as shown in~Figure~\ref{tab:DynamicPhysics1} with the weight adjuster $k_d = 0$ for the baseline.\\
 \textit{Assumption 3:} All destination based experiments will have the weight adjuster set to $k_d = 100$.
 
@@ -148,7 +145,7 @@ Speed & 20 & units/s\\  \hline
 \end{center}
 \end{table}
 
-The results for the baseline experimental swarm are shown in~Figures~\ref{coord:BaselineMagnitude1} and~\ref{coord:BaselineDistance1}. The metrics used are the distance \cite{NIM:09} and resultant inter-agent magnitudes (\textit{inter-agent vector}).
+The results for the baseline experimental swarm are shown in~Figures~\ref{coord:BaselineMagnitude1} and~\ref{coord:BaselineDistance1}. The metrics used are the distance~\cite{NIM:09} and resultant inter-agent magnitudes (\textit{inter-agent vector})~\cite{EKB:18}.
 
 % \begin{figure}
 % \begin{center}
