@@ -103,17 +103,23 @@ When cohesion and repulsion (\textit{inter-agent vectors}) are the only field ef
 \Figure[t!](topskip=0pt, botskip=0pt, midskip=0pt)[width=7.5cm]{figures/SwarmStableShape1}
 {Stable swarm edges\label{concave:SwarmStableShape1}}
 
-\textit{Permimeter Control} is a method of identifying a subset of a swarm that then uses a GPS signal to coordinate the progress of the swarm to a destination. This papers proposes two subset identification methods. The first subset (\textit{basic count}) is identified by identifying agents with a limited number of neighbours. The second subset (\textit{full perimeter}) is identified by detecting agents that make up any perimeters within the swarm. The paper then compares the coordination of a swarm based upon a baseline of using all agents to coordinate a swarm to a destination to identify the efficiency of the methods based on swarm progress and energy utilisation. 
+\textit{Permimeter Control} is a method of identifying a subset of a swarm that then uses a GPS signal to coordinate the progress of the swarm to a destination. This papers proposes two subset identification methods. The first subset (\textit{basic count}) is identified by identifying agents with a limited number of neighbours. The second subset (\textit{full perimeter}) is identified by detecting agents that make up any perimeters within the swarm. The paper then compares the coordination of a swarm based upon a baseline of using all agents to coordinate a swarm to a destination to identify the efficiency of the methods based on swarm progress and energy utilisation.
+
+The paper is structured as follows: Section~\ref{sec:RelatedWork} discusses related work. Section~\ref{sec:Baseline} introduces a baseline swarm model to allow comparisons of the algorithms presented in this paper. Section~\ref{sec:DestinationApp} discusses th mechanism used to add a directional bias to an agents movement. Section~\ref{sec:CoordRole} discusses the rules by which a coordinator is identified. Section~\ref{sec:AllAgents} discusses the effects of using a GPS directional bias when applied to all the agents. Section~\ref{sec:BasicCount} discusses the application of the basic count algorithm and its effects. Section~\ref{sec:complexMulti}
+discusses full perimeter detection and it application. Section~\ref{sec:compareBaselineAll1} compares the effects of the algorithms to the baseline. Section~\ref{sec:EnergyReductionGPS} compares the energy savings of limiting the use of the GPS sensors in coordinating a swarm. Section~\ref{sec:MessagePropogation} discusses the issues associated with message propogation in the identification of perimeter types. Section~\label{sec:conclusion} highlights the findings and Section~\ref{sec:FutureWork} discusses additional applications of the techniques discussed within this paper.
 
 \section{Related Work}\label{sec:RelatedWork}
-Research has identified several approaches to swarm coordination. Coordination of agent movement was proposed by Reynolds in his "Boid" model in 1987~\cite{REY:87}. This model uses a directional component based on neighbour orientation. The agents communicate with each other to determine a directional vector that is then applied to their movement. This technique has been extended by many authors to incorporate a more strategic advantage in the directional component of the swarms movement. Kawabayashi and Chen proposed an extended model that added predator avoidance and other bounds to make the movement more "organic" but did not add a goal based direction~\cite{KC:08}. Yao and Hwang used GPS signals to identify human movements to be boid-like~\cite{YH:14}. Kovacina et al. took the approach of allowing each agent to select a random direction, which was combined with the orientation of an agents neighbours as a mechanism to move a swarm~\cite{MPYV:02}, this is very similar to how the Boid model functions. The main problem with this approach is that although the swarm is directional there is no destination-based goal.   
+Research has identified several approaches to swarm coordination. Coordination of agent movement was proposed by Reynolds in his "Boid" model in 1987~\cite{REY:87}. This model uses a directional component based on neighbour orientation. The agents communicate with each other to determine a directional vector that is then applied to their movement. This technique has been extended by many authors to incorporate a more strategic advantage in the directional component of the swarms movement. Kawabayashi and Chen proposed an extended model that added predator avoidance and other bounds to make the movement more `organic' but did not add a goal based direction~\cite{KC:08}. Yao and Hwang used GPS signals to identify human movements to be boid-like~\cite{YH:14}. Kovacina et al. took the approach of allowing each agent to select a random direction, which was combined with the orientation of an agents neighbours as a mechanism to move a swarm~\cite{MPYV:02}, this is very similar to how the Boid model functions. The main problem with these approaches is that although the swarm is directional there is no destination-based goal.
 
+Ant-colony research requires directional agents to implement aforgaing behaviour, the goal is usually to find energy sources and return them to a common base. The initial coordination of the direction of agents in a foraging scenario is randomised. The control component is applied using several different techniques including pheremone trails~\cite{JRD:03,RGJHR:08,VBBLO:15,STZZW:13,SK:16} . Gazi and Passino examined foraging algorithms to measure their stability but the swarms used a random movement approach in the foraging behaviour~\cite{GP:04a}. Hoff et al. used a hybrid approac to their coordination wich does include a directional bias. They achieve this by allowing agents to become beacons~\cite{HSWN:10}. As such they are adding a destination bias to local agent movemnents. However, the mechanism requires local communications and all agents are using a communications infrastructure to identify the beacons. Lee et al. also present a goal-based scenario that utilises GPS however, it is only used by individual agents when returning to a "storehouse"~\cite{LAA:13}.
 
-The closest research to perimeter control, as discussed in this paper, is that of 
+Alternative approaches also include using a global coordination through unique agent markings and a series of cameras that employ image recognition to coordinate agents to a goal. Furci et al. uses this technique to coordinate crazyfly quadcopters~\cite{FCNSM:15}. This same technique is often used in football playing robots for the `RoboCup' where each team is in effect a swarm~\cite{LL:09}. This technique is shown by Lupashin et al. in their design of a `Flying machine area'~\cite{LSHD:11} and is used by Brescianini et al. when coordinating two quadcopters to pass a pole between each other and balnce it~\cite{BHD:13}. This same technique is also used by Augugliaro et al. to calculate quadcopter trajectories~\cite{ASD:12}.
 
-The technique employed in this paper does not require the identification of the perimeter type as this would require a communications infrastructure.
+The use of GPS as a mechanism to coordinate agents within in a swarm is common~\cite{SG:15,TG:12,AZHMJJM:12,MPYV:02,LAA:13,RRSTM:15}. However, the usual approach is to have a directional bias applied to all the agents within the swarm. 
 
-\section{Baseline specification}
+The techniques employed in this paper are specifically designed to reduce the utilisation of GPS positioning to a subset of agents within a swarm and does not require the identification of the perimeter type as this would require a communications infrastructure.
+
+\section{Baseline specification}\label{sec:Baseline}
 To allow an analysis of each algorithm's effect on a swarm a baseline measurement of `background' variance (jitter) is identified. The baseline measurement provides a comparative data set for the experiments. The baseline data set is for a static swarm (no destination vector) with the same internal parameters.
 
 \noindent\textit{Assumption 1:} The swarm used for the experiments consists of 200 agents randomly distributed~(Figure~\ref{fig:SampleSwarm200-1}).\\ 
@@ -182,7 +188,7 @@ The centroid path for the baseline swarm is shown in~FIgure~\ref{coord:SwarmPath
 
 These baseline measurements are used to identify the changes that occur in the structure of a swarm when changes are made to the weightings of the field effects, the number of coordination agents and the \textit{destination vector} weighting.
 
-\section{Destination vector application}
+\section{Destination vector application}\label{sec:DestinationApp}
 Many mechanisms can be used to influence a swarm to travel in a specific direction. These mechanisms generally involve the use of sensors such as magnetometers or GPS's to achieve a directional coordinate \cite{SG:15,TG:12}. 
 
 This paper aims to produce algorithms that will reduce the number of active sensors that are needed for the directional coordination of a swarm. When reducing the number of active sensors the algorithms must maintain sufficient coordination of agents to influence the swarm's direction and therefore create an overall \textit{destination vector} to a swarms movement. Reducing the number of active sensors will reduce the net energy usage of the sensors and potentially increase the sensors viable lifetime. Another aspect of the algorithms is that they should minimise the internal disturbance (jitter) created by the \textit{destination vector}.
@@ -197,7 +203,7 @@ The following assumptions are made in this paper:
 
 Reducing the usage of sensors will reduce the net power consumption of the swarm and increase the time that an agent can be a part of a swarm. If the purpose of the swarm is reconnaissance then the reduction in energy usage may allow a longer traversal time, or allow the swarm to travel further. As agents in the swarm will use there resources at different rates some agents may be lost due to resource exhaustion. The algorithms should therefore be resilient to this.
 
-\section{Swarm destination vector}
+%%\section{Swarm destination vector}\label{sec:SwarmDestination}
 The following assumptions are made in this paper:
 
 \textit{Assumption 1:} The direction of the swarm is based upon having a fixed goal that is known to all the agents. \\
@@ -205,14 +211,14 @@ The following assumptions are made in this paper:
 
 The swarm's destination is established by the coordinator agents influencing the non-coordinator agents. This influence is applied through the coordinators proximity to non-coordinator agents (cohesion). Coordinator agents are identified by a set of conditions. The conditions are the activators for the coordinator identification algorithms.
 
-\section{Identifying the coordinator role}
+\section{Identifying the coordinator role}\label{sec:CoordRole}
 For an agent to change its role from a standard agent to a coordinator there needs to an algorithm that identifies a set of conditions to trigger the change. This same algorithm also triggers an agent to revert to being a standard agent. The coordinator selection algorithm is separate from the agent coordination algorithms that determine cohesion and repulsion.
 
 In this paper three algorithms are presented and compared. In the first algorithm, all agents have the role of a coordinator permanently. This will be referred to as the all-agent algorithm. The other two mechanisms employ a selection criteria to identify if the simulated GPS sensor should be enabled. These two algorithms are: full-perimeter detection and the partial perimeter detection. Partial perimeter detection will be referred to as the basic-count algorithm.
 
 There are many other ways in which the coordinator role could be established such as randomly enabling a GPS for a set period of time or oscillating the role on and off but they are beyond the scope of this paper.
 
-\section{Monolithic swarm - (all-agent)} 
+\section{Monolithic swarm - (all-agent)}\label{sec:AllAgents} 
 In a monolithic swarm \cite{BS:13} the propagation towards the goal is achieved by all the agents using a GPS signal to give each agents' movement a \textit{direction vector} towards a required goal. There is no selection criteria and no computational overhead for the agents.
 
 Figure~\ref{reduced:Monolithic1} shows a screen shot from the swarm simulator with all agents GPS's enabled. This can be seen as the agents highlighted with a ring around them. The small `tail' on each agent is the \textit{movement vector}.
@@ -283,7 +289,7 @@ This effect can be seen in both the magnitudes shown in~Figure~\ref{reduced:Base
 
 \Figure[t!](topskip=0pt, botskip=0pt )[width=8cm]{figures/BaselineAllAgentsDist2.pdf}{Baseline/All agents distance comparison (60 seconds)\label{reduced:BaselineAllAgentsDist2}}
 
-\section{Simple multifaceted swarm (basic-count)} 
+\section{Simple multifaceted swarm (basic-count)}\label{sec:BasicCount} 
 In a simple multifaceted swarm the propagation towards the goal is achieved by generating a \textit{destination vector} for an agent when the agent conforms to a simple counting rule. This \textit{destination vector} is obtained by using the agent's GPS to identify its current coordinate and generating a vector from that coordinate to a specific destination point. This rule creates a subset of agents that apply a local \textit{direction vector} to their movement. This has the effect of creating a directional effect on the whole swarm. The aggregate \textit{direction vector} magnitude of the swarm is less than that produced when all agents apply a \textit{direction vector}. This reduction is further diluted by agents without the \textit{direction vector} calculating a \textit{movement vector} to an equilibrium position. This change in the aggregate \textit{direction vector} will impact on a swarm's `jitter'. This is discussed in more detail in~Section~\ref{sec:AlternateBias1}. With there only being a limited number of peripheral agents invoking their GPS signal there will also be a net reduction in the energy usage of the swarm as discussed in Section~\ref{reduced:EnergyReductionGPS}.
 
 A swarm with the appropriate field effects will propagate towards hexagons made from a central agent and six neighbours. A swarm can be influenced by its surroundings, which involves the interaction of other agents (as neighbours) and obstacles which can cause a compression of the agents. Compression can also occur during the stabilisation phase of a swarm. These situations can cause an agent to have less than 6 neighbours but still be surrounded. A general rule therefore to detect a rudimentary boundary of a hexagonal swarm is to calculate the number of neighbours an agent has. If the total is less than five ($nbr(b) < 5$) then there is a high probability that the agent is either in a void within the swarm or on an external perimeter. If an agent is on a perimeter or a void the it should enable its GPS and become a coordinator and provide a directional bias to the swarm via its \textit{direction vector}. This coordinator role affects the immediate neighbours \textit{movement vector} through cohesion/repulsion~(Figure~\ref{reduced:SimpleMulti12}). This simple detection algorithm allows a directional bias to be induced into a swarm with minimal computational impact on the coordinator agents.
@@ -682,7 +688,7 @@ The simulation shows that once the swarm has stabilised the majority of agents a
 
 The experiment demonstrates that the perimeter detection algorithm is a practical technique to apply to the detection of a swarm subset to reduce GPS usage. However the environmental parameters the impact of the \textit{destination vectors}create a high level of jitter within the swarm.
 
-\section{Baseline and effect comparison\label{section:compareBaselineAll1}}
+\section{Baseline and effect comparison}\label{sec:compareBaselineAll1}
 To compare the three algorithms and their effects the metrics applied. The internal movement (jitter), the terminal speed of the centroid of the swarm and the effect on the path of the swarm are considered. 
 
 Analysing the path and speed of a swarm requires the centroid to be identified~\cite{HAY:08,VG:05,GP:02,GP:04,GP:04a,GP:05,GP:11}. The centroid is then tracked over time as the swarm progresses to its a goal~(Equation~\ref{eq:Centroid1}).
@@ -1026,7 +1032,7 @@ The computational overhead of each of the algorithms differs only in the logic t
 
 The main energy difference between the algorithms is the use of the GPS sensor which is a high energy consumption device. Therefore for general purpose coordination the basic-count algorithm provides the lowest GPS energy requirement and also minimal computational overhead.
 
-\section{Energy efficiency evaluation}\label{reduced:EnergyReductionGPS}
+\section{Energy efficiency evaluation}\label{sec:EnergyReductionGPS}
 The effect of an algorithm also effects the amount of gross energy that is used by the swarm in creating the directional effect. If we consider different size physical agents the overall effect of the algorithm can impact on the practical use of the swarm.
 
 The following evaluation is based on analysing the motor and GPS usage and ignores the energy consumption of sensors and agent processor units.
@@ -1096,7 +1102,7 @@ Motor & Watts  & No GPS & With GPS \\ \hline
 
 The tables above demonstrate the most effective savings in energy can be achieved by using smaller motors. This implies using smaller agents will provide the most appropriate platform to use GPS energy conservation. This efficiency saving falls in line with the current trend in using smaller agents in swarms as described by Mulgaonkar et al.~\cite{KV:16,MCK:15} who work as part of the research group at the University of Pennsylvania.
 
-\section{Message Propagation Performance}\label{methods:MessagePropogation}
+\section{Message Propagation Performance}\label{sec:MessagePropogation}
 Many algorithms depend upon the propagation of messages throughout a swarm to determine many of the characteristics that allow it to be controlled~\cite{MD:09}. However message propagation has an ($O(n^2)$) propagation profile which effects the speed at which a swarm can react to characteristic changes~\cite{SHA:07}. This could be countered by a reduction in the speed that agents move within a swarm to counter the message propagation delays. 
 
 The perimeter detection algorithms employed in this paper have been reduced from ($O(n^2)$) to zero by limiting the agents information needs to simple proximity information from a sensor. This is a bio-inspired approach taken from the flocking of birds and shoaling of fish.
@@ -1127,6 +1133,9 @@ $n_5 \to \{n_6\}$\\
 $n_4 \to \{n_6\}$\\
 
 The SenseSwarm algorithm works by locating the lowest agent in the swarm and then that agent propagating a message left and right to next lowest neighbours to identify the swarms outer edge. 
+
+\section{Conclusion}\label{sec:conclusion}
+\section{Future Work}\label{sec:FutureWork}
 
 \bibliographystyle{plain}
 \bibliography{thesis}
