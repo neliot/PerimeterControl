@@ -106,7 +106,7 @@ When cohesion and repulsion (\textit{inter-agent vectors}) are the only field ef
 \textit{Permimeter Control} is a method of identifying a subset of a swarm that then uses a GPS signal to coordinate the progress of the swarm to a destination. This papers proposes two subset identification methods. The first subset (\textit{basic count}) is identified by identifying agents with a limited number of neighbours. The second subset (\textit{full perimeter}) is identified by detecting agents that make up any perimeters within the swarm. The paper then compares the coordination of a swarm based upon a baseline of using all agents to coordinate a swarm to a destination to identify the efficiency of the methods based on swarm progress and energy utilisation.
 
 The paper is structured as follows: Section~\ref{sec:RelatedWork} discusses related work. Section~\ref{sec:Baseline} introduces a baseline swarm model to allow comparisons of the algorithms presented in this paper. Section~\ref{sec:DestinationApp} discusses th mechanism used to add a directional bias to an agents movement. Section~\ref{sec:CoordRole} discusses the rules by which a coordinator is identified. Section~\ref{sec:AllAgents} discusses the effects of using a GPS directional bias when applied to all the agents. Section~\ref{sec:BasicCount} discusses the application of the basic count algorithm and its effects. Section~\ref{sec:complexMulti}
-discusses full perimeter detection and it application. Section~\ref{sec:compareBaselineAll1} compares the effects of the algorithms to the baseline. Section~\ref{sec:EnergyReductionGPS} compares the energy savings of limiting the use of the GPS sensors in coordinating a swarm. Section~\ref{sec:MessagePropogation} discusses the issues associated with message propogation in the identification of perimeter types. Section~\label{sec:conclusion} highlights the findings and Section~\ref{sec:FutureWork} discusses additional applications of the techniques discussed within this paper.
+discusses full perimeter detection and it application. Section~\ref{sec:compareBaselineAll1} compares the effects of the algorithms to the baseline. Section~\ref{sec:EnergyReductionGPS} compares the energy savings of limiting the use of the GPS sensors in coordinating a swarm. Section~\ref{sec:MessagePropogation} discusses the issues associated with message propogation in the identification of perimeter types. Section~\ref{sec:conclusion} highlights the findings and Section~\ref{sec:FutureWork} discusses additional applications of the techniques discussed within this paper.
 
 \section{Related Work}\label{sec:RelatedWork}
 Research has identified several approaches to swarm coordination. Coordination of agent movement was proposed by Reynolds in his "Boid" model in 1987~\cite{REY:87}. This model uses a directional component based on neighbour orientation. The agents communicate with each other to determine a directional vector that is then applied to their movement. This technique has been extended by many authors to incorporate a more strategic advantage in the directional component of the swarms movement. Kawabayashi and Chen proposed an extended model that added predator avoidance and other bounds to make the movement more `organic' but did not add a goal based direction~\cite{KC:08}. Yao and Hwang used GPS signals to identify human movements to be boid-like~\cite{YH:14}. Kovacina et al. took the approach of allowing each agent to select a random direction, which was combined with the orientation of an agents neighbours as a mechanism to move a swarm~\cite{MPYV:02}, this is very similar to how the Boid model functions. The main problem with these approaches is that although the swarm is directional there is no destination-based goal.
@@ -177,12 +177,12 @@ Figure~\ref{coord:BaselineDistance1} shows the internal movement and the deviati
 
 The centroid path for the baseline swarm is shown in~FIgure~\ref{coord:SwarmPathBaseline1}. Due to there being no \textit{destination vector} for the swarm the centroid changes positions based on the inter-agent positional changes caused by the \textit{interaction vectors}. These changes are the result of each agents attempting to attain a state of equilibrium within their `clusters'.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=9cm]{figures/SwarmPathBaseline.pdf}
-\end{center}
-\caption{Baseline swarm path\label{coord:SwarmPathBaseline1}}
-\end{figure}
+% \begin{figure}
+% \begin{center}
+% \includegraphics[width=9cm]{figures/SwarmPathBaseline.pdf}
+% \end{center}
+% \caption{Baseline swarm path\label{coord:SwarmPathBaseline1}}
+% \end{figure}
 
 \Figure[t!](topskip=0pt, botskip=0pt )[width=8.3cm]{figures/SwarmPathBaseline.pdf}{Baseline swarm path\label{coord:SwarmPathBaseline1}}
 
@@ -235,12 +235,12 @@ Figure~\ref{reduced:Monolithic1} shows a screen shot from the swarm simulator wi
 \subsection{Baseline and effect of no perimeter detection\label{section:compareBaselineNoPerimeter}}
 To identify the effect of the all-agents algorithm the simulation is executed using the same parameters as the baseline swarm with the added \textit{destination vector} on all the agents. The effect of introducing this bias on the swarms internal characteristics is shown in~Figures~\ref{reduced:BaselineAllAgentsMag1} and~\ref{reduced:BaselineAllAgentsDist1}.
 %BASELINE-ALLAGENTS-MAG.py
-\begin{figure}
-\begin{center}
-\includegraphics[width=9cm]{figures/BaselineAllAgentsMag1.pdf}
-\end{center}
-\caption{Baseline/All agents comparison \textit{inter-agent vector} magnitude\label{reduced:BaselineAllAgentsMag1}}
-\end{figure}
+% \begin{figure}
+% \begin{center}
+% \includegraphics[width=9cm]{figures/BaselineAllAgentsMag1.pdf}
+% \end{center}
+% \caption{Baseline/All agents comparison \textit{inter-agent vector} magnitude\label{reduced:BaselineAllAgentsMag1}}
+% \end{figure}
 
 \Figure[t!](topskip=0pt, botskip=0pt )[width=8cm]{figures/BaselineAllAgentsMag1.pdf}{Baseline/All agents comparison \textit{inter-agent vector} (magnitude)\label{reduced:BaselineAllAgentsMag1}}
 
@@ -375,7 +375,6 @@ A complex multifaceted swarm is based upon the full detection of perimeters in a
 
 \Figure[t!](topskip=0pt, botskip=0pt )[width=6cm]{figures/PerimeterBots2.pdf}{Multiple perimeters\label{concave:VoidPerimeter2}}
 
-
 %% \begin{figure}
 %% \centering
 %% \subfigure[Void and perimeter]{
@@ -507,26 +506,6 @@ The full visibility check~(Algorithm~\ref{algo:checkVisibility}) takes each pair
 \label{algo:checkVisibility}
 \end{figure}
 
-%% \begin{algorithm}
-%% \DontPrintSemicolon
-%% \SetAlgoLined
-%% \caption{CheckVisibility}
-%% \KwData{b,angles}
-%% \For{$i \leftarrow 0$ \KwTo $size(angles)-1$}{
-%% 	\eIf{i == size(angles)-1}{
-%% 		\If{$cosrule(b,angles[size(angles)-1][0],angles[i][0]$}{
-%%    		\KwRet{True}
-%%    	}
-%% 	}
-%% 	{\If{$cosrule(b,angles[i + 1][0],angles[i][0]$}{
-%% 			\KwRet{True}
-%% 		}
-%% 	}
-%% }
-%% \KwRet{False}
-%% \label{algo:checkVisibility}
-%% \end{algorithm}
-
 There is one exception to the neighbour visibility check. Due to compression of the swarm, which can be caused by an initial deployment configuration~(Fig.~\ref{fig:SampleSwarm200-1}) or when an obstacle is in the path of the swarm, the agent's neighbours are able to `see' other neighbours but a pair of sequential neighbours could create an angle $> 180^\circ$ as shown in~Figure~\ref{reduced:Perimeter2}. In this case the agent is on the outside of the enclosed neighbour space, the agent is therefore on a perimeter. 
 
 % \begin{figure}
@@ -648,7 +627,7 @@ The screen shot below shows the algorithm resolving the issue to the pseudo-peri
 \Figure[t!](topskip=0pt, botskip=0pt)[width=5cm]{figures/PerimeterAnomaly.pdf}{Simulator perimeter detection\label{reduced:PerimeterAnomaly}}
 
 \subsubsection{Perimeter and void detection}\label{sec:PerimeterVoidDetection} 
-The focus of this paper is the control of arbitrary sized swarms. The identification of the inner and outer perimeters would require a communications mechanism to determine which type of perimeter an agent was a part of~\cite{ZAPS:07,MD:09}. A mean angle $< 180^\circ$ would indicate a void. A mean angle $> 180^\circ$ would indicate an outer perimeter which may be enclose inside a swarm as shown in~Figure~\ref{concave:VoidPerimeter2} on page \pageref{concave:VoidPerimeter2}.  
+The focus of this paper is the control of arbitrary sized swarms. The identification of the inner and outer perimeters would require a communications mechanism to determine which type of perimeter an agent was a part of~\cite{ZAPS:07,MD:09}. A mean angle $< 180^\circ$ would indicate a void. A mean angle $> 180^\circ$ would indicate an outer perimeter which may be enclose inside a swarm as shown in~Figure~\ref{concave:VoidPerimeter2} on page \pageref{concave:VoidPerimeter2}. 
 
 The communications architecture would prevent swarms of an arbitrary size from being coordinated due to the $O(n^{2})$ message propagation time factor as discussed in Section~\ref{methods:MessagePropogation}. It should be noted however that introducing the communications layer would increase the potential functionality of the swarm and may have practical applications in other scenarios where smaller swarms are appropriate. 
 

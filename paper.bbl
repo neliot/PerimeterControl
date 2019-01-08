@@ -1,0 +1,316 @@
+\begin{thebibliography}{10}
+
+\bibitem{AZHMJJM:12}
+M.~S. Alvissalim, B.~Zaman, Z.~A. Hafizh, M.~A. Ma'sum, G.~Jati, W.~Jatmiko,
+  and P.~Mursanto.
+\newblock Swarm quadrotor robots for telecommunication network coverage area
+  expansion in disaster area.
+\newblock In {\em SICE Annual Conference (SICE), 2012 Proceedings of}, pages
+  2256--2261, Aug 2012.
+
+\bibitem{APZDAMC:09}
+Panayiotis Andreou, Demetrios Zeinalipour-Yazti, Maria Andreou, Panos~K
+  Chrysanthis, and George Samaras.
+\newblock Perimeter-based data replication in mobile sensor networks.
+\newblock In {\em Mobile Data Management: Systems, Services and Middleware,
+  2009. MDM'09. Tenth International Conference on}, pages 244--251. IEEE, 2009.
+
+\bibitem{AZDPS:11}
+Panayiotis Andreou, Demetrios Zeinalipour-Yazti, Panos~K Chrysanthis, and
+  George Samaras.
+\newblock In-network data acquisition and replication in mobile sensor
+  networks.
+\newblock {\em Distributed and Parallel Databases}, 29(1-2):87--112, 2011.
+
+\bibitem{ASD:12}
+F.~Augugliaro, A.~P. Schoellig, and R.~D'Andrea.
+\newblock Generation of collision-free trajectories for a quadrocopter fleet: A
+  sequential convex programming approach.
+\newblock In {\em 2012 IEEE/RSJ International Conference on Intelligent Robots
+  and Systems}, pages 1917--1922, Oct 2012.
+
+\bibitem{AZMD:15}
+F.~Augugliaro, E.~Zarfati, A.~Mirjan, and R.~D'Andrea.
+\newblock Knot-tying with flying machines for aerial construction.
+\newblock In {\em Intelligent Robots and Systems (IROS), 2015 IEEE/RSJ
+  International Conference on}, pages 5917--5922, Sept 2015.
+
+\bibitem{BS:13}
+Jan~Carlo Barca and Y~Ahmet Sekercioglu.
+\newblock Swarm robotics reviewed.
+\newblock {\em Robotica}, 31(03):345--359, 2013.
+
+\bibitem{BAFVM:06}
+Laura Barnes, Wendy Alvis, MaryAnne Fields, Kimon Valavanis, and Wilfrido
+  Moreno.
+\newblock Heterogeneous swarm formation control using bivariate normal
+  functions to generate potential fields.
+\newblock In {\em Distributed Intelligent Systems: Collective Intelligence and
+  Its Applications, 2006. DIS 2006. IEEE Workshop on}, pages 85--94. IEEE,
+  2006.
+
+\bibitem{BAF:06}
+Laura Barnes, Wendy Alvis, MaryAnne Fields, Kimon Valavanis, and Wilfrido
+  Moreno.
+\newblock Swarm formation control with potential fields formed by bivariate
+  normal functions.
+\newblock In {\em Control and Automation, 2006. MED'06. 14th Mediterranean
+  Conference on}, pages 1--7. IEEE, 2006.
+
+\bibitem{BM:09}
+{Derek J.} Bennet and C.R. McInnes.
+\newblock Verifiable control of a swarm of unmanned aerial vehicles.
+\newblock {\em Journal of Aerospace Engineering}, 223(7):939--953, 2009.
+
+\bibitem{BHD:13}
+D.~Brescianini, M.~Hehn, and R.~D'Andrea.
+\newblock Quadrocopter pole acrobatics.
+\newblock In {\em 2013 IEEE/RSJ International Conference on Intelligent Robots
+  and Systems}, pages 3472--3479, Nov 2013.
+
+\bibitem{EP:10}
+Samitha~W Ekanayake and Pubudu~N Pathirana.
+\newblock Formations of robotic swarm: an artificial force based approach.
+\newblock {\em International Journal of Advanced Robotic Systems},
+  7(3):173--190, 2010.
+
+\bibitem{EKB:18}
+N.~Eliot, D.~Kendall, and M.~Brockway.
+\newblock A new metric for the analysis of swarms using potential fields.
+\newblock {\em IEEE Access}, 6:63258--63267, 2018.
+
+\bibitem{FCNSM:15}
+M.~Furci, G.~Casadei, R.~Naldi, R.~G. Sanfelice, and L.~Marconi.
+\newblock An open-source architecture for control and coordination of a swarm
+  of micro-quadrotors.
+\newblock In {\em 2015 International Conference on Unmanned Aircraft Systems
+  (ICUAS)}, pages 139--146, June 2015.
+
+\bibitem{VG:05}
+V.~Gazi.
+\newblock Swarm aggregations using artificial potentials and sliding-mode
+  control.
+\newblock {\em IEEE Transactions on Robotics}, 21(6):1208--1214, Dec 2005.
+
+\bibitem{GP:04a}
+V.~Gazi and K.~M. Passino.
+\newblock Stability analysis of social foraging swarms.
+\newblock {\em IEEE Transactions on Systems, Man, and Cybernetics, Part B
+  (Cybernetics)}, 34(1):539--557, Feb 2004.
+
+\bibitem{GP:02}
+Veysel Gazi and Kevin~M Passino.
+\newblock Stability analysis of swarms in an environment with an
+  attractant/repellent profile.
+\newblock In {\em American Control Conference, 2002. Proceedings of the 2002},
+  volume~3, pages 1819--1824. IEEE, 2002.
+
+\bibitem{GP:04}
+Veysel Gazi and Kevin~M. Passino.
+\newblock A class of attractions/repulsion functions for stable swarm
+  aggregations.
+\newblock {\em International Journal of Control}, 77(18):1567--1579, 2004.
+
+\bibitem{GP:05}
+Veysel Gazi and Kevin~M Passino.
+\newblock Stability of a one-dimensional discrete-time asynchronous swarm.
+\newblock {\em Systems, Man, and Cybernetics, Part B: Cybernetics, IEEE
+  Transactions on}, 35(4):834--841, 2005.
+
+\bibitem{GP:11}
+Veysel Gazi and Kevin~M Passino.
+\newblock {\em Swarm stability and optimization}.
+\newblock Springer Science \& Business Media, 2011.
+
+\bibitem{GK:07}
+Pini Gurfil and Elad Kivelevitch.
+\newblock Flock properties effect on task assignment and formation flying of
+  cooperating unmanned aerial vehicles.
+\newblock {\em Proceedings of the Institution of Mechanical Engineers, Part G:
+  Journal of Aerospace Engineering}, 221(3):401--416, 2007.
+
+\bibitem{HAY:08}
+Hiroshi Hashimoto, Shinichi Aso, Syo Yokota, Akinori Sasaki, Yasuhiro Ohya, and
+  Hiroyuki Kobayashi.
+\newblock Stability of swarm robot based on local forces of local swarms.
+\newblock In {\em SICE Annual Conference, 2008}, pages 1254--1257. IEEE, 2008.
+
+\bibitem{HER:11}
+J.~Hereford.
+\newblock Analysis of beeclust swarm algorithm.
+\newblock In {\em Swarm Intelligence (SIS), 2011 IEEE Symposium on}, pages
+  1--7, April 2011.
+
+\bibitem{HSWN:10}
+Nicholas Hoff, A.~Sagoff, Robert~J. Wood, and Radhika Nagpal.
+\newblock Two foraging algorithms for robot swarms using only local
+  communication.
+\newblock In {\em 2010 {IEEE} International Conference on Robotics and
+  Biomimetics, {ROBIO} 2010, Tianjin, China, December 14-18, 2010}, pages
+  123--130, 2010.
+
+\bibitem{HCS:09}
+S.~P. Hou, C.~C. Cheah, and J.~J.~E. Slotine.
+\newblock Dynamic region following formation control for a swarm of robots.
+\newblock In {\em Robotics and Automation, 2009. ICRA '09. IEEE International
+  Conference on}, pages 1929--1934, May 2009.
+
+\bibitem{MJ:08}
+James D.~McLurkin IV.
+\newblock {\em Analysis and Implementation of Distributed Algorithms for
+  Multi-Robot Systems}.
+\newblock PhD thesis, Massachusetts Institute of Technology, USA, 2008.
+
+\bibitem{JRD:03}
+Rapha{\"e}l Jeanson, Francis L~W Ratnieks, and Jean-Louis Deneubourg.
+\newblock Pheromone trail decay rates on different substrates in the pharaoh's
+  ant, monomorium pharaonis (l.).
+\newblock {\em Physiological Entomology}, 28(3):192--198, 2003.
+
+\bibitem{KC:08}
+H.~Kawabayashi and Y.~W. Chen.
+\newblock Interactive system of artificial fish school based on the extended
+  boid model.
+\newblock In {\em Intelligent Information Hiding and Multimedia Signal
+  Processing, 2008. IIHMSP '08 International Conference on}, pages 721--724,
+  Aug 2008.
+
+\bibitem{MPYV:02}
+M.~A. Kovacina, D.~Palmer, Guang Yang, and R.~Vaidyanathan.
+\newblock Multi-agent control algorithms for chemical cloud detection and
+  mapping using unmanned air vehicles.
+\newblock In {\em IEEE/RSJ International Conference on Intelligent Robots and
+  Systems}, volume~3, pages 2782--2788 vol.3, Sep. 2002.
+
+\bibitem{KV:16}
+Vijay Kumar.
+\newblock Current projects: Vijay {K}umar {L}ab.
+\newblock \url{http://www.kumarrobotics.org/research/}, 2016.
+
+\bibitem{LAA:13}
+J.~Lee, C.~W. Ahn, and J.~An.
+\newblock A honey bee swarm-inspired cooperation algorithm for foraging swarm
+  robots: An empirical analysis.
+\newblock In {\em 2013 IEEE/ASME International Conference on Advanced
+  Intelligent Mechatronics}, pages 489--493, July 2013.
+
+\bibitem{LL:09}
+Ying Liu and Jian hua Liu.
+\newblock Robocup is a stage which impulse the research of basic technology in
+  robot.
+\newblock In {\em 2009 Asia-Pacific Conference on Computational Intelligence
+  and Industrial Applications (PACIIA)}, volume~1, pages 23--28, Nov 2009.
+
+\bibitem{LSHD:11}
+S.~Lupashin, A.~Schöllig, M.~Hehn, and R.~D'Andrea.
+\newblock The flying machine arena as of 2010.
+\newblock In {\em 2011 IEEE International Conference on Robotics and
+  Automation}, pages 2970--2971, May 2011.
+
+\bibitem{MD:09}
+James McLurkin and Erik~D Demaine.
+\newblock A distributed boundary detection algorithm for multi-robot systems.
+\newblock In {\em Intelligent Robots and Systems, 2009. IROS 2009. IEEE/RSJ
+  International Conference on}, pages 4791--4798. IEEE, 2009.
+
+\bibitem{MYP:09}
+Yogeswaran Mohan and SG~Ponnambalam.
+\newblock An extensive review of research in swarm robotics.
+\newblock In {\em Nature \& Biologically Inspired Computing, 2009. NaBIC 2009.
+  World Congress on}, pages 140--145. IEEE, 2009.
+
+\bibitem{MCK:15}
+Y.~Mulgaonkar, G.~Cross, and V.~Kumar.
+\newblock Design of small, safe and robust quadrotor swarms.
+\newblock In {\em 2015 IEEE International Conference on Robotics and Automation
+  (ICRA)}, pages 2208--2215, May 2015.
+
+\bibitem{NIM:09}
+Inaki Navarro and F~Mat{\'\i}a.
+\newblock A proposal of a set of metrics for collective movement of robots.
+\newblock {\em Proc. Workshop on Good Experimental Methodology in Robotics},
+  2009.
+
+\bibitem{PD:06}
+Oliver Purwin and Raffaello D’Andrea.
+\newblock Trajectory generation and control for four wheeled omnidirectional
+  vehicles.
+\newblock {\em Robotics and Autonomous Systems}, 54(1):13 -- 22, 2006.
+
+\bibitem{REY:87}
+Craig~W Reynolds.
+\newblock Flocks, herds and schools: A distributed behavioral model.
+\newblock In {\em ACM SIGGRAPH computer graphics}, volume~21, pages 25--34.
+  ACM, 1987.
+
+\bibitem{RGJHR:08}
+EJH Robinson, KE~Green, EA~Jenner, M~Holcombe, and FLW Ratnieks.
+\newblock Decay rates of attractive and repellent pheromones in an ant foraging
+  trail network.
+\newblock {\em Insectes sociaux}, 55(3):246--251, 2008.
+
+\bibitem{RRSTM:15}
+B.~Ryu, N.~Ranasinghe, W.~Shen, K.~Turck, and M.~Muccio.
+\newblock Bioair: Bio-inspired airborne infrastructure reconfiguration.
+\newblock In {\em MILCOM 2015 - 2015 IEEE Military Communications Conference},
+  pages 774--779, Oct 2015.
+
+\bibitem{SK:16}
+A.~M. Schroeder and M.~Kumar.
+\newblock Design of decentralized chemotactic control law for area coverage
+  using swarm of mobile robots.
+\newblock In {\em 2016 American Control Conference (ACC)}, pages 4317--4322,
+  July 2016.
+
+\bibitem{SHA:07}
+Jeff~S Shamma.
+\newblock {\em Cooperative control of distributed multi-agent systems}.
+\newblock Wiley Online Library, 2007.
+
+\bibitem{STZZW:13}
+Z.~Shi, J.~Tu, Q.~Zhang, X.~Zhang, and J.~Wei.
+\newblock The improved q-learning algorithm based on pheromone mechanism for
+  swarm robot system.
+\newblock In {\em Control Conference (CCC), 2013 32nd Chinese}, pages
+  6033--6038, July 2013.
+
+\bibitem{SG:15}
+J.~Song and S.~Gupta.
+\newblock Slam based shape adaptive coverage control using autonomous vehicles.
+\newblock In {\em System of Systems Engineering Conference (SoSE), 2015 10th},
+  pages 268--273, May 2015.
+
+\bibitem{TG:12}
+G.~Tuna and K.~Gulez.
+\newblock Aided navigation techniques for indoor and outdoor unmanned vehicles.
+\newblock In {\em 2012 5th International Conference on New Technologies,
+  Mobility and Security (NTMS)}, pages 1--4, May 2012.
+
+\bibitem{VBBLO:15}
+R.~R.~P. Vicerra, R.~N.~R. Barcos, J.~K.~S. Bulan, A.~J.~O. Loterina, S.~O.
+  Oliver, J.~M. D.~G. Pineda, A.~R. dela Cruz, E.~A. Roxas, A.~A. Bandala, and
+  E.~P. Dadios.
+\newblock A comparative study of swarm foraging behaviors; trophallaxis, task
+  allocation and pheromone.
+\newblock In {\em Humanoid, Nanotechnology, Information
+  Technology,Communication and Control, Environment and Management (HNICEM),
+  2015 International Conference on}, pages 1--6, Dec 2015.
+
+\bibitem{YH:14}
+Y.~T. Yao and R.~H. Hwang.
+\newblock Analysis of swarm behavior of users' gps data based on boids model.
+\newblock In {\em Internet of Things (iThings), 2014 IEEE International
+  Conference on, and Green Computing and Communications (GreenCom), IEEE and
+  Cyber, Physical and Social Computing(CPSCom), IEEE}, pages 421--427, Sept
+  2014.
+
+\bibitem{ZAPS:07}
+Demetrios Zeinalipour-Yazti, Panayiotis Andreou, Panos~K. Chrysanthis, and
+  George Samaras.
+\newblock Senseswarm: A perimeter-based data acquisition framework for mobile
+  sensor networks.
+\newblock In {\em Proceedings of the 4th Workshop on Data Management for Sensor
+  Networks: In Conjunction with 33rd International Conference on Very Large
+  Data Bases}, DMSN '07, pages 13--18, New York, NY, USA, 2007. ACM.
+
+\end{thebibliography}
