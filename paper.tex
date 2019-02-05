@@ -402,7 +402,120 @@ There is an exceptional circumstance that must be considered in perimeter detect
 
 The full-perimeter algorithm allows a predictable subset of agents to be identified. This subset can be used to influence the overall direction of the swarm. The full-perimeter detection algorithm detects similar agents to the basic-count algorithm but also identifies `indented' agents that the basic-count algorithm ignores. The basic-count algorithm identifies these agents as having a neighbour count beyond the threshold.
 
+\section{Swarm Model}\label{sec:Swarm Model}
+To describe the removal of voids a swarming model needs to be defined.
+
+\Figure[t!](topskip=0pt, botskip=0pt ){figures/neighbours} {Neighbour agents\label{define:neighbours}}
+
+An agent $b$ in the swarm ($b\in\mathcal S$) has a sensor ($S_b$) that detects other agents
+($b'$)in the swarm
+determining their range $r$  and direction $\beta$.  From this data the agent generates a
+set of neighbours ($\mathcal N_b$) that are within a specific range.  Usually the range of the
+cohesion field $C_b$.
+
+The Agent creates a set of neighbours containing range and bearing pairs
+$(r,\beta)$ as shown in equation~\ref{set:Nb} and
+figure~\ref{define:neighbours}
+
+\begin{equation}
+\mathcal N_b = \{ (r,\beta) \ldots \}
+\label{set:Nb}
+\end{equation}
+These range and bearing pairs are the relative position vector for each
+neighbour $b'$ with respect to the sensor reference frame of agent $b$.
+Alternative notations are given in equation \ref{notation}
+\begin{equation}
+	\mathcal N_b = \{(r,\beta) \ldots \} = \{ (r_{b'}, \beta_{b'}) \ldots \} = \{
+	b' \ldots \}
+	\label{notation}
+\end{equation}
+
 \subsection{Full-perimeter coordinator detection}\label{sec:PerimeterAgentDetection} 
+%In a 2D Euclidean plane a circle provides the maximum area with the minimum perimeter size. A circles perimeter is convex in nature. 
+To restructure a disorganised swarm the perimeter agents need to be identified. These agents form part of an outer ({\color{green}green}) or inner edge ({\color{red}red}) (Fig.~\ref{fig:PerimeterBots1}) or are part of an island~(Fig.~\ref{fig:PerimeterBots2}).
+
+The detection mechanism detects both the outer edge of a swarm (equation
+\ref{perimeter-predicate})  and any internal features~(voids) that satisfy the same
+set of conditions. It is therefore possible to have both voids and islands of
+agents within the same swarm~(Fig.~\ref{fig:PerimeterBots2}). Voids are best
+defined as perimeters that are concave (equation \ref{concave-predicate}) in nature and inside another perimeter. McLurkin describes two types of perimeters convex and concave~\cite{MD:09}. A convex perimeter is an edge where the average angle of the agent's exposed faces are~$> 180^\circ$. A concave perimeter is where the average exposed angle is~$< 180^\circ$.
+
+\Figure[t!](topskip=0pt, botskip=0pt, midskip=0pt)[width=5cm]{figures/PerimeterBots1}
+{Outer Perimeter\label{fig:PerimeterBots1}}
+
+\Figure[t!](topskip=0pt, botskip=0pt, midskip=0pt)[width=8cm]{figures/PerimeterBots2}
+{Inner Island Perimeter\label{fig:PerimeterBots2}}
+%\subsection{Full-perimeter detection}\label{sec:PerimeterAgentDetection} 
+
+
+The set of neighbours $\mathcal N_b$ (eqn \ref{set:Nb}) is sorted into a
+sequence $\mathcal P_a$ with the bearing values
+increasing
+\begin{equation}
+	\mathcal P_a = \langle (r_0,\beta_0),\ldots,(r_n,\beta_n) \rangle
+\end{equation}
+such that $\beta_0 < \beta_1 < \ldots < \beta_n$
+
+This set of agents forms the perimeter of an enclosing polygon of agent $b$. 
+Each consecutive pair of agents (in the sequence) defines an edge, which has
+length $d$ and an angle $\theta$ given by the difference in bearings of
+succesive neighbours.  The sequence of edges
+that forms this polygon is
+\begin{equation}
+	\mathcal{P}_e = \langle (d_0,\theta_0), \ldots , (d_n,\theta_n) \rangle
+\end{equation}
+where
+\begin{equation}
+	\theta_i = \beta_{i+1} - \beta_i
+\end{equation}
+the index addition is modulo $|\mathcal N_b|$ making $\beta_0$ the successor
+bearing to $\beta_n$ ($n+1 = 0$).  The angles $\theta$ must lie in the range
+$0<\theta\leq2\pi$.
+This restriction on the values of $\theta$ enforce a condition that
+\begin{equation}
+	\sum\theta_i = 2\pi
+\end{equation}
+The length of a perimeter edge is given by the cosine rule
+\begin{equation}
+	d_i^2 = r_{i+1}^2 + r_i^2 -2r_{i+1}r_i \cos\theta_i
+\end{equation}
+
+An agent is on the perimeter of the swarm if it is not enclosed by the polygon
+defined in $\mathcal{P}_e$.  Simple geometry shows that this is the case given
+by the predicate in equation \ref{enclosing}
+\begin{equation}
+	\exists \theta_i \in \mathcal{P}_e : \theta_i\geq\pi
+	\label{enclosing}
+\end{equation}
+The polygon is considered `open' if two succesive agents on the perimeter 
+cannot see each onther, their separation $d$ is greater that the range of the
+attractive field.  An open polygon does not enclose the agent $b$ so it
+considered to be on the perimeter.
+
+The agent $b$ is on the perimeter of the swarm if the predicate in equation
+\ref{perimeter-predicate} is true.
+\begin{equation}
+	\exists d_i\in\mathcal{P}_e:d_i>C_b \vee
+	\exists\theta_i\in\mathcal{P}_e:\theta_i\geq\pi
+	\label{perimeter-predicate}
+\end{equation}
+An agent is at the apex of a concave region of the perimeter if
+\begin{equation}
+	\exists(\theta_i,d_i)\in\mathcal{P}_e : d_i>C_b\wedge\theta_i<\pi
+	\label{concave-predicate}
+\end{equation}
+
+
+\textit{Orientation independent}  If the agent $b$ is rotated through an angle of $\gamma$ then 
+the bearings are rotated by $-\gamma$, \[ \beta_i\mapsto\beta_i-\gamma \]
+The  angle between successive agents is now
+\[
+	\theta_i  =  (\beta_{i+1}-\gamma) - (\beta_i-\gamma)
+	 = \beta_{i+1}-\beta_i-\gamma+\gamma
+	 = \beta_{i+1}-\beta_i
+\]
+The predicates are independent of the orientation of the sensing agent.
+
 The process of detecting a perimeter agent is based upon identifying when the agent in not surrounded by interconnected neighbours~(Figure~\ref{reduced:Perimeter1}). The process has several conditional checks that detect the status of an agent, each step is discussed below. 
 
 % \begin{figure}
@@ -412,190 +525,12 @@ The process of detecting a perimeter agent is based upon identifying when the ag
 % \caption{Complex multifaceted agents \label{reduced:Perimeter1}}
 % \end{figure}
 
-\Figure[t!](topskip=0pt, botskip=0pt )[width=7cm]{figures/Perimeter1.pdf}{Complex multifaceted agents\label{reduced:Perimeter1}}
-
-The first check is a short circuit count of the number of neighbours. This is the same process used to the basic-count algorithm. If an agent has $\leq 4$ neighbours and the swarm parameters are for a hexagonal swarm configuration then the agent is a perimeter agent and therefore a coordinator. This identification process is shown in~Figure~\ref{SmallNeighbourCount}. 
-
-\begin{figure}
-\begin{algorithmic}[1]
-\Procedure{NeighbourCount}{$b$}
-\If{$|nbr(b)| \leq 4$}
-   \State\textbf{return} $True$
-\EndIf
-\State\textbf{return} $False$
-\EndProcedure
-\end{algorithmic}
-\caption{SmallNeighbourCount}
-\label{SmallNeighbourCount}
-\end{figure}
-
-If the short circuit neighbour count check fails then further conditions must be checked. The additional checks require a dictionary of agent/angular values to be generated~(Figure~\ref{eq:ConcaveVoidPhysics1}). Algorithm~\ref{algo:getNeighbourAngles} shows how the dictionary of agent/angle values are produced.   
-
-\begin{center}
-\begin{equation}
-\label{eq:ConcaveVoidPhysics1}
-S_b \buildrel \Delta \over = \{(b',\angle\{(b'~b~b^0)) : b' \in nbr(b)\}
-\end{equation}
-\end{center}
-
-Figure~\ref{eq:ConcaveVoidPhysics1} generates the dictionary set of all the neighbours along with an angle that each of the agent's neighbour's make with the first detected neighbour.
-%% 
-%% \begin{center}
-%% \begin{equation}
-%% \label{eq:ConcaveVoidPhysics2}
-%% G_b \buildrel \Delta \over = gap(S_b,\angle<180^\circ)
-%% \end{equation}
-%% \end{center}
-
-Algorithm \ref{algo:getNeighbourAngles} shows the logic to produce the sorted neighbour/angle dictionary. $sort(.)$ sorts the dictionary set generated in~Equation~\ref{eq:ConcaveVoidPhysics1} by ascending angle to produce a dictionary of neighbour agents with their relative angle to the first detected neighbour as shown in~Figure~\ref{reduced:Perimeter1}.
-
-\begin{figure}
-\begin{algorithmic}[1]
-\Procedure{NeighbourAngle}{$b$}
-\State $angles \leftarrow \emptyset$
-\For{$b^{'}\in b.neighbours$}
-	\If{$b.neighbours[0] == b^{'}$}
-      \State $angles[b^{'}] = 0$
-	\Else
-		\State $newAngle = b.getAngle(b.neighbours[0], b^{'})$
-	   \State $angles[b^{'}] = newAngle$
-	\EndIf
-\EndFor
-\State \textbf{return}{$sort(angles)$} 
-\EndProcedure
-\end{algorithmic}
-\caption{NeighbourAngle: Sorted by angle}
-\label{algo:getNeighbourAngles}
-\end{figure}
-
-Using the angular dictionary from Algorithm~\ref{algo:getNeighbourAngles} it is possible to identify if adjacent neighbours can detect each other. If the agent is within all of its neighbours boundary then it is not on the perimeter~(Algorithm~\ref{algo:checkVisibility}). 
-
-As the agents are monolithic all agents have the same field effects the `visibility' of two neighbours can be determined. The angle and distance of each neighbour pair and the angle they create allows cosine rule to be used to calculate the distance the neighbours are apart as shown in~Equation~\ref{eq:CosineRule1} and~Figure~\ref{reduced:Triangulate}. The distance is then checked against the neighbour range field effect. If the distance is $\leq N_b$ where $N_b$ is the \textit{neighbour field} then the agent can assume the neighbours have `sight' of each other. 
-
-% \begin{figure}
-% \begin{center}
-% \includegraphics[width=4.5cm]{figures/Triangulate.pdf}
-% \end{center}
-% \caption{Neighbour visibility\label{reduced:Triangulate}}
-% \end{figure}
+%\Figure[t!](topskip=0pt, botskip=0pt )[width=7cm]{figures/Perimeter1.pdf}{Complex multifaceted agents\label{reduced:Perimeter1}}
+\Figure[t!](topskip=0pt, botskip=0pt )[width=7cm]{figures/neighbours.pdf}{Complex multifaceted agents\label{reduced:Perimeter1}}
 
 \Figure[t!](topskip=0pt, botskip=0pt)[width=4cm]{figures/Triangulate.pdf}{Neighbour visibility\label{reduced:Triangulate}}
 
-\begin{equation}\label{eq:CosineRule1}
-z = \sqrt{x^2 + y^2 - 2xy~\cos(\theta)}
-\end{equation}
-
-The full visibility check~(Algorithm~\ref{algo:checkVisibility}) takes each pair in turn and using the cosine rule~(Equation~\ref{eq:CosineRule1}) checks for a `visibility gap'. 
-
-\begin{figure}
-\begin{algorithmic}[1]
-\Procedure{NeighbourAngle}{$b,angles$}
-\For{$i \leftarrow 0$ to $size(angles)-1$}
-	\If{i == size(angles)-1}
-		\If{$cosrule(b,angles[size(angles)-1][0],angles[i][0]$}
-			\State \textbf{return} $True$ 
-   	\EndIf
-	\ElsIf{$cosrule(b,angles[i + 1][0],angles[i][0]$}
-		\State \textbf{return} $True$ 
-	\EndIf
-\EndFor
-\State \textbf{return} $False$ 
-\EndProcedure
-\end{algorithmic}
-\caption{CheckVisibility}
-\label{algo:checkVisibility}
-\end{figure}
-
-There is one exception to the neighbour visibility check. Due to compression of the swarm, which can be caused by an initial deployment configuration~(Fig.~\ref{fig:SampleSwarm200-1}) or when an obstacle is in the path of the swarm, the agent's neighbours are able to `see' other neighbours but a pair of sequential neighbours could create an angle $> 180^\circ$ as shown in~Figure~\ref{reduced:Perimeter2}. In this case the agent is on the outside of the enclosed neighbour space, the agent is therefore on a perimeter. 
-
-% \begin{figure}
-% \begin{center}
-% \includegraphics[width=5.5cm]{figures/Perimeter2.pdf}
-% \end{center}
-% \caption{Convex multifaceted agents \label{reduced:Perimeter2}}
-% \end{figure}
-
 \Figure[t!](topskip=0pt, botskip=0pt)[width=4cm]{figures/Perimeter2.pdf}{Convex multifaceted agents\label{reduced:Perimeter2}}
-
-This phenomenon requires the detection process to identify the angles that all the agents create from an arbitrary point, in this case the first identified neighbour. The neighbours must then be checked to determine if any neighbour pair create an angle $> 180^\circ$~(Figure~\ref{reduced:Perimeter1}~Algorithm~\ref{algo:checkConvex}). This process includes a short circuit in that as soon as a gap is found the check terminates. 
-
-\begin{figure}
-\begin{algorithmic}[1]
-\Procedure{CheckConvex}{$angles$}
-\For{$i \leftarrow 0$ to $size(angles)-1$}
-	\If{i == size(angles)-1}
-		\If{$360 - angles[loop][1] \geq 180$}
-			\State \textbf{return} $True$ 
-   	\EndIf
-	\ElsIf{$angles[loop + 1][1] - angles[loop][1] \geq 180$}
-		\State \textbf{return} $True$ 
-	\EndIf
-\EndFor
-\State \textbf{return} $False$ 
-\EndProcedure
-\end{algorithmic}
-\caption{CheckConvex}
-\label{algo:checkConvex}
-\end{figure}
-
-%% \begin{algorithm}
-%% \DontPrintSemicolon
-%% \SetAlgoLined
-%% \caption{CheckConvex}
-%% \KwData{angles}
-%% \For{$i \leftarrow 0$ \KwTo $size(angles)-1$}{
-%% 	\eIf{i == size(angles)-1}{
-%% 		\If{$360 - angles[loop][1] \geq 180$}{
-%%    		\KwRet{True}
-%%    	}
-%% 	}{
-%% 		\If{$angles[loop + 1][1] - angles[loop][1] \geq 180$}{
-%% 			\KwRet{True}
-%% 		}
-%% 	}
-%% }
-%% \KwRet{False}
-%% \label{algo:checkConvex}
-%% \end{algorithm}
-
-The complete perimeter detection algorithm using this `cyclic-angular-neighbour-check' methodology is show in~Algorithm~\ref{algo:checkPerimeter}. The first part of the algorithm is the short circuit check~(\textit{SmallNeighbourCount(b)}). This is only followed by the visibility check (\textit{CheckVisibility(b,angles)}) if the short circuit fails. If the visibility check is confirmed, which is another short circuit method, the convex check is carried out~(CheckConvex(angles)). This sequence ensures the minimum computational overhead for the agent check. 
-
-\begin{figure}
-\begin{algorithmic}[1]
-\Procedure{CheckPerimeter}{$b,S$}
-\If{SmallNeighbourCount(b,S)}
-	\State \textbf{return} $False$ 
-\EndIf
-\State $angles = NeighbourAngle(b)$
-\If{CheckVisibility(b,angles)}
-	\If{CheckConvex(angles)}
-		\State \textbf{return} $True$ 
-	\EndIf
-\EndIf
-\State \textbf{return} $False$ 
-\EndProcedure
-\end{algorithmic}
-\caption{CheckPerimeter}
-\label{algo:checkPerimeter}
-\end{figure}
-
-%% \begin{algorithm}
-%% \DontPrintSemicolon
-%% \SetAlgoLined
-%% \caption{CheckPerimeter}
-%% \KwData{$b,S$}
-%% \If{SmallNeighbourCount(b,S)}{
-%% 	\KwRet{True}
-%% }
-%% $angles = NeighbourAngle(b)$\;
-%% \If{CheckVisibility(b,angles)}{
-%% 	\If{CheckConvex(angles)}{
-%% 		\KwRet{True}
-%% 	}
-%% }
-%% \KwRet{False}
-%% \label{algo:checkPerimeter}
-%% \end{algorithm}
 
 \subsubsection{Perimeter detection errors\label{section:PerimeterErrorLocalisation}}
 With the proximity of the agents needing to be hexagonally connected and the requirement to eliminate inter-agent communications to allow for arbitrary sized swarms, there is the possibility of a localised perimeter detection algorithm error. When a swarm is compressed a localised anomaly can arise where agents are in a hyper-connected structure on a perimeter. When this anomaly occurs the proposed algorithm will produce a false positive result for the affected agents. 
